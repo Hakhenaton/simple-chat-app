@@ -1,0 +1,66 @@
+:host {
+  --wcs-tabs-padding-bottom: 16px;
+}
+
+:host([align=start]) .wcs-tabs-headers {
+  justify-content: start;
+}
+
+:host([align=end]) .wcs-tabs-headers {
+  justify-content: end;
+}
+
+:host([align=center]) .wcs-tabs-headers {
+  justify-content: center;
+}
+
+.wcs-tabs-headers {
+  padding-top: 4px;
+  overflow-x: auto;
+  display: flex;
+  position: relative;
+}
+
+:host([gutter]) .wcs-tabs-headers {
+  border-bottom: var(--wcs-tabs-headers-border-bottom);
+}
+
+.wcs-tab-header {
+  padding: 8px 24px 16px 0;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+}
+.wcs-tab-header span {
+  text-align: center;
+  color: var(--wcs-text-disabled);
+  font-size: 1rem;
+  font-weight: 400;
+}
+.wcs-tab-header:focus span, .wcs-tab-header:hover span {
+  color: var(--wcs-primary);
+}
+.wcs-tab-header:focus-visible > span {
+  outline: 2px dashed var(--wcs-primary);
+  outline-offset: 4px;
+  border-radius: 0.1rem;
+}
+
+.active span {
+  font-weight: 500;
+  color: var(--wcs-primary);
+  position: relative;
+}
+.active span::after {
+  position: absolute;
+  bottom: calc(var(--wcs-tabs-padding-bottom) * -1);
+  left: 0;
+  width: 100%;
+  height: 0.3125rem;
+  content: "";
+  background-color: var(--wcs-primary);
+  border-radius: 3px;
+}

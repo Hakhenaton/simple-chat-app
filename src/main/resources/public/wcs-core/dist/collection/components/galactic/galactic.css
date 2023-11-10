@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  background-color: var(--wcs-gray);
+}
+
+.container {
+  height: 32px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--wcs-white);
+  font-size: 14px;
+  display: flex;
+  max-width: var(--wcs-com-content-max-width);
+  margin: 0 auto;
+}
+.container #sncf-logo {
+  height: 32px;
+  margin-right: 20px;
+}
+.container .container-left {
+  display: flex;
+  align-items: center;
+}

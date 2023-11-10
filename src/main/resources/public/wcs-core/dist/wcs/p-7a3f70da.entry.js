@@ -1,0 +1,2 @@
+import{r as s,h as r}from"./p-a2df3a49.js";const o=":host{flex:1 1 auto;padding:var(--wcs-padding)}";const t=class{constructor(r){s(this,r)}render(){return r("slot",null)}};t.style=o;export{t as wcs_card_body};
+//# sourceMappingURL=p-7a3f70da.entry.js.map

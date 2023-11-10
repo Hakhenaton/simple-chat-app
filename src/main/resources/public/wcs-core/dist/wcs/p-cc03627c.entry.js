@@ -1,0 +1,2 @@
+import{r as s,h as l,H as r}from"./p-a2df3a49.js";const t=class{constructor(l){s(this,l)}render(){return l(r,{slot:"label"},l("slot",null))}};export{t as wcs_field_label};
+//# sourceMappingURL=p-cc03627c.entry.js.map

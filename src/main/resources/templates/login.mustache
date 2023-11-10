@@ -1,0 +1,21 @@
+<wcs-modal id="login-modal" show show-close-button hx-on="wcsDialogClosed: this.remove()">
+    <style>
+        .field {
+            margin-bottom: 24px;
+        }
+    </style>
+    <div slot="header">Connexion à l'application</div>
+    <p>Veuillez fournir vos identifiants.</p>
+    <form hx-encoding="application/x-www-form-urlencoded" hx-post="/login">
+        <wcs-form-field class="field">
+            <wcs-label>Nom d'utilisateur</wcs-label>
+            <wcs-input name="username" placeholder="John doe"></wcs-input>
+        </wcs-form-field>
+        <wcs-form-field class="field">
+            <wcs-label>Mot de passe</wcs-label>
+            <wcs-input name="password" type="password" name="password"></wcs-input>
+        </wcs-form-field>
+        <input type="hidden" name="{{ csrf.parameterName }}" value="{{ csrf.token }}">
+        <wcs-button class="wcs-primary" type="submit">Se connecter</wcs-button>
+    </form>
+</wcs-modal>

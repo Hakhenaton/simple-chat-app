@@ -1,0 +1,2 @@
+import{r as s,h as r,H as t}from"./p-a2df3a49.js";const o=":host{display:block;border-bottom:solid 1px var(--wcs-text-light)}";const a=class{constructor(r){s(this,r)}render(){return r(t,null)}};a.style=o;export{a as wcs_divider};
+//# sourceMappingURL=p-17630eea.entry.js.map

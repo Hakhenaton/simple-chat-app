@@ -1,0 +1,1 @@
+{"version":3,"file":"accessibility.js","sourceRoot":"","sources":["../../src/utils/accessibility.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,gBAAgB,CAAC,OAAoB;EACjD,OAAO,OAAO,KAAK,QAAQ,CAAC,aAAa,CAAC;AAC9C,CAAC","sourcesContent":["export function isElementFocused(element: HTMLElement) {\n    return element === document.activeElement;\n}\n"]}

@@ -1,0 +1,2 @@
+import{r as s,h as r,H as a}from"./p-a2df3a49.js";const t=":host{display:block;padding:calc(var(--wcs-padding) / 2) var(--wcs-padding);font-size:0.75rem;text-transform:uppercase;color:var(--wcs-text-medium);white-space:nowrap}";const o=class{constructor(r){s(this,r)}render(){return r(a,{slot:"item"},r("slot",null))}};o.style=t;export{o as wcs_dropdown_header};
+//# sourceMappingURL=p-269d244c.entry.js.map

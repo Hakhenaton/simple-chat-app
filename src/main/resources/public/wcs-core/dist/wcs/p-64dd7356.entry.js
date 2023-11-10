@@ -1,0 +1,2 @@
+import{r as s,c as t,h as a,H as o}from"./p-a2df3a49.js";const n=class{constructor(a){s(this,a);this.tabLoaded=t(this,"tabLoaded",7);this.header=undefined;this.itemKey=undefined}componentDidLoad(){this.tabLoaded.emit()}render(){return a(o,{slot:"wcs-tab"},a("slot",null))}};export{n as wcs_tab};
+//# sourceMappingURL=p-64dd7356.entry.js.map

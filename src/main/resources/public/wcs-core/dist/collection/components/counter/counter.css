@@ -1,0 +1,93 @@
+@keyframes spin-animation-up {
+  0% {
+    transform: translateY(0);
+    transform-origin: center;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(30px);
+    transform-origin: center;
+    opacity: 1;
+  }
+}
+@keyframes spin-animation-down {
+  0% {
+    transform: translateY(0);
+    transform-origin: center;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-30px);
+    transform-origin: center;
+    opacity: 1;
+  }
+}
+:host {
+  box-sizing: border-box;
+  height: var(--wcs-counter-host-height);
+  --wcs-input-icon-color: var(--wcs-text-medium);
+  --wcs-internal-input-border-radius: calc(var(--wcs-border-radius) * 10);
+  --wcs-internal-input-border-width: 2px;
+  font-family: var(--wcs-font-sans-serif);
+  font-size: var(--wcs-counter-font-size);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: var(--wcs-counter-host-padding);
+  width: fit-content;
+  overflow: hidden;
+  border-radius: var(--wcs-internal-input-border-radius);
+  background-color: var(--wcs-light);
+  border: var(--wcs-internal-input-border-width) solid var(--wcs-light);
+  background-clip: padding-box;
+}
+:host .counter-container {
+  height: var(--wcs-counter-host-height);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 calc(2 * var(--wcs-base-margin));
+  position: relative;
+}
+:host .outliers {
+  position: absolute;
+}
+:host #outlier-down {
+  top: calc(var(--wcs-counter-host-height) / 2 * -1);
+}
+:host #outlier-up {
+  bottom: calc(var(--wcs-counter-host-height) / 2 * -1);
+}
+:host span.current-value:focus-visible {
+  outline: 2px dashed var(--wcs-primary);
+  outline-offset: 4px;
+  border-radius: 0.1rem;
+}
+:host .animate-up {
+  animation: spin-animation-up 0.175s ease-in-out;
+}
+:host .animate-down {
+  animation: spin-animation-down 0.175s ease-in-out;
+}
+:host .hidden {
+  opacity: 0;
+}
+
+:host([size=m]) {
+  --wcs-counter-host-padding: 4px;
+  --wcs-counter-host-height: var(--wcs-size-m);
+  --wcs-counter-font-size: 1rem;
+}
+
+:host([size=l]) {
+  --wcs-counter-host-padding: 8px;
+  --wcs-counter-host-height: var(--wcs-size-l);
+  --wcs-counter-font-size: 1.0625rem;
+}

@@ -1,0 +1,2 @@
+import{r as s,h as t,H as o}from"./p-a2df3a49.js";const r=":host{margin-top:0.25rem}:host([small]){font-size:0.75rem;font-weight:400;color:var(--wcs-text-medium)}";const e=class{constructor(t){s(this,t);this.small=false}render(){return t(o,{slot:"messages"},t("slot",null))}};e.style=r;export{e as wcs_hint};
+//# sourceMappingURL=p-50dce764.entry.js.map

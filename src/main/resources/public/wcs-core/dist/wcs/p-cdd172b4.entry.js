@@ -1,0 +1,2 @@
+import{r as s,h as o,H as t}from"./p-a2df3a49.js";const c=":host{margin:calc(3 * var(--wcs-base-margin));display:block}";const r=class{constructor(o){s(this,o)}render(){return o(t,{slot:"content"},o("slot",null))}};r.style=c;export{r as wcs_accordion_content};
+//# sourceMappingURL=p-cdd172b4.entry.js.map

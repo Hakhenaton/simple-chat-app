@@ -1,0 +1,2 @@
+import{r as l,h as t,H as a}from"./p-a2df3a49.js";const e=':host{font-weight:500;margin-bottom:8px}:host([required])>label::after{font-weight:500;color:var(--wcs-red);content:" *"}label{display:inline-block}label ::slotted(wcs-mat-icon){display:inline;vertical-align:middle;margin-left:calc(var(--wcs-base-margin) / 2)}';const s=class{constructor(t){l(this,t);this.required=false}render(){return t(a,{slot:"label"},t("label",null,t("slot",null)))}};s.style=e;export{s as wcs_label};
+//# sourceMappingURL=p-54e29233.entry.js.map

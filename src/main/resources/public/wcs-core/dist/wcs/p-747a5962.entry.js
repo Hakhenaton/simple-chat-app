@@ -1,0 +1,2 @@
+import{r as t,h as r,H as o}from"./p-a2df3a49.js";const s=":host{font-weight:500 !important;color:var(--wcs-gray-light)}";const a=class{constructor(r){t(this,r)}render(){return r(o,{slot:"property"},r("slot",null))}};a.style=s;export{a as wcs_list_item_property};
+//# sourceMappingURL=p-747a5962.entry.js.map

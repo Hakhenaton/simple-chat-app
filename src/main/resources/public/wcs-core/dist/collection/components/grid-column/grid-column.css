@@ -1,0 +1,40 @@
+:host {
+  --wcs-grid-column-border-left: solid 1px var(--wcs-text-light);
+  display: contents;
+}
+:host th {
+  color: var(--wcs-gray-dark);
+  background-color: var(--wcs-light);
+  border-left: var(--wcs-grid-column-border-left);
+  padding: calc(var(--wcs-padding) / 2) var(--wcs-padding);
+  text-align: left;
+}
+:host th .grid-column-th-content {
+  display: inline-flex;
+  flex-direction: row;
+}
+:host th .grid-column-th-content span {
+  user-select: none;
+}
+:host .pointer {
+  cursor: pointer;
+}
+
+:host([sort-order=asc]) img {
+  transform: scaleY(1);
+}
+
+:host([sort-order=desc]) img {
+  transform: scaleY(-1);
+}
+
+:host([sort-order=none]) img {
+  display: none;
+}
+:host([sort-order=none]) th:hover img {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none !important;
+}

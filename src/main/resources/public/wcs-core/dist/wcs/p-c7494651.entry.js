@@ -1,0 +1,2 @@
+import{r as s,h as t}from"./p-a2df3a49.js";const i=class{constructor(t){s(this,t);this.icon=undefined;this.size=undefined}render(){const s={class:{[`icons-${this.icon}`]:true,[`icons-size-${this.size}`]:true}};return t("i",Object.assign({},s))}};export{i as wcs_icon};
+//# sourceMappingURL=p-c7494651.entry.js.map

@@ -1,0 +1,121 @@
+:host {
+  --wcs-input-icon-color: var(--wcs-text-medium);
+  --wcs-internal-input-border-radius-left: var(--wcs-input-border-radius-left, var(--wcs-border-radius));
+  --wcs-internal-input-border-radius-right: var(--wcs-input-border-radius-right, var(--wcs-border-radius));
+  --wcs-internal-input-border-width: 2px;
+  display: flex;
+  width: 100%;
+  height: var(--wcs-input-host-height);
+  box-sizing: border-box;
+  border-radius: var(--wcs-internal-input-border-radius-left) var(--wcs-internal-input-border-radius-right) var(--wcs-internal-input-border-radius-right) var(--wcs-internal-input-border-radius-left);
+  background-color: var(--wcs-light);
+  border: var(--wcs-internal-input-border-width) solid var(--wcs-light);
+  background-clip: padding-box;
+}
+:host ::placeholder {
+  font-weight: 400;
+  font-style: italic;
+}
+:host input {
+  overflow: hidden;
+  min-height: var(--wcs-size-xs);
+  width: 100%;
+  background-color: transparent;
+  font-family: var(--wcs-font-sans-serif);
+  color: var(--wcs-primary);
+  font-weight: var(--wcs-font-weight-form-value) !important;
+  border: none;
+  padding: 0 calc(var(--wcs-padding) - var(--wcs-internal-input-border-width));
+  font-size: var(--wcs-input-font-size, 1rem);
+  line-height: 1.5;
+}
+:host input:focus {
+  box-shadow: none;
+  outline: 0;
+}
+:host wcs-mat-icon {
+  position: relative;
+  margin-left: 8px;
+  margin-right: -8px;
+}
+:host .toggle_password {
+  cursor: pointer;
+  margin-left: -8px;
+  margin-right: 8px;
+}
+:host .prefix, :host .suffix {
+  color: var(--wcs-white);
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  font-size: var(--wcs-input-font-size, 1rem);
+  padding: 0 calc(var(--wcs-padding) / 2);
+  font-weight: var(--wcs-font-weight-form-value) !important;
+  background-color: var(--wcs-text-disabled);
+}
+:host .prefix {
+  border-radius: var(--wcs-internal-input-border-radius-left) 0 0 var(--wcs-internal-input-border-radius-left);
+  margin: calc(-1 * var(--wcs-internal-input-border-width)) 0 calc(-1 * var(--wcs-internal-input-border-width)) calc(-1 * var(--wcs-internal-input-border-width));
+  border-left: solid var(--wcs-internal-input-border-width) transparent;
+  border-top: solid var(--wcs-internal-input-border-width) transparent;
+  border-bottom: solid var(--wcs-internal-input-border-width) transparent;
+}
+:host .suffix {
+  border-radius: 0 var(--wcs-internal-input-border-radius-right) var(--wcs-internal-input-border-radius-right) 0;
+  margin: calc(-1 * var(--wcs-internal-input-border-width)) calc(-1 * var(--wcs-internal-input-border-width)) calc(-1 * var(--wcs-internal-input-border-width)) 0px;
+  border-right: solid var(--wcs-internal-input-border-width) transparent;
+  border-top: solid var(--wcs-internal-input-border-width) transparent;
+  border-bottom: solid var(--wcs-internal-input-border-width) transparent;
+}
+
+:host([size=l]) {
+  --wcs-input-host-height: var(--wcs-size-l);
+  --wcs-input-font-size: 1.0625rem;
+}
+
+:host([size=m]) {
+  --wcs-input-host-height: var(--wcs-size-m);
+  --wcs-input-font-size: 1rem;
+}
+
+:host([size=s]) {
+  --wcs-input-host-height: var(--wcs-size-s);
+  --wcs-input-font-size: 0.9375rem;
+}
+
+:host([state=error]) {
+  border-color: var(--wcs-red) !important;
+}
+
+:host([data-has-prefix]) input {
+  padding-left: calc(var(--wcs-padding) / 2);
+}
+
+:host([data-has-suffix]) input {
+  padding-left: calc(var(--wcs-padding) / 2);
+}
+
+:host([disabled]) input {
+  color: var(--wcs-text-disabled);
+  cursor: not-allowed;
+}
+:host([disabled]) .prefix, :host([disabled]) .suffix {
+  color: var(--wcs-light);
+}
+
+:host(:focus-within) {
+  border: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+}
+:host(:focus-within) .prefix {
+  border-left: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+  border-top: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+  border-bottom: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+}
+:host(:focus-within) .suffix {
+  border-right: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+  border-top: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+  border-bottom: dashed var(--wcs-internal-input-border-width) var(--wcs-primary);
+}
+:host(:focus-within) wcs-mat-icon {
+  color: var(--wcs-primary);
+}

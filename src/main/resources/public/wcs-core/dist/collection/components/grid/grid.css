@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  --wcs-grid-highlight-color: var(--wcs-light);
+}
+:host th {
+  background-color: var(--wcs-light);
+}
+:host th:not(:first-child) {
+  border-left: solid 1px var(--wcs-text-light);
+}
+:host ::slotted([slot=grid-column]:first-child) {
+  --wcs-grid-column-border-left: none;
+}
+:host table {
+  width: 100%;
+  border-spacing: 0;
+}
+:host td {
+  color: var(--wcs-gray-light);
+  margin: 0;
+  padding: calc(var(--wcs-padding) / 2) var(--wcs-padding);
+}
+:host tr:not(:last-child) td {
+  border-bottom: solid 1px var(--wcs-text-light);
+}
+:host .wcs-grid-selection-column {
+  padding: calc(var(--wcs-padding) / 2) var(--wcs-padding);
+  width: 40px;
+}
+:host tr.selected {
+  background-color: var(--wcs-grid-highlight-color);
+}
+:host .loading {
+  text-align: center;
+}
+
+:host([selection]) ::slotted([slot=grid-column]:first-child) {
+  --wcs-grid-column-border-left: solid 1px var(--wcs-text-light) !important;
+}

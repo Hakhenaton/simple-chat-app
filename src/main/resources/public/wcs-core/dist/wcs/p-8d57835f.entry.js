@@ -1,0 +1,2 @@
+import{r as s,h as t,H as r}from"./p-a2df3a49.js";const o=":host{text-align:left}";const a=class{constructor(t){s(this,t)}render(){return t(r,{slot:"header"},t("slot",null))}};a.style=o;export{a as wcs_accordion_header};
+//# sourceMappingURL=p-8d57835f.entry.js.map

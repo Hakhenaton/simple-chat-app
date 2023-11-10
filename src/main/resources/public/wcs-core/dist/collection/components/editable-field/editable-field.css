@@ -1,0 +1,86 @@
+:host {
+  display: block;
+}
+:host .display-none {
+  display: none !important;
+}
+:host .label {
+  margin-bottom: var(--wcs-base-margin);
+  font-weight: 500;
+  font-size: var(--wcs-editable-field-font-size);
+  color: var(--wcs-gray-light);
+}
+:host .edit-container {
+  display: flex;
+  width: 100%;
+}
+:host .display-container {
+  box-sizing: border-box;
+  height: var(--wcs-editable-field-host-height);
+  white-space: break-spaces;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--wcs-light);
+  border-radius: var(--wcs-border-radius);
+  font-size: var(--wcs-editable-field-font-size);
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--wcs-gray);
+  padding: var(--wcs-editable-field-host-padding);
+  transition: 0.175s all;
+  border: solid 2px transparent;
+}
+:host .display-container wcs-mat-icon {
+  display: none;
+}
+:host .load-container {
+  box-sizing: border-box;
+  height: var(--wcs-editable-field-host-height);
+  white-space: pre;
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--wcs-light);
+  border-radius: var(--wcs-border-radius);
+  font-size: var(--wcs-editable-field-font-size);
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--wcs-gray);
+  padding: var(--wcs-editable-field-host-padding);
+  transition: 0.175s all;
+  border: solid 2px transparent;
+  align-items: center;
+}
+:host wcs-spinner {
+  height: 24px;
+  width: 24px;
+}
+:host .readonly-icon {
+  fill: var(--wcs-text-medium);
+}
+
+:host([readonly]) .display-container {
+  color: var(--wcs-gray-light);
+}
+
+:host(:not([readonly])) .display-container:hover {
+  color: var(--wcs-primary);
+  cursor: pointer;
+  border: dashed 2px var(--wcs-primary);
+}
+:host(:not([readonly])) .display-container:hover wcs-mat-icon {
+  display: flex;
+  align-items: center;
+}
+
+:host([size=l]) {
+  --wcs-editable-field-host-padding: var(--wcs-padding-l) calc(var(--wcs-padding) - var(--wcs-border-size));
+  --wcs-editable-field-host-height: var(--wcs-size-l);
+  --wcs-editable-field-font-size: 1.0625rem;
+}
+
+:host([size=m]) {
+  --wcs-editable-field-host-padding: var(--wcs-padding-m) calc(var(--wcs-padding) - var(--wcs-border-size));
+  --wcs-editable-field-host-height: var(--wcs-size-m);
+  --wcs-editable-field-font-size: 1rem;
+}

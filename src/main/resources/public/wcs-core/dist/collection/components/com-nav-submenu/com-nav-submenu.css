@@ -1,0 +1,193 @@
+:host {
+  display: block;
+  padding-bottom: var(--wcs-padding);
+}
+:host .menu-button {
+  display: block;
+  font-weight: 500;
+  padding-left: calc(3 * var(--wcs-base-margin));
+}
+:host .arrow-icon {
+  display: none;
+}
+:host .arrow-container {
+  display: none;
+}
+:host .label {
+  text-transform: uppercase;
+  font-size: 16px;
+  cursor: unset;
+  font-weight: 500;
+  color: var(--wcs-gray);
+  text-decoration: none;
+}
+:host .drawer {
+  display: contents;
+}
+:host .drawer-container {
+  display: contents;
+}
+:host .drawer-description {
+  display: none;
+}
+:host .menu-items {
+  /**For mobile*/
+}
+:host .menu-items ::slotted(a):after {
+  font-family: icons;
+  padding-left: var(--wcs-base-margin);
+  font-size: 0.6rem;
+  content: "\f107";
+  line-height: 1;
+  box-sizing: border-box;
+}
+:host .menu-items ::slotted(a) {
+  user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  color: var(--wcs-gray);
+  font-weight: 500;
+  display: block;
+  padding-top: calc(1.5 * var(--wcs-base-margin));
+  padding-bottom: calc(1.5 * var(--wcs-base-margin));
+  padding-left: calc(6 * var(--wcs-base-margin));
+}
+:host .menu-items ::slotted(a:focus-visible) {
+  outline: 2px dashed var(--wcs-primary);
+  outline-offset: 0.1rem;
+  border-radius: 2px;
+}
+@supports not selector(::slotted(a:focus-visible)) {
+  :host .menu-items ::slotted(a:focus-within) {
+    outline: 2px dashed var(--wcs-primary);
+    outline-offset: 0.1rem;
+    border-radius: 2px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  :host {
+    height: 100%;
+    padding-bottom: unset;
+  }
+  :host .menu-button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    user-select: none;
+    font-weight: unset;
+    padding-left: unset;
+  }
+  :host .menu-button:focus-visible {
+    outline: 2px dashed var(--wcs-primary);
+    outline-offset: 0.1rem;
+    border-radius: 2px;
+  }
+  @supports not selector(.menu-button:focus-visible) {
+    :host {
+      outline: 2px dashed var(--wcs-primary);
+      outline-offset: 0.1rem;
+      border-radius: 2px;
+    }
+  }
+  :host .label {
+    text-transform: unset;
+    cursor: pointer;
+  }
+  :host .arrow-icon {
+    display: inline-block;
+    font-family: icons;
+    font-size: 0.6rem;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+  :host .arrow-container {
+    display: unset;
+    margin-left: var(--wcs-base-margin);
+  }
+  :host .arrow-icon:not([data-open]) {
+    transform: rotate(90deg);
+  }
+  :host .arrow-icon[data-open] {
+    transform: rotate(-90deg);
+  }
+  :host .drawer {
+    display: none;
+    position: absolute;
+    top: 75px;
+    z-index: 8888;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 50px;
+    background-color: var(--wcs-primary);
+    color: var(--wcs-white);
+  }
+  :host .drawer-content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 62.5%;
+    flex: 1;
+  }
+  :host .drawer-content div:first-child {
+    flex: 0.8;
+  }
+  :host .drawer-content div {
+    max-width: 260px;
+  }
+  :host .menu-items {
+    padding: 0 80px 0 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  :host .menu-items ::slotted(*:not(:first-child)) {
+    margin-top: 24px;
+  }
+  :host .menu-items ::slotted(a) {
+    color: var(--wcs-white);
+    font-weight: 400;
+    display: unset;
+    padding-top: unset;
+    padding-bottom: unset;
+    padding-left: unset;
+  }
+  :host .menu-items ::slotted(a:focus-visible) {
+    outline: 2px dashed var(--wcs-white);
+    outline-offset: 0.1rem;
+    border-radius: 2px;
+  }
+  @supports not selector(::slotted(a:focus-visible)) {
+    :host .menu-items ::slotted(a:focus-within) {
+      outline: 2px dashed var(--wcs-white);
+      outline-offset: 0.1rem;
+      border-radius: 2px;
+    }
+  }
+  :host .drawer-container {
+    display: flex;
+    max-width: var(--wcs-com-content-max-width);
+    margin: 0 auto;
+  }
+  :host .drawer-container h3 {
+    margin: 0 0 24px 0;
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 400;
+  }
+  :host .drawer-container p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.375;
+  }
+  :host .drawer[data-open] {
+    display: block;
+  }
+  :host .drawer-description {
+    display: block;
+  }
+}

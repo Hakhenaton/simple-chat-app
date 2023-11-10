@@ -1,0 +1,124 @@
+:host {
+  display: block;
+  padding-bottom: var(--wcs-padding);
+  /**For mobile*/
+}
+:host .label-container {
+  display: block;
+  padding-left: calc(9 * var(--wcs-base-margin));
+  color: var(--wcs-gray);
+}
+:host ::slotted(a):after {
+  font-family: icons;
+  padding-left: var(--wcs-base-margin);
+  font-size: 0.6rem;
+  content: "\f107";
+  line-height: 1;
+  box-sizing: border-box;
+}
+:host ::slotted(a) {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  color: var(--wcs-gray);
+  padding-left: calc(12 * var(--wcs-base-margin));
+  padding-top: calc(1.5 * var(--wcs-base-margin));
+  padding-bottom: calc(1.5 * var(--wcs-base-margin));
+}
+:host ::slotted(a:focus-visible) {
+  outline: 2px dashed var(--wcs-primary);
+  outline-offset: 0.1rem;
+  border-radius: 2px;
+}
+@supports not selector(::slotted(a:focus-visible)) {
+  :host ::slotted(a:focus-within) {
+    outline: 2px dashed var(--wcs-primary);
+    outline-offset: 0.1rem;
+    border-radius: 2px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  :host {
+    padding-bottom: unset;
+  }
+  :host .item-container:not([data-open]) {
+    display: none;
+  }
+  :host .label:after {
+    font-family: icons;
+    padding-left: var(--wcs-base-margin);
+    font-size: 0.6rem;
+    content: "\f107";
+    line-height: 1;
+    box-sizing: border-box;
+  }
+  :host .label-container {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    padding-left: unset;
+    color: var(--wcs-white);
+  }
+  :host .label-container:focus-visible {
+    outline: 2px dashed var(--wcs-white);
+    outline-offset: 0.1rem;
+    border-radius: 5px;
+  }
+  @supports not selector(.label-container:focus-visible) {
+    :host .label-container:focus-within {
+      outline: 2px dashed var(--wcs-white);
+      outline-offset: 0.1rem;
+      border-radius: 5px;
+    }
+  }
+  :host .label-container[data-open]:after {
+    position: absolute;
+    left: calc(50% + var(--wcs-com-content-max-width) / 8 - 0.5625rem);
+    z-index: 2;
+    display: block;
+    width: 1.125rem;
+    height: 1.125rem;
+    content: "";
+    background-color: var(--wcs-primary);
+    transform: rotate(45deg);
+  }
+  :host .item-container[data-open] {
+    position: absolute;
+    left: calc(50% + var(--wcs-com-content-max-width) / 8);
+    top: 0;
+    right: 0;
+    padding: 50px 0 50px 50px;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+  :host .item-container[data-open] ::slotted(a:not(:first-child)) {
+    margin-top: 24px;
+  }
+  :host .item-container[data-open] ::slotted(a) {
+    display: unset;
+    color: var(--wcs-white);
+    padding-left: unset;
+    padding-top: unset;
+    padding-bottom: unset;
+  }
+  :host .item-container[data-open] ::slotted(a:focus-visible) {
+    outline: 2px dashed var(--wcs-white);
+    outline-offset: 0.1rem;
+    border-radius: 2px;
+  }
+  @supports not selector(::slotted(a:focus-visible)) {
+    :host .item-container[data-open] ::slotted(a:focus-within) {
+      outline: 2px dashed var(--wcs-white);
+      outline-offset: 0.1rem;
+      border-radius: 2px;
+    }
+  }
+}
