@@ -17,6 +17,6 @@ public class UserContextInterceptor implements HandlerInterceptor {
             return;
         }
         final var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof Anoy)
+        
     }
 }

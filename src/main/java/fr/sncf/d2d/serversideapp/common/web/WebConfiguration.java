@@ -37,6 +37,7 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
+            
         registry.viewResolver(mustacheViewResolver());
     }
 

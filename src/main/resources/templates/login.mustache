@@ -1,17 +1,24 @@
-<wcs-modal id="login-modal" show show-close-button hx-on="wcsDialogClosed: this.remove()">
+<wcs-modal id="login-modal" show show-close-button hx-on="
+    wcsDialogClosed: this.remove() 
+    login: this.remove()
+">
     <style>
-        .field {
-            margin-bottom: 24px;
+        .login-field {
+            margin-bottom: 16px;
+        }
+        #login-error {
+            display: block;
+            margin-bottom: 16px;
         }
     </style>
-    <div slot="header">Connexion à l'application</div>
-    <p>Veuillez fournir vos identifiants.</p>
-    <form hx-encoding="application/x-www-form-urlencoded" hx-post="/login">
-        <wcs-form-field class="field">
+    <div slot="header">Login</div>
+    <form hx-disabled-elt hx-encoding="application/x-www-form-urlencoded" hx-post="/login" hx-swap="none">
+        <span id="login-error"></span>
+        <wcs-form-field class="login-field">
             <wcs-label>Nom d'utilisateur</wcs-label>
             <wcs-input name="username" placeholder="John doe"></wcs-input>
         </wcs-form-field>
-        <wcs-form-field class="field">
+        <wcs-form-field class="login-field">
             <wcs-label>Mot de passe</wcs-label>
             <wcs-input name="password" type="password" name="password"></wcs-input>
         </wcs-form-field>

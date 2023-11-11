@@ -1,9 +1,12 @@
-package fr.sncf.d2d.serversideapp.security;
+package fr.sncf.d2d.serversideapp.security.web;
+
+import java.util.Collections;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
@@ -13,14 +16,12 @@ import lombok.RequiredArgsConstructor;
 public class SecurityController {
     
     @GetMapping("/login")
-    public ModelAndView loginForm(){
-        return new ModelAndView("login");
+    public String loginForm(){
+        return "login";
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> doLogin(){
-        return ResponseEntity.ok()
-            .header("HX-Trigger", "login")
-            .build();
+    @PostMapping("/login-error")
+    public String loginError() throws InterruptedException{
+        return "login-error";
     }
 }
