@@ -1,0 +1,23 @@
+<wcs-modal id="signup-modal" size="l" show show-close-button hx-on="
+    wcsDialogClosed: this.remove() 
+    login: this.remove()
+">
+    <style>
+        .signup-field {
+            margin-bottom: 16px;
+        }
+
+        #signup-errors {
+            display: block;
+            margin-bottom: 16px;
+            color: var(--wcs-red);
+        }
+    </style>
+    <div slot="header" id="signup-header">
+        🚀 Bienvenue !
+    </div>
+    <div style="margin-bottom: 16px">
+        Créez un compte et commencez à discuter avec vos amis...
+    </div>
+    {{>form}}
+</wcs-modal>

@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class MainController {
    
     @GetMapping
-    public ModelAndView main(){
-        return new ModelAndView("main");
+    public ModelAndView home(){
+        return new ModelAndView("main/home");
     }
 
     @GetMapping("navbar")
     public ModelAndView navbar(){
-        return new ModelAndView("navbar");
+        return new ModelAndView("main/navbar");
     }
 }
