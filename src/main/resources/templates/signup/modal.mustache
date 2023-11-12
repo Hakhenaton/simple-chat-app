@@ -19,5 +19,30 @@
     <div style="margin-bottom: 16px">
         Créez un compte et commencez à discuter avec vos amis...
     </div>
-    {{>form}}
+    <form hx-disabled-elt hx-encoding="application/x-www-form-urlencoded" hx-post="/users/signup" hx-swap="outerHTML">
+        <wcs-form-field class="signup-field">
+            <wcs-label>
+                Nom d'utilisateur
+            </wcs-label>
+            <wcs-hint>Alphanumérique, maximum 20 caractères.</wcs-hint>
+            <wcs-input required name="username" placeholder="John doe"></wcs-input>
+        </wcs-form-field>
+        <wcs-form-field class="signup-field">
+            <wcs-label>
+                Mot de passe
+            </wcs-label>
+            <wcs-hint>Minimum 12 caractères, lettres majuscules, minuscules, et chiffres.</wcs-hint>
+            <wcs-input required name="password" type="password"></wcs-input>
+        </wcs-form-field>
+        <wcs-form-field class="signup-field">
+            <wcs-label>
+                Confirmation du mot de passe
+            </wcs-label>
+            <wcs-input required name="password" type="password"></wcs-input>
+        </wcs-form-field>
+        {{>../security/csrf-input}}
+        <wcs-button class="wcs-primary" type="submit">
+            Commencer à discuter
+        </wcs-button>
+    </form>
 </wcs-modal>

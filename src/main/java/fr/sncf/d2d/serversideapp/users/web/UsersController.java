@@ -49,8 +49,8 @@ public class UsersController {
             this.hx.sendEvent("signup", response);
             
             return new ModelAndView(
-                "signup/form", 
-                Collections.singletonMap("success", true)
+                "signup/login", 
+                Collections.singletonMap("afterSignup", true)
             );
         
         } catch (UserValidationError validationException){

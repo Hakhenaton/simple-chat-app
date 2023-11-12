@@ -21,8 +21,8 @@ public class HxHelpers {
         response.setHeader(HX_TRIGGER, name);
     }
 
-    public void sendEventWithData(String name, Object value, HttpServletResponse response) throws Exception {
-        final var serialized = this.objectMapper.writeValueAsString(Collections.singletonMap(name, value));
+    public void sendEventWithData(String name, Object data, HttpServletResponse response) throws Exception {
+        final var serialized = this.objectMapper.writeValueAsString(Collections.singletonMap(name, data));
         response.setHeader(HX_TRIGGER, serialized);
     }
 }
