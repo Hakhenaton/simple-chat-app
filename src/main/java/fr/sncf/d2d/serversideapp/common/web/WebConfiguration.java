@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,14 +21,19 @@ import com.github.mustachejava.DefaultMustacheFactory;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebMvc
+@RequiredArgsConstructor
 public class WebConfiguration implements WebMvcConfigurer {
 
     private static final String TEMPLATES_LOCATION = "templates/";
 
     private static final String TEMPLATE_FILE_EXT = ".mustache";
+
+    private final UserContextInterceptor userContextInterceptor;
+    private final CsrfTokenInterceptor csrfTokenInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -36,14 +42,14 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void configureViewResolvers(ViewResolverRegistry registry) {
-            
+    public void configureViewResolvers(ViewResolverRegistry registry) { 
         registry.viewResolver(mustacheViewResolver());
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CsrfTokenInterceptor());
+        registry.addInterceptor(this.csrfTokenInterceptor);
+        registry.addInterceptor(this.userContextInterceptor);
     }
 
     @Bean

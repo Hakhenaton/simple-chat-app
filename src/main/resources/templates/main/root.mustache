@@ -41,7 +41,11 @@
 
             document.body.addEventListener('htmx:configRequest', event => {
                 bindWcsFormData(event)
-            });
+            })
+
+            document.body.addEventListener('login', event => {
+                console.log('login', event.target)
+            })
         </script>
     </body>
 </html>

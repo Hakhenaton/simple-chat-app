@@ -20,7 +20,7 @@ public class AuthenticationService implements UserDetailsService {
 
     public Optional<User> currentUser(){
         final var authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication instanceof ApplicationUserDetails details
+        return authentication.getPrincipal() instanceof ApplicationUserDetails details
             ? Optional.of(details.getDomainUser())
             : Optional.empty();
     }

@@ -11,15 +11,17 @@
     <changeSet id="dedf598c-809f-11ee-8317-00155d85504c" author="RNZ">
         <createTable tableName="users">
             <column name="id" type="char(36)">
-                <constraints primaryKey="true" primaryKeyName="users_id_primary_key" />
+                <constraints primaryKey="true"  primaryKeyName="users_id_primary_key" />
             </column>
             <column name="username" type="varchar(25)">
-                <constraints unique="true" uniqueConstraintName="users_username_unique_constraint" />
+                <constraints unique="true" nullable="false" uniqueConstraintName="users_username_unique_constraint" />
             </column>
             <column name="password" type="varchar(255)">
-                <constraints unique="true" uniqueConstraintName="users_password_unique_constraint" />
+                <constraints unique="true" nullable="false" uniqueConstraintName="users_password_unique_constraint" />
             </column>
-            <column name="role" type="varchar(255)"></column>
+            <column name="role" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

@@ -29,25 +29,6 @@ public class CreateUserUseCase {
 
     public User create(CreateUserParams params) throws UserValidationError {
 
-        this.authenticationService.currentUser()
-            .ifPresentOrElse(
-                authenticatedUser -> {
-                    if (params.getRole().equals(Role.USER)){
-                        return;
-                    }
-                    if (authenticatedUser.getRole().equals(Role.ADMINISTRATOR)){
-                        return;
-                    }
-                    throw new AccessDeniedException("Seul les administrateurs peuvent créer des compte d'administration");
-                },
-                () -> {
-                    if (params.getRole().equals(Role.USER)){
-                        return;
-                    }
-                    throw new AccessDeniedException("Seul le rôle standard est autorisé pour les anonymes.");
-                }
-            );
-
         final var errors = new ArrayList<String>();
 
         if (!StringUtils.hasText(params.getUsername()))
@@ -56,26 +37,37 @@ public class CreateUserUseCase {
         if (params.getRole() == null)
             errors.add("Le rôle doit être fourni.");
 
+        final var isAdmin = this.authenticationService.currentUser()
+            .map(u -> u.getRole().equals(Role.ADMINISTRATOR))
+            .orElse(false);
+
+        if (!params.getRole().equals(Role.USER) && !isAdmin){
+            throw new AccessDeniedException("Seuls les administrateurs peuvent créer des utilisateurs non standards");
+        }
+
         final var passwordComplexityChecks = Stream.<Predicate<String>>of(
             password -> password != null,
-            password -> password.length() > 12,
-            password -> Pattern.matches("[a-z]+", password),
-            password -> Pattern.matches("[A-Z]+", password),
-            password -> Pattern.matches("[0-9]+", password)
+            password -> password.length() >= 12,
+            password -> Pattern.compile("[a-z]").matcher(password).find(),
+            password -> Pattern.compile("[A-Z]").matcher(password).find(),
+            password -> Pattern.compile("[0-9]").matcher(password).find()
         );
 
         if (passwordComplexityChecks.anyMatch(check -> !check.test(params.getPassword())))
             errors.add("Votre mot de passe ne respecte pas les contraintes de sécurité.");
 
+        final var sanitizedUsername = params.getUsername().trim();
+
+        if (this.usersRepository.findByUsername(sanitizedUsername).isPresent()){
+            errors.add(String.format("Le nom d'utilisateur %s n'est pas disponible", sanitizedUsername));
+        }
+
         if (!errors.isEmpty())
             throw new UserValidationError(errors);
 
-        final var sanitizedUsername = params.getUsername().trim();
-        final var hashedPassword = this.passwordEncoder.encode(params.getPassword());
-
         final var user = User.builder()
             .username(sanitizedUsername)
-            .password(hashedPassword)
+            .password(this.passwordEncoder.encode(params.getPassword()))
             .role(params.getRole())
             .build();
 

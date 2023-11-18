@@ -7,3 +7,16 @@ body {
 .error {
     color: var(--wcs-red);
 }
+
+.wcs-modal-container {
+    animation: growing 0.2s;
+}
+
+@keyframes growing {
+    0% { 
+        transform: scale(0);
+    }
+    100% { 
+        transform: scale(1);
+    }
+}

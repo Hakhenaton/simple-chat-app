@@ -1,11 +1,15 @@
 package fr.sncf.d2d.serversideapp.common.web;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@Component
 public class CsrfTokenInterceptor implements HandlerInterceptor {
 
     private static final String VIEW_KEY = "csrf";

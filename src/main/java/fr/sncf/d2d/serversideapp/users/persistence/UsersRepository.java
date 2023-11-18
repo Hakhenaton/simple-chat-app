@@ -34,11 +34,12 @@ public class UsersRepository {
         user.setId(UUID.randomUUID());
         
         this.jdbcTemplate.update(
-            "INSERT INTO users (id, username, password) VALUES (:id, :username, :password)", 
+            "INSERT INTO users (id, username, password, role) VALUES (:id, :username, :password, :role)", 
             Map.of(
                 "id", user.getId(),
                 "username", user.getUsername(),
-                "password", user.getPassword()
+                "password", user.getPassword(),
+                "role", user.getRole().name()
             )
         );
     }

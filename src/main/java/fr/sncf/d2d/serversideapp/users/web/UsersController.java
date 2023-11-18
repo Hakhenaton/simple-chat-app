@@ -35,6 +35,8 @@ public class UsersController {
 
     @PostMapping("/signup")
     public ModelAndView signupAction(SignupForm form, HttpServletResponse response) throws Exception {
+
+        Thread.sleep(3000);
         
         final var params = CreateUserParams.builder()
                     .username(form.getUsername())
@@ -47,15 +49,17 @@ public class UsersController {
             log.info("\"{}\" signed up", user.getUsername());
             
             this.hx.sendEvent("signup", response);
+            this.hx.retarget("#signup-modal", response);
+            this.hx.reswap("outerHTML", response);
             
             return new ModelAndView(
-                "signup/login", 
+                "login/form", 
                 Collections.singletonMap("afterSignup", true)
             );
         
         } catch (UserValidationError validationException){
             return new ModelAndView(
-                "signup/form", 
+                "signup/server-validation-errors", 
                 Map.of(
                     "hasError", true,
                     "errors", validationException.getErrors()

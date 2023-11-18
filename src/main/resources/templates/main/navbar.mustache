@@ -4,7 +4,7 @@
         <div slot="actions">
             {{#user}}
                 <wcs-dropdown class="wcs-primary" shape="small" style="margin-left: 8px;">
-                <div slot="placeholder">{{ user.fullName }}</div>
+                <div slot="placeholder">{{ user.getUsername }}</div>
                     <wcs-dropdown-item>Mon compte</wcs-dropdown-item>
                     <wcs-dropdown-item>Se déconnecter</wcs-dropdown-item>
                 </wcs-dropdown>
