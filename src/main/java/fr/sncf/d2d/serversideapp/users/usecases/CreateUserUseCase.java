@@ -1,8 +1,6 @@
 package fr.sncf.d2d.serversideapp.users.usecases;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;

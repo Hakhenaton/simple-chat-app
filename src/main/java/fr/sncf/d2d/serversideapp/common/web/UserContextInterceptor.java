@@ -1,14 +1,9 @@
 package fr.sncf.d2d.serversideapp.common.web;
 
-import java.util.Optional;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import fr.sncf.d2d.serversideapp.security.service.ApplicationUserDetails;
 import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
