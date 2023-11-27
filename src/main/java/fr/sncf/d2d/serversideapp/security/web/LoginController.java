@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.common.web;
+package fr.sncf.d2d.serversideapp.security.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,14 +8,14 @@ import fr.sncf.d2d.serversideapp.common.htmx.HxView;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/login")
 @RequiredArgsConstructor
-public class MainController {
+public class LoginController {
 
     private final HxView view;
-   
+    
     @GetMapping
-    public void home() throws Exception {
-        this.view.render("main/home");
+    public void loginForm() throws Exception {
+        this.view.render("login/form");
     }
 }

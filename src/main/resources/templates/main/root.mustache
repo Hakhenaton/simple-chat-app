@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        <header hx-get="/navbar" hx-trigger="load, login" hx-swap="outerHTML"></header>
+        {{> navbar}}
         <main>
             {{$main}}{{/main}}
         </main>
@@ -40,11 +40,7 @@
             }
 
             document.body.addEventListener('htmx:configRequest', event => {
-                bindWcsFormData(event)
-            })
-
-            document.body.addEventListener('login', event => {
-                console.log('login', event.target)
+                bindWcsFormData(event) 
             })
         </script>
     </body>

@@ -3,13 +3,12 @@ package fr.sncf.d2d.serversideapp.users.web;
 import java.util.Collections;
 import java.util.Map;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
-import fr.sncf.d2d.serversideapp.common.web.Htmx;
+import org.springframework.web.bind.annotation.RestController;
+import fr.sncf.d2d.serversideapp.common.htmx.HxCommands;
+import fr.sncf.d2d.serversideapp.common.htmx.HxView;
 import fr.sncf.d2d.serversideapp.users.exceptions.UserValidationError;
 import fr.sncf.d2d.serversideapp.users.usecases.CreateUserParams;
 import fr.sncf.d2d.serversideapp.users.usecases.CreateUserUseCase;
@@ -17,22 +16,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @Slf4j
 public class UsersController {
     
     private final CreateUserUseCase createUserUseCase;
-    private final Htmx hx;
+    private final HxView view;
+    private final HxCommands commands;
 
     @GetMapping("/signup")
-    public ModelAndView signupForm(){
-        return new ModelAndView("signup/modal");
+    public void signupForm() throws Exception{
+       this.view.render("signup/modal");
     }
 
     @PostMapping("/signup")
-    public ModelAndView signupAction(SignupForm form, HttpServletResponse response) throws Exception {
+    public void signupAction(SignupForm form, HttpServletResponse response) throws Exception {
 
         try {
             final var params = CreateUserParams.builder()
@@ -44,18 +44,16 @@ public class UsersController {
 
             log.info("\"{}\" signed up", user.getUsername());
             
-            this.hx.sendEvent("signup", response);
-            this.hx.retarget("#signup-modal", response);
-            this.hx.reswap("outerHTML", response);
-            
-            return new ModelAndView(
+            this.commands.retarget("#signup-modal");
+            this.commands.reswap("outerHTML");
+            this.view.render(
                 "login/form", 
                 Collections.singletonMap("afterSignup", true)
             );
         
         } catch (UserValidationError validationException){
-            return new ModelAndView(
-                "signup/server-validation-errors", 
+            this.view.render(
+                "signup/server-validation-errors",
                 Map.of(
                     "hasError", true,
                     "errors", validationException.getErrors()

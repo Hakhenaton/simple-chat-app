@@ -1,4 +1,9 @@
-<header id="navbar">
+<header 
+    id="navbar" 
+    {{#oob}}
+        hx-swap-oob="outerHTML"
+    {{/oob}}
+>
     <wcs-action-bar gutter>
         Sample app
         <div slot="actions">
@@ -27,7 +32,6 @@
                     hx-disabled-elt 
                     mode="stroked" 
                     class="wcs-primary" 
-                    mode="stroked" 
                     shape="small">
                     Se connecter
                 </wcs-button>
