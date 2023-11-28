@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging;
+package fr.sncf.d2d.serversideapp.messaging.websocket;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class MessagingConfiguration implements WebSocketConfigurer {
+public class WebSocketConfiguration implements WebSocketConfigurer {
 
     private final MessagesHandler messagesHandler;
 

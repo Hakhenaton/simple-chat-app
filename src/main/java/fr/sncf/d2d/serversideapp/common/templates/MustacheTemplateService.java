@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.github.mustachejava.DefaultMustacheFactory;
 
 @Component
-public class MustacheViewCompiler { 
+public class MustacheTemplateService { 
 
     private static final String TEMPLATES_LOCATION = "templates/";
 
@@ -17,7 +17,7 @@ public class MustacheViewCompiler {
 
     private final DefaultMustacheFactory mustacheFactory = new DefaultMustacheFactory(TEMPLATES_LOCATION);
 
-    public void render(String name, Map<String, Object> model, Writer writer) throws IOException{
+    public void writeTemplate(String name, Map<String, Object> model, Writer writer) throws IOException {
         final var mustache = mustacheFactory.compile(name + TEMPLATE_FILE_EXT);
         mustache.execute(writer, model).flush();
     } 

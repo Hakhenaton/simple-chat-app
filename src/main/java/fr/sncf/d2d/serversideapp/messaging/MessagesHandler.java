@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging;
+package fr.sncf.d2d.serversideapp.messaging.websocket;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

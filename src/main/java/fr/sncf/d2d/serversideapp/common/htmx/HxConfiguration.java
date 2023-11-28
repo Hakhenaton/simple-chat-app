@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.socket.WebSocketSession;
+import org.springframework.web.socket.client.standard.WebSocketContainerFactoryBean;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +32,7 @@ public class HxConfiguration {
     }
 
     @Bean(WS_RENDERER)
-    @Scope("websocket")
+    @Scope(scopeName = "websocket", proxyMode = ScopedProxyMode.TARGET_CLASS)
     public HxWebSocketView webSocketRenderer(WebSocketSession session){
         return this.rendererFactory.forWebSocket(session);
     }
