@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,7 +16,9 @@ public class HxWebSocketView implements HxView {
 
     private static final int DEFAULT_OUTPUT_ALLOC_SIZE = 8192; 
 
+    @Getter
     private final WebSocketSession session;
+    
     private final HxRenderer renderer;
 
     @Override
@@ -24,5 +27,4 @@ public class HxWebSocketView implements HxView {
         renderer.render(responseStream, partials);
         this.session.sendMessage(new TextMessage(responseStream.toString(StandardCharsets.UTF_8)));
     }
-    
 }

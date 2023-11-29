@@ -1,11 +1,14 @@
 package fr.sncf.d2d.serversideapp.messaging.usecases;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import fr.sncf.d2d.serversideapp.messaging.channels.Channel;
+import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.ConnectedClient;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
@@ -22,26 +25,21 @@ public class ConnectToChannelUseCase {
     
     public UUID connect(UUID channelId, Connection connection) throws ChannelNotFoundException, IOException {
 
-        final var user = this.authenticationService.currentUser()
-            .orElseThrow(() -> new AccessDeniedException("authentication is required"));
-
         final var channel = this.channelsRepository.getChannel(channelId)
             .orElseThrow(ChannelNotFoundException::new);
 
-        final var clientId = channel.add(
-            ConnectedClient.builder()
-                .connection(connection)
-                .user(user)
-                .build()
-        );
+        final var connectedClientBuilder = ConnectedClient.builder()
+            .connection(connection);
 
-        for (final var client: channel.clients().entrySet()){
-            final var id = client.getKey();
-            if (id.equals(clientId))
-                continue;
-            final var otherClient = client.getValue();
-            otherClient.getConnection().notifyConnect(user);
-        }
+        this.authenticationService.currentUser()
+            .ifPresent(connectedClientBuilder::user);
+
+        final var clientId = channel.add(connectedClientBuilder.build());
+
+        final var state = ChannelState.fromChannel(channel);
+
+        for (final var client: channel.clients().values())
+            client.getConnection().sendState(state);
 
         return clientId;
     }

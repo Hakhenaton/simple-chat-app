@@ -1,9 +1,12 @@
 package fr.sncf.d2d.serversideapp.messaging.channels;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import fr.sncf.d2d.serversideapp.messaging.exceptions.NotConnectedException;
 
 public class InMemoryChannel implements Channel {
 
@@ -24,6 +27,11 @@ public class InMemoryChannel implements Channel {
     @Override
     public Map<UUID, ConnectedClient> clients() {
         return this.connected;
+    }
+
+    @Override
+    public Optional<ConnectedClient> findClient(UUID clientId){
+        return Optional.ofNullable(this.connected.get(clientId));
     }
     
 }
