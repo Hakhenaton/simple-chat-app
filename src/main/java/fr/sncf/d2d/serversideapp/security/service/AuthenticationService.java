@@ -19,10 +19,13 @@ public class AuthenticationService implements UserDetailsService {
     private final UsersRepository usersRepository;
 
     public Optional<User> currentUser(){
-        final var authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.getPrincipal() instanceof ApplicationUserDetails details
-            ? Optional.of(details.getDomainUser())
-            : Optional.empty();
+        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+            .flatMap(authentication -> {
+                final var principal = authentication.getPrincipal();
+                return principal instanceof ApplicationUserDetails details
+                    ? Optional.of(details.getDomainUser())
+                    : Optional.empty();
+            });
     }
 
     @Override

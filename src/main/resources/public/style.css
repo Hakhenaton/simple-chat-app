@@ -8,6 +8,38 @@ body {
     color: var(--wcs-red);
 }
 
+.channel {
+    display: flex;
+    flex-direction: row;
+}
+
+.channel-users {
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-users-list > li {
+    list-style: none;
+    padding: 16px;
+    display: block;
+}
+
+.message {
+    display: flex;
+    padding: 16px;
+}
+
+.message-header {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.message-timestamp {
+    font-style: italic;
+    font-weight: 300;
+    font-size: 12px;
+}
+
 .wcs-modal-container {
     animation: growing 0.2s;
 }

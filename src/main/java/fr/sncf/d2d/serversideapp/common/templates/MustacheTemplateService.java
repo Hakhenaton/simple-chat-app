@@ -19,6 +19,6 @@ public class MustacheTemplateService {
 
     public void writeTemplate(String name, Map<String, Object> model, Writer writer) throws IOException {
         final var mustache = mustacheFactory.compile(name + TEMPLATE_FILE_EXT);
-        mustache.execute(writer, model).flush();
+        mustache.execute(writer, model);
     } 
 }

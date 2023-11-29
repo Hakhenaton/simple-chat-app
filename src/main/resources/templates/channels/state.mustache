@@ -1,0 +1,5 @@
+{{#state.users}}
+    <li hx-swap-oob="beforeend" hx-target="[x-channel-id=&#22;{{ channel.id }}&#22;] > .channel-users-list">
+        {{username}}
+    </li>
+{{/state.users}}

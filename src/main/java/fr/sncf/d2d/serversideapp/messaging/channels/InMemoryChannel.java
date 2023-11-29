@@ -6,8 +6,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import fr.sncf.d2d.serversideapp.messaging.exceptions.NotConnectedException;
-
+/**
+ * Une implémentation en mémoire d'un {@link Channel} (thread-safe).
+ */
 public class InMemoryChannel implements Channel {
 
     private final ConcurrentMap<UUID, ConnectedClient> connected = new ConcurrentHashMap<>(100);

@@ -1,12 +1,14 @@
 package fr.sncf.d2d.serversideapp.messaging.websocket;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
+@EnableWebSocket
 @RequiredArgsConstructor
 public class WebSocketConfiguration implements WebSocketConfigurer {
 
@@ -14,7 +16,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(this.messagesHandler, "/rooms/*");
+        registry.addHandler(this.messagesHandler, "/channels/*");
     }
     
 }

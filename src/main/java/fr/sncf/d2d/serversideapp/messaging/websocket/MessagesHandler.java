@@ -13,13 +13,15 @@ import fr.sncf.d2d.serversideapp.common.htmx.HxViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class MessagesHandler extends TextWebSocketHandler {
 
-    private static final String CHANNEL_ID_KEY = "channelId";
-    private static final String CONNECTION_ID_KEY = "connectionId";
+    public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
+    public static final String CONNECTION_ID_ATTRIBUTE_NAME = "connectionId";
 
     private final HxViewFactory hxViewFactory;
 
@@ -29,23 +31,20 @@ public class MessagesHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
-        final var path = session.getUri().getPath().split("/");
+        final var pathVariables = session.getUri().getPath().split("/");
         UUID channelId;
         try {
-            channelId = UUID.fromString(path[1]);
+            channelId = UUID.fromString(pathVariables[2]);
         } catch (IllegalArgumentException badUuid){
             session.close(CloseStatus.NOT_ACCEPTABLE);
             return;
         }
 
         final var connection = new WebSocketConnection(this.hxViewFactory.forWebSocket(session));
+        session.getAttributes().put(CHANNEL_ID_ATTRIBUTE_NAME, channelId);
 
         final var clientId = this.connectToChannel.connect(channelId, connection);
-
-        session.getAttributes().putAll(Map.of(
-            CHANNEL_ID_KEY, channelId,
-            CONNECTION_ID_KEY, clientId
-        ));
+        session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, clientId);
     }
 
     @Override
@@ -55,9 +54,15 @@ public class MessagesHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        this.disconnectFromChannel.disconnect(
-            (UUID)session.getAttributes().get(CHANNEL_ID_KEY), 
-            (UUID)session.getAttributes().get(CONNECTION_ID_KEY)
-        );   
+
+        final var channelId = (UUID)session.getAttributes().get(CHANNEL_ID_ATTRIBUTE_NAME);
+        final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
+
+        if (channelId == null || connectionId == null){
+            log.warn("WS channel closed in an unexpected way (no session).");
+            return;
+        }
+
+        this.disconnectFromChannel.disconnect(channelId, connectionId);   
     }
 }

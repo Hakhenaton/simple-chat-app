@@ -2,6 +2,7 @@ package fr.sncf.d2d.serversideapp.security.htmx;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +29,14 @@ public class SecurityResolversConfiguration {
 
     @Bean
     public HxResolver csrfTokenResolver(){
-        return () -> Collections.singletonMap(
-            CSRF_KEY, 
-            RequestContextHolder.currentRequestAttributes()
-                .getAttribute(CSRF_REQUEST_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST)
-        );
+        return () -> Optional.ofNullable(RequestContextHolder.getRequestAttributes()) 
+            .flatMap(attributes -> Optional.ofNullable(
+                attributes.getAttribute(
+                    CSRF_REQUEST_ATTRIBUTE, 
+                    RequestAttributes.SCOPE_REQUEST
+                )
+            ))
+            .map(token -> Collections.singletonMap(CSRF_KEY, token))
+            .orElseGet(Collections::emptyMap);
     }
 }
