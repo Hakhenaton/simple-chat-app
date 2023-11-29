@@ -14,7 +14,7 @@ public class WebSocketConfiguration implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(this.messagesHandler, "/messages");
+        registry.addHandler(this.messagesHandler, "/rooms/*");
     }
     
 }
