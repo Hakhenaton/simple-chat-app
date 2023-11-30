@@ -130,7 +130,7 @@
             }
         }
 
-        function isFormValid(){
+        function isFormValid(fields){
             return Object.keys(fields).every(name => oks.has(name))
         }
     
@@ -141,7 +141,7 @@
                 field.addEventListener('wcsChange', () => {
                     touched.add(name)
                     validate(name, field)
-                    if (isFormValid()){
+                    if (isFormValid(fields)){
                         submitButton.disabled = false
                         return
                     }

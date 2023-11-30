@@ -19,19 +19,17 @@
         <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
         <script type="module">
 
-            import { defineCustomElements } from '/wcs-core/loader/index.js';
+            import { defineCustomElements } from '/wcs-core/loader/index.js'
             
-            defineCustomElements();
+            defineCustomElements()
 
             // les éléments <wcs-input> ne sont pas des <input> standards, donc les éléments <form> ne les prennent pas
             // en compte par défaut.
             // on peut customiser le comportement de HTMX pour supporter cela lors de la configuration des requêtes
             // faites avec hx-<method>.
-            function bindWcsFormData(htmxConfigRequestEvent){
-                const { detail: { target, parameters } } = event
-                if (!(target instanceof HTMLFormElement))
-                    return
-                // wcs-input
+            function bindWcsInputsToRequests(htmxConfigRequestEvent){
+                const { target, parameters } = htmxConfigRequestEvent.detail
+                
                 for (const input of target.querySelectorAll('wcs-input')){
                     const name = input.getAttribute('name')
                     if (!name)
@@ -41,11 +39,21 @@
             }
 
             document.body.addEventListener('htmx:configRequest', event => {
-                bindWcsFormData(event) 
+                bindWcsInputsToRequests(event)
             })
 
-            document.body.addEventListener('htmx:configWs', request => {
-                
+            // le même traitement doit s'appliquer avec les messages WebSocket envoyés avec ws-send
+            function bindWcsInputsToWsMessages(htmxWsConfigSendEvent){
+                const { elt: target } = htmxWsConfigSendEvent.detail
+
+                htmxWsConfigSendEvent.detail.messageBody = Object.fromEntries(
+                    Array.from(target.querySelectorAll('wcs-input[name]'))
+                        .map(input => [input.getAttribute('name'), input.value])
+                )
+            }
+
+            document.body.addEventListener('htmx:wsConfigSend', event => {
+                bindWcsInputsToWsMessages(event)
             })
         </script>
     </body>

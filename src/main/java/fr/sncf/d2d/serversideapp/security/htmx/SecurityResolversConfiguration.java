@@ -1,7 +1,6 @@
 package fr.sncf.d2d.serversideapp.security.htmx;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;

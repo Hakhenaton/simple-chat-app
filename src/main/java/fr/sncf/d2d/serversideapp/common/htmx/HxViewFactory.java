@@ -1,7 +1,5 @@
 package fr.sncf.d2d.serversideapp.common.htmx;
 
-import java.io.OutputStream;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 

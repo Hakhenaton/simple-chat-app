@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.security.service;
+package fr.sncf.d2d.serversideapp.security.userdetails;
 
 import java.util.Collection;
 import java.util.Collections;

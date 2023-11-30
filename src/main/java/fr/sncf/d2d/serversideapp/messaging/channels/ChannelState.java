@@ -6,9 +6,11 @@ import java.util.Optional;
 import fr.sncf.d2d.serversideapp.users.models.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @Builder
+@ToString
 public class ChannelState {
     
     private final List<User> users;

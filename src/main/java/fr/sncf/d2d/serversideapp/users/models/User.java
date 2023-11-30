@@ -30,4 +30,9 @@ public class User {
             user.id != null && 
             user.id.equals(obj);
     }
+
+    @Override
+    public String toString(){
+        return this.username;
+    }
 }

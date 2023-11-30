@@ -8,31 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import fr.sncf.d2d.serversideapp.security.userdetails.ApplicationUserDetails;
 import fr.sncf.d2d.serversideapp.users.models.User;
 import fr.sncf.d2d.serversideapp.users.persistence.UsersRepository;
 import lombok.RequiredArgsConstructor;
 
-@Service
-@RequiredArgsConstructor
-public class AuthenticationService implements UserDetailsService {
+
+public interface AuthenticationService {
     
-    private final UsersRepository usersRepository;
-
-    public Optional<User> currentUser(){
-        return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
-            .flatMap(authentication -> {
-                final var principal = authentication.getPrincipal();
-                return principal instanceof ApplicationUserDetails details
-                    ? Optional.of(details.getDomainUser())
-                    : Optional.empty();
-            });
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return new ApplicationUserDetails(
-            this.usersRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("user %s does not exist", username)))
-        );
-    }
+    public Optional<User> currentUser();
 }

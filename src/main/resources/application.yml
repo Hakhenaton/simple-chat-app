@@ -1,3 +1,9 @@
+logging:
+  level:
+    fr:
+      sncf:
+        d2d:
+          serversideapp: DEBUG
 spring:
   devtools:
     restart:

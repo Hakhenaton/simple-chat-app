@@ -13,14 +13,6 @@
             
         </div>
     </div>
-    <div class="channel-form">
-        <form ws-send>
-            <wcs-input name="message"></wcs-input>
-            <wcs-button type="submit" class="wcs-primary">
-                Envoyer
-            </wcs-button>
-        </form>
-    </div>
     <div class="channel-message-form">
         <form ws-send>
             <wcs-form-field>
@@ -29,9 +21,6 @@
             </wcs-form-field>
             <wcs-button 
                 type="submit" 
-                {{^user}}
-                    disabled
-                {{/user}}
                 class="wcs-primary">
                 Envoyer
             </wcs-button>

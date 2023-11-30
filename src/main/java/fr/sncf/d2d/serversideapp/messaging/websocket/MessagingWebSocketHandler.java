@@ -1,7 +1,9 @@
 package fr.sncf.d2d.serversideapp.messaging.websocket;
 
-import java.util.Map;
+import java.security.Principal;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -24,6 +26,15 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
     public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
     public static final String CONNECTION_ID_ATTRIBUTE_NAME = "connectionId";
 
+    private static final Function<WebSocketSession, String> fmtSession = session -> String.format(
+        "%s (%s:%s)",
+        Optional.ofNullable(session.getPrincipal())
+                .map(Principal::getName)
+                .orElse("anonymous user"),
+        session.getRemoteAddress().getHostName(),
+        session.getRemoteAddress().getPort()
+    );
+
     private final HxViewFactory hxViewFactory;
 
     private final ConnectToChannelUseCase connectToChannel;
@@ -32,6 +43,8 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+
+        log.debug("New connection from {} ", fmtSession.apply(session));
 
         final var pathVariables = session.getUri().getPath().split("/");
         UUID channelId;
@@ -47,6 +60,8 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
         final var clientId = this.connectToChannel.connect(channelId, connection);
         session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, clientId);
+
+        log.debug("Client {} accepted on channel {} from {}", clientId, channelId, fmtSession.apply(session));
     }
 
     @Override
@@ -55,7 +70,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){
-            log.warn("unexpected message (no session)");
+            log.warn("Unexpected message (no session)");
             return;
         }
 
@@ -65,14 +80,22 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
+        log.debug(
+            "Closed received from {} (status={})",
+            fmtSession.apply(session),
+            status
+        );
+
         final var channelId = (UUID)session.getAttributes().get(CHANNEL_ID_ATTRIBUTE_NAME);
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){
-            log.warn("WS channel closed in an unexpected way (no session).");
+            log.warn("Unexpected close from {} (no session), ignoring disconnect", fmtSession.apply(session));
             return;
         }
 
         this.disconnectFromChannel.disconnect(channelId, connectionId);   
+
+        log.debug("Client disconnected from channel {} {}", channelId);
     }
 }

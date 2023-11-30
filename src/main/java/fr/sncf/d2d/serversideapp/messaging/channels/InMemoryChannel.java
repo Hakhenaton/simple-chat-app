@@ -16,13 +16,13 @@ public class InMemoryChannel implements Channel {
     @Override
     public UUID add(ConnectedClient connection) {
         final var id = UUID.randomUUID();
-        connected.put(id, connection);
+        assert connected.put(id, connection) == null;
         return id;
     }
 
     @Override
     public void remove(UUID id) {
-        connected.remove(id);
+        assert connected.remove(id) != null;
     }
 
     @Override

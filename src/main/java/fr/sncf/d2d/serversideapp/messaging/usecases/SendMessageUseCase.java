@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import fr.sncf.d2d.serversideapp.common.exceptions.AccessDeniedException;
@@ -12,13 +13,15 @@ import fr.sncf.d2d.serversideapp.messaging.channels.Message;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.BadMessageException;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.service.WebSocketSessionAuthenticationService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Service
 public class SendMessageUseCase {
     
     private final ChannelsRepository channelsRepository;
+
+    @Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME)
     private final AuthenticationService authenticationService;
 
     public void send(UUID channelId, String content) throws AccessDeniedException, BadMessageException, ChannelNotFoundException, IOException {
