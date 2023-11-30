@@ -3,12 +3,22 @@
     ws-connect="/channels/{{ channelId }}"
     x-channel-id="{{ channelId }}" 
     class="channel">
-    <div class="channel-users">
-        <ul class="channel-users-list">
+    <div class="channel-main">
+        <div class="channel-users">
+            <ul class="channel-users-list">
 
-        </ul>
+            </ul>
+        </div>
+        <div class="channel-messages">
+            
+        </div>
     </div>
-    <div class="channel-messages">
-        
+    <div class="channel-form">
+        <form ws-send>
+            <wcs-input name="message"></wcs-input>
+            <wcs-button type="submit" class="wcs-primary">
+                Envoyer
+            </wcs-button>
+        </form>
     </div>
 </div>

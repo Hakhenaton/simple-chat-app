@@ -10,7 +10,16 @@ body {
 
 .channel {
     display: flex;
+    flex-direction: column;
+}
+
+.channel-main {
+    display: flex;
     flex-direction: row;
+}
+
+.channel-form {
+    padding: 16px;
 }
 
 .channel-users {
