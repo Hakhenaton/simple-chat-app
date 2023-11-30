@@ -11,4 +11,20 @@
     <div class="channel-messages">
         
     </div>
+    <div class="channel-message-form">
+        <form ws-send>
+            <wcs-form-field>
+                <wcs-input name="message">
+                </wcs-input>
+            </wcs-form-field>
+            <wcs-button 
+                type="submit" 
+                {{^user}}
+                    disabled
+                {{/user}}
+                class="wcs-primary">
+                Envoyer
+            </wcs-button>
+        </form>
+    </div>
 </div>

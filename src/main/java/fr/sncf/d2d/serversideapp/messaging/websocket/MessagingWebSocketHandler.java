@@ -12,13 +12,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import fr.sncf.d2d.serversideapp.common.htmx.HxViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
+import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MessagesHandler extends TextWebSocketHandler {
+public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
     public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
     public static final String CONNECTION_ID_ATTRIBUTE_NAME = "connectionId";
@@ -27,6 +28,7 @@ public class MessagesHandler extends TextWebSocketHandler {
 
     private final ConnectToChannelUseCase connectToChannel;
     private final DisconnectFromChannelUseCase disconnectFromChannel;
+    private final SendMessageUseCase sendMessage;
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -49,7 +51,15 @@ public class MessagesHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        
+        final var channelId = (UUID)session.getAttributes().get(CHANNEL_ID_ATTRIBUTE_NAME);
+        final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
+
+        if (channelId == null || connectionId == null){
+            log.warn("unexpected message (no session)");
+            return;
+        }
+
+        this.sendMessage.send(channelId, message.getPayload());
     }
 
     @Override

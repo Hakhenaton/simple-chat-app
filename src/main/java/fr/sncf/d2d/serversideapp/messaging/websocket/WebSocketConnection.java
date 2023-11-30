@@ -23,7 +23,7 @@ public class WebSocketConnection implements Connection {
 
         final var channelId = this.view.getSession()
             .getAttributes()
-            .get(MessagesHandler.CHANNEL_ID_ATTRIBUTE_NAME);
+            .get(MessagingWebSocketHandler.CHANNEL_ID_ATTRIBUTE_NAME);
 
         this.view.render(
             "channels/message", 
@@ -39,7 +39,7 @@ public class WebSocketConnection implements Connection {
         
         final var channelId = this.view.getSession()
             .getAttributes()
-            .get(MessagesHandler.CHANNEL_ID_ATTRIBUTE_NAME);
+            .get(MessagingWebSocketHandler.CHANNEL_ID_ATTRIBUTE_NAME);
 
         this.view.render(
             "channels/state", 
