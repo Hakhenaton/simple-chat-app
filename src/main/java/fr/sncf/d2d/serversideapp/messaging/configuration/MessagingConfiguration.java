@@ -9,20 +9,21 @@ import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.service.WebSocketSessionAuthenticationService;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
+@RequiredArgsConstructor
 public class MessagingConfiguration {
     
+    private final ChannelsRepository channelsRepository;
 
     @Bean
-    public ConnectToChannelUseCase connectToChannelUseCase(
-        ChannelsRepository channelsRepository, 
-        @Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME) AuthenticationService authenticationService){
+    public ConnectToChannelUseCase connectToChannelUseCase(@Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME) AuthenticationService authenticationService){
         return new ConnectToChannelUseCase(channelsRepository, authenticationService);
     }
 
     @Bean
-    public DisconnectFromChannelUseCase disconnectFromChannelUseCase(){
-        
+    public DisconnectFromChannelUseCase disconnectFromChannelUseCase(@Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME) AuthenticationService authenticationService){
+        return new DisconnectFromChannelUseCase(this.channelsRepository);
     }
 }
