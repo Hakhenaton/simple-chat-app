@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class MessagesHandler extends TextWebSocketHandler {
+public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
     public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
     public static final String CONNECTION_ID_ATTRIBUTE_NAME = "connectionId";
@@ -28,7 +28,7 @@ public class MessagesHandler extends TextWebSocketHandler {
 
     private final ConnectToChannelUseCase connectToChannel;
     private final DisconnectFromChannelUseCase disconnectFromChannel;
-    private final SendMessageUseCase sendMessageUseCase;
+    private final SendMessageUseCase sendMessage;
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -55,12 +55,11 @@ public class MessagesHandler extends TextWebSocketHandler {
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){
-            log.warn("unexpected message data (no session).");
-            session.close(CloseStatus.POLICY_VIOLATION);
+            log.warn("unexpected message (no session)");
             return;
         }
 
-        this.sendMessageUseCase.send(channelId, message.getPayload());
+        this.sendMessage.send(channelId, message.getPayload());
     }
 
     @Override
@@ -70,7 +69,7 @@ public class MessagesHandler extends TextWebSocketHandler {
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){
-            log.warn("WS channel closed in an unexpected way (no session). Close status: {}", status);
+            log.warn("WS channel closed in an unexpected way (no session).");
             return;
         }
 

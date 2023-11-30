@@ -1,14 +1,11 @@
 package fr.sncf.d2d.serversideapp.users.usecases;
 
 import java.util.ArrayList;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
 import fr.sncf.d2d.serversideapp.users.exceptions.UserValidationError;
@@ -29,29 +26,23 @@ public class CreateUserUseCase {
 
         final var errors = new ArrayList<String>();
 
-        if (!StringUtils.hasText(params.getUsername()))
+        if (params.getUsername().isBlank())
             errors.add("Votre nom d'utilisateur ne doit pas être vide.");
-
-        if (params.getRole() == null)
-            errors.add("Le rôle doit être fourni.");
 
         final var isAdmin = this.authenticationService.currentUser()
             .map(u -> u.getRole().equals(Role.ADMINISTRATOR))
             .orElse(false);
 
-        if (!params.getRole().equals(Role.USER) && !isAdmin){
+        if (!params.getRole().equals(Role.USER) && !isAdmin)
             throw new AccessDeniedException("Seuls les administrateurs peuvent créer des utilisateurs non standards");
-        }
+        
+        final var password = params.getPassword();
+        final var validPassword = password.length() >= 12 &&
+            Pattern.compile("[a-z]").matcher(password).find() &&
+            Pattern.compile("[A-Z]").matcher(password).find() &&
+            Pattern.compile("[0-9]").matcher(password).find();
 
-        final var passwordComplexityChecks = Stream.<Predicate<String>>of(
-            password -> password != null,
-            password -> password.length() >= 12,
-            password -> Pattern.compile("[a-z]").matcher(password).find(),
-            password -> Pattern.compile("[A-Z]").matcher(password).find(),
-            password -> Pattern.compile("[0-9]").matcher(password).find()
-        );
-
-        if (passwordComplexityChecks.anyMatch(check -> !check.test(params.getPassword())))
+        if (!validPassword)
             errors.add("Votre mot de passe ne respecte pas les contraintes de sécurité.");
 
         final var sanitizedUsername = params.getUsername().trim();
