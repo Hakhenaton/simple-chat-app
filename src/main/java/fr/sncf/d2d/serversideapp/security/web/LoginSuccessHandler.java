@@ -8,7 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxViewFactory;
+import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
+import fr.sncf.d2d.serversideapp.common.web.HxHttpServletView;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final HxViewFactory viewFactory;
+    private final HxRenderer hxRenderer;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
         Authentication authentication) throws IOException, ServletException {
-        this.viewFactory.forHttpServlet(response).render(
+        new HxHttpServletView(response, this.hxRenderer).render(
             Map.of(
                 "main/navbar", Collections.singletonMap("oob", true),
                 "login/success", Collections.emptyMap()

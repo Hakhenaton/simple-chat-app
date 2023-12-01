@@ -10,13 +10,16 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
-public class WebSocketConfiguration implements WebSocketConfigurer {
+public class ChannelsConfiguration implements WebSocketConfigurer {
 
     private final MessagingWebSocketHandler messagesHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(this.messagesHandler, "/channels/*");
+        registry.addHandler(
+            new DelegatingSessionRegistrationWebSocketHandler(this.messagesHandler), 
+            "/channels/*"
+        );
     }
-    
+
 }

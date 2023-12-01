@@ -1,14 +1,20 @@
-package fr.sncf.d2d.serversideapp.common.htmx;
+package fr.sncf.d2d.serversideapp.common.web;
 
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 
+import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
+import fr.sncf.d2d.serversideapp.common.htmx.HxView;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+@Primary
+@Component
 @RequiredArgsConstructor
 public class HxHttpServletView implements HxView {
     

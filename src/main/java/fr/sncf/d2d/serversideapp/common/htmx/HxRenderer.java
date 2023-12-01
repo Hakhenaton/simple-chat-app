@@ -9,14 +9,20 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.templates.MustacheTemplateService;
+import com.github.mustachejava.DefaultMustacheFactory;
+
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
 public class HxRenderer {
 
-    private final MustacheTemplateService mustache;
+    private static final String TEMPLATES_LOCATION = "templates/";
+
+    private static final String TEMPLATE_FILE_EXT = ".mustache";
+
+    private final DefaultMustacheFactory mustacheFactory = new DefaultMustacheFactory(TEMPLATES_LOCATION);
+
     private final List<HxResolver> resolvers;
     
     public void render(OutputStream stream, Map<String, Map<String, Object>> partials) throws IOException {
@@ -29,7 +35,8 @@ public class HxRenderer {
             for (final var partial: partials.entrySet()){
                 final var name = partial.getKey();
                 data.putAll(partial.getValue());
-                this.mustache.writeTemplate(name, data, writer);
+                final var mustache = mustacheFactory.compile(name + TEMPLATE_FILE_EXT);
+                mustache.execute(writer, data);
             }
         }
     }

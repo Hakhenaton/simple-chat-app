@@ -11,16 +11,15 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
     public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
@@ -35,7 +34,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
         session.getRemoteAddress().getPort()
     );
 
-    private final HxViewFactory hxViewFactory;
+    private final WebSocketConnection connection;
 
     private final ConnectToChannelUseCase connectToChannel;
     private final DisconnectFromChannelUseCase disconnectFromChannel;
@@ -55,10 +54,9 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
             return;
         }
 
-        final var connection = new WebSocketConnection(this.hxViewFactory.forWebSocket(session));
         session.getAttributes().put(CHANNEL_ID_ATTRIBUTE_NAME, channelId);
 
-        final var clientId = this.connectToChannel.connect(channelId, connection);
+        final var clientId = this.connectToChannel.connect(channelId, this.connection);
         session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, clientId);
 
         log.debug("Client {} accepted on channel {} from {}", clientId, channelId, fmtSession.apply(session));

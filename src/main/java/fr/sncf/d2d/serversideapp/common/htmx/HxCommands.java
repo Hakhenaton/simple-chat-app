@@ -2,7 +2,6 @@ package fr.sncf.d2d.serversideapp.common.htmx;
 
 import java.util.Collections;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.RequestScope;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
-@RequestScope
+/**
+ * Utilitaire pour lancer des en-têtes de type HX-*.
+ */
 @Component
 @RequiredArgsConstructor
 public class HxCommands {

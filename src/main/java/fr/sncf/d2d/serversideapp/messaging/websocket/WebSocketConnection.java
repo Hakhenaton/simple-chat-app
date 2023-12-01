@@ -3,12 +3,14 @@ package fr.sncf.d2d.serversideapp.messaging.websocket;
 import java.io.IOException;
 import java.util.Map;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxWebSocketView;
+import org.springframework.stereotype.Component;
+
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
 import fr.sncf.d2d.serversideapp.messaging.channels.Message;
 import lombok.RequiredArgsConstructor;
 
+@Component
 @RequiredArgsConstructor
 public class WebSocketConnection implements Connection {
     

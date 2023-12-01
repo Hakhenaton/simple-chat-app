@@ -10,22 +10,20 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.ConnectedClient;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
-import fr.sncf.d2d.serversideapp.messaging.configuration.MessagingConfiguration;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
+import fr.sncf.d2d.serversideapp.messaging.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class ConnectToChannelUseCase {
 
     private final ChannelsRepository channelsRepository;
+
     private final AuthenticationService authenticationService;
-    
-    public ConnectToChannelUseCase(
-        ChannelsRepository channelsRepository,
-        @Qualifier(MessagingConfiguration.WS_AUTHENTICATION_SERVICE) 
-        AuthenticationService authenticationService
-    ) {
+
+    public ConnectToChannelUseCase(ChannelsRepository channelsRepository, 
+        @Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME)
+        AuthenticationService authenticationService) {
         this.channelsRepository = channelsRepository;
         this.authenticationService = authenticationService;
     }
