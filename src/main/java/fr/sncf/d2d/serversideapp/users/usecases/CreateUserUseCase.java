@@ -7,7 +7,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.users.exceptions.UserValidationError;
 import fr.sncf.d2d.serversideapp.users.models.Role;
 import fr.sncf.d2d.serversideapp.users.models.User;

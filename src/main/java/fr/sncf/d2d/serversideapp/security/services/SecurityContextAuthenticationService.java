@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.security.service;
+package fr.sncf.d2d.serversideapp.security.services;
 
 import java.util.Optional;
 

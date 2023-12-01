@@ -9,7 +9,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import fr.sncf.d2d.serversideapp.common.htmx.HxResolver;
-import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 
 @Configuration
 public class SecurityResolversConfiguration {

@@ -10,6 +10,7 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 public class DisconnectFromChannelUseCase {
     

@@ -8,7 +8,6 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
 import fr.sncf.d2d.serversideapp.messaging.channels.Message;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 public class WebSocketConnection implements Connection {

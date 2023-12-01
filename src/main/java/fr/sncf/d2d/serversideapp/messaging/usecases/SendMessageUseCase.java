@@ -10,19 +10,27 @@ import org.springframework.stereotype.Service;
 import fr.sncf.d2d.serversideapp.common.exceptions.AccessDeniedException;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.Message;
+import fr.sncf.d2d.serversideapp.messaging.configuration.MessagingConfiguration;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.BadMessageException;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
-import fr.sncf.d2d.serversideapp.security.service.WebSocketSessionAuthenticationService;
-import lombok.RequiredArgsConstructor;
+import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 
-@RequiredArgsConstructor
+@Service
 public class SendMessageUseCase {
     
     private final ChannelsRepository channelsRepository;
-
-    @Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME)
     private final AuthenticationService authenticationService;
+
+    public SendMessageUseCase(
+        ChannelsRepository channelsRepository,
+        @Qualifier(MessagingConfiguration.WS_AUTHENTICATION_SERVICE)  
+        AuthenticationService authenticationService
+    ) {
+        this.channelsRepository = channelsRepository;
+        this.authenticationService = authenticationService;
+    }
+
+
 
     public void send(UUID channelId, String content) throws AccessDeniedException, BadMessageException, ChannelNotFoundException, IOException {
         

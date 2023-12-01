@@ -10,19 +10,26 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.ConnectedClient;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
+import fr.sncf.d2d.serversideapp.messaging.configuration.MessagingConfiguration;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.security.service.AuthenticationService;
-import fr.sncf.d2d.serversideapp.security.service.WebSocketSessionAuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@Service
 public class ConnectToChannelUseCase {
 
     private final ChannelsRepository channelsRepository;
-
-    @Qualifier(WebSocketSessionAuthenticationService.BEAN_NAME)
     private final AuthenticationService authenticationService;
     
+    public ConnectToChannelUseCase(
+        ChannelsRepository channelsRepository,
+        @Qualifier(MessagingConfiguration.WS_AUTHENTICATION_SERVICE) 
+        AuthenticationService authenticationService
+    ) {
+        this.channelsRepository = channelsRepository;
+        this.authenticationService = authenticationService;
+    }
+
     public UUID connect(UUID channelId, Connection connection) throws ChannelNotFoundException, IOException {
 
         final var channel = this.channelsRepository.getChannel(channelId)
@@ -30,6 +37,8 @@ public class ConnectToChannelUseCase {
 
         final var connectedClientBuilder = ConnectedClient.builder()
             .connection(connection);
+
+        connection.sendState(ChannelState.builder().build());
 
         this.authenticationService.currentUser()
             .ifPresent(connectedClientBuilder::user);
