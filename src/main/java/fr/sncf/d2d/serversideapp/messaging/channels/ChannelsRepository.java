@@ -8,5 +8,5 @@ public interface ChannelsRepository {
 
     Map<UUID, ? extends Channel> getAllChannels();
 
-    Optional<Channel> getChannel(UUID channelId);
+    Optional<Channel> findById(UUID channelId);
 }

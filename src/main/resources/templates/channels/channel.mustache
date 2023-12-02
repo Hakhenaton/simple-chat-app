@@ -5,6 +5,7 @@
     class="channel">
     <div class="channel-main">
         <div class="channel-users">
+            <h2>Utilisateurs en ligne</h2>
             <ul class="channel-users-list">
 
             </ul>
@@ -13,17 +14,16 @@
             
         </div>
     </div>
-    <div class="channel-message-form">
-        <form ws-send>
-            <wcs-form-field>
-                <wcs-input name="message">
-                </wcs-input>
-            </wcs-form-field>
-            <wcs-button 
-                type="submit" 
-                class="wcs-primary">
-                Envoyer
-            </wcs-button>
-        </form>
-    </div>
+    <form class="channel-message-form" ws-send hx-on:htmx:ws-after-send="htmx.find(this, '.message-input').value = ''">
+        <wcs-form-field style="flex-grow: 2">
+            <wcs-input class="message-input" name="content" size="l">
+            </wcs-input>
+            <input name="type" value="message" type="hidden" />
+        </wcs-form-field>
+        <wcs-button 
+            type="submit" 
+            class="wcs-primary">
+            Envoyer
+        </wcs-button>
+    </form>
 </div>

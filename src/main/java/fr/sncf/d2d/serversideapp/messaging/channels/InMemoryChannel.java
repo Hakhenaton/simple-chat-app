@@ -4,25 +4,31 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+
+import lombok.RequiredArgsConstructor;
 
 /**
  * Une implémentation en mémoire d'un {@link Channel} (thread-safe).
  */
+@RequiredArgsConstructor
 public class InMemoryChannel implements Channel {
 
-    private final ConcurrentMap<UUID, ConnectedClient> connected = new ConcurrentHashMap<>(100);
+    private final UUID id;
+
+    private final ConcurrentHashMap<UUID, ConnectedClient> connected = new ConcurrentHashMap<>(100);
 
     @Override
     public UUID add(ConnectedClient connection) {
         final var id = UUID.randomUUID();
-        assert connected.put(id, connection) == null;
+        final var removed = this.connected.put(id, connection);
+        assert removed == null;
         return id;
     }
 
     @Override
     public void remove(UUID id) {
-        assert connected.remove(id) != null;
+        final var removed = this.connected.remove(id);
+        assert removed != null;
     }
 
     @Override
@@ -33,6 +39,11 @@ public class InMemoryChannel implements Channel {
     @Override
     public Optional<ConnectedClient> findClient(UUID clientId){
         return Optional.ofNullable(this.connected.get(clientId));
+    }
+
+    @Override
+    public UUID getId() {
+        return this.id;
     }
     
 }

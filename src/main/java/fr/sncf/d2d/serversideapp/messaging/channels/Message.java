@@ -1,18 +1,25 @@
 package fr.sncf.d2d.serversideapp.messaging.channels;
 
 import java.util.Date;
+import java.util.UUID;
 
-import fr.sncf.d2d.serversideapp.users.models.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 @Builder
 @Getter
 public class Message {
+
+    @Setter
+    private UUID id;
     
     @NonNull
-    private final User from;
+    private final UUID authorId;
+
+    @NonNull
+    private final UUID channelId;
 
     @NonNull
     private final String content;

@@ -17,7 +17,7 @@ public class GlobalChannelRepository implements ChannelsRepository {
 
     private static final Map<UUID, Channel> CHANNELS = Collections.singletonMap(
         GLOBAL_CHANNEL_ID,
-        new InMemoryChannel()
+        new InMemoryChannel(GLOBAL_CHANNEL_ID)
     );
 
     @Override
@@ -26,7 +26,7 @@ public class GlobalChannelRepository implements ChannelsRepository {
     }
 
     @Override
-    public Optional<Channel> getChannel(UUID channelId) {
+    public Optional<Channel> findById(UUID channelId) {
         return Optional.ofNullable(CHANNELS.get(channelId));
     }
 }

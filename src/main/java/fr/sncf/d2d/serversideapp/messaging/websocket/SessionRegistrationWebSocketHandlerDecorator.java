@@ -8,7 +8,7 @@ import org.springframework.web.socket.WebSocketSession;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class DelegatingSessionRegistrationWebSocketHandler implements WebSocketHandler {
+public class SessionRegistrationWebSocketHandlerDecorator implements WebSocketHandler {
 
     private final WebSocketHandler delegate;
 
@@ -17,8 +17,6 @@ public class DelegatingSessionRegistrationWebSocketHandler implements WebSocketH
         this.registerSession(session);
         this.delegate.afterConnectionEstablished(session);
     }
-
-    
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {

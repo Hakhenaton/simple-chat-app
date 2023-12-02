@@ -30,13 +30,11 @@ public class ConnectToChannelUseCase {
 
     public UUID connect(UUID channelId, Connection connection) throws ChannelNotFoundException, IOException {
 
-        final var channel = this.channelsRepository.getChannel(channelId)
+        final var channel = this.channelsRepository.findById(channelId)
             .orElseThrow(ChannelNotFoundException::new);
 
         final var connectedClientBuilder = ConnectedClient.builder()
             .connection(connection);
-
-        connection.sendState(ChannelState.builder().build());
 
         this.authenticationService.currentUser()
             .ifPresent(connectedClientBuilder::user);

@@ -18,7 +18,7 @@ public class DisconnectFromChannelUseCase {
 
     public void disconnect(UUID channelId, UUID clientId) throws ChannelNotFoundException, IOException {
         
-        final var channel = this.channelsRepository.getChannel(channelId)
+        final var channel = this.channelsRepository.findById(channelId)
             .orElseThrow(ChannelNotFoundException::new);
 
         channel.remove(clientId);

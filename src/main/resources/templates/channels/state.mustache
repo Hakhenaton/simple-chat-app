@@ -1,5 +1,5 @@
+<ul hx-swap-oob="innerHTML:[x-channel-id=&quot;{{ channelId }}&quot;] .channel-users-list">
 {{#state.users}}
-    <li hx-swap-oob="beforeend" hx-target="[x-channel-id=&#22;{{ channel.id }}&#22;] > .channel-users-list">
-        {{username}}
-    </li>
+    <li>{{username}}</li>
 {{/state.users}}
+</ul>

@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface Channel {
+
+    UUID getId();
     
     UUID add(ConnectedClient client);
 

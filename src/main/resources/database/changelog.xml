@@ -24,4 +24,97 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="fbfd6de6-90f9-11ee-bc33-00155dc23879" author="RNZ">
+        <createTable tableName="messages">
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true"  primaryKeyName="messages_id_primary_key" />
+            </column>
+            <column name="content" type="text">
+                <constraints nullable="false" />
+            </column>
+            <column name="sent_at" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+            <column name="author_id" type="char(36)">
+                <constraints nullable="false" foreignKeyName="messages_author_id_foreign_key" referencedTableName="users" referencedColumnNames="id"/>
+            </column>
+            <column name="channel_id" type="char(36)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_deleted" type="tinyint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="464c6fa2-90fd-11ee-8185-00155dc23879" author="RNZ">
+        <createIndex indexName="users_username_index" tableName="users">
+            <column name="username"/>
+        </createIndex>
+        <createIndex indexName="messages_sent_at_index" tableName="messages">
+            <column name="sent_at"/>
+        </createIndex>
+        <createIndex indexName="messages_channel_id_index" tableName="messages">
+            <column name="channel_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="958b0d88-912c-11ee-93d5-00155dc23879" author="RNZ">
+        <createTable tableName="spring_session">
+            <column name="primary_id" type="CHAR(36)">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="spring_session_pk"
+                />
+            </column>
+            <column name="session_id" type="CHAR(36)">
+                <constraints
+                        nullable="false"
+                        unique="true"
+                        uniqueConstraintName="spring_session_ix1"
+                />
+            </column>
+            <column name="creation_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_access_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_inactive_interval" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_time" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="principal_name" type="VARCHAR(100)"/>
+        </createTable>
+        <createIndex tableName="spring_session" indexName="spring_session_ix2">
+            <column name="expiry_time"/>
+        </createIndex>
+        <createIndex tableName="spring_session" indexName="spring_session_ix3">
+            <column name="principal_name"/>
+        </createIndex>
+        <createTable tableName="spring_session_attributes">
+            <column name="session_primary_id" type="CHAR(36)">
+                <constraints
+                        foreignKeyName="spring_session_attributes_fk"
+                        referencedTableName="spring_session"
+                        referencedColumnNames="primary_id"
+                        deleteCascade="true"
+                        nullable="false"
+                />
+            </column>
+            <column name="attribute_name" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attribute_bytes" type="BYTEA">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey
+                constraintName="spring_session_attributes_pk"
+                tableName="spring_session_attributes"
+                columnNames="session_primary_id, attribute_name"
+        />
+        <!-- AUTOROLLBACK -->
+    </changeSet>
 </databaseChangeLog>

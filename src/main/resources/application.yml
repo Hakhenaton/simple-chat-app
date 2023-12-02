@@ -15,3 +15,8 @@ spring:
     driverClassName: org.h2.Driver
   liquibase:
     change-log: classpath:/database/changelog.xml
+  session:
+    store-type: jdbc
+    timeout: 1d
+    jdbc:
+      initialize-schema: never

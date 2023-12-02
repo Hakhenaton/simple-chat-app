@@ -1,7 +1,20 @@
 body {
     margin: 0;
     padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
     background-color: var(--wcs-light);
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    flex-grow: 1;
 }
 
 .error {
@@ -11,30 +24,63 @@ body {
 .channel {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .channel-main {
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
 }
 
 .channel-form {
     padding: 16px;
 }
 
+.message-input {
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
 .channel-users {
-    display: flex;
-    flex-direction: column;
+    padding: 16px;
+    min-width: 250px;
+    background-color:cadetblue;
+    margin-bottom: 16px;
+}
+
+.channel-messages {
+    overflow-y: scroll;
+}
+
+.channel-users-list {
+    overflow: hidden;
+    border-radius: 8px;
+    padding: 0;
+    list-style-type: none;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
 
 .channel-users-list > li {
-    list-style: none;
+    background-color: bisque;
+    border-bottom: 1px solid black;
     padding: 16px;
-    display: block;
+    text-overflow: ellipsis;
+}
+
+.channel-message-form {
+    padding: 8px;
+    background-color:cornflowerblue;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .message {
     display: flex;
+    flex-direction: column;
     padding: 16px;
 }
 

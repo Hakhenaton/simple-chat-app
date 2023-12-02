@@ -17,7 +17,7 @@ public class ChannelsConfiguration implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(
-            new DelegatingSessionRegistrationWebSocketHandler(this.messagesHandler), 
+            new SessionRegistrationWebSocketHandlerDecorator(this.messagesHandler), 
             "/channels/*"
         );
     }

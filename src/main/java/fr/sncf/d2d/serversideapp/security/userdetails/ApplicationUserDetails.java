@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class ApplicationUserDetails implements UserDetails {
 
+    private static final long serialVersionUID = 1900266451894782778L;
+
     private final User domainUser;
 
     @Override

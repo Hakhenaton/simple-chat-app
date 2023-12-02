@@ -34,11 +34,10 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
         session.getRemoteAddress().getPort()
     );
 
-    private final WebSocketConnection connection;
-
     private final ConnectToChannelUseCase connectToChannel;
     private final DisconnectFromChannelUseCase disconnectFromChannel;
     private final SendMessageUseCase sendMessage;
+    private final WebSocketConnectionFactory webSocketConnectionFactory;
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -56,10 +55,10 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
         session.getAttributes().put(CHANNEL_ID_ATTRIBUTE_NAME, channelId);
 
-        final var clientId = this.connectToChannel.connect(channelId, this.connection);
-        session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, clientId);
+        final var connectionId = this.connectToChannel.connect(channelId, this.webSocketConnectionFactory.create(session));
+        session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, connectionId);
 
-        log.debug("Client {} accepted on channel {} from {}", clientId, channelId, fmtSession.apply(session));
+        log.debug("Client {} accepted on channel {} from {}", connectionId, channelId, fmtSession.apply(session));
     }
 
     @Override
@@ -71,6 +70,8 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
             log.warn("Unexpected message (no session)");
             return;
         }
+
+        System.out.println(message.getPayload());
 
         this.sendMessage.send(channelId, message.getPayload());
     }
