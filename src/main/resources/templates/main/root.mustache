@@ -2,22 +2,22 @@
 <html>
     <head>
         <title>Dead simple app</title>
-        <meta name="description" content="Une application moderne avec HTMX">
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="/style.css">
-        <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <meta name='description' content='Une application moderne avec HTMX'>
+        <meta charset='utf-8'>
+        <link rel='stylesheet' href='/style.css'>
+        <link rel='stylesheet' href='/wcs-core/dist/wcs/wcs.css'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
     </head>
     <body>
         {{> navbar}}
         <main>
             {{$main}}{{/main}}
         </main>
-        <div id="modal-zone">
+        <div id='modal-zone'>
         </div>
-        <script src="https://unpkg.com/htmx.org@1.9.8"></script>
-        <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
-        <script type="module">
+        <script src='https://unpkg.com/htmx.org@1.9.8'></script>
+        <script src='https://unpkg.com/htmx.org/dist/ext/ws.js'></script>
+        <script type='module'>
 
             import { defineCustomElements } from '/wcs-core/loader/index.js'
             
@@ -43,7 +43,7 @@
                 const { elt: target } = htmxWsConfigSendEvent.detail
 
                 htmxWsConfigSendEvent.detail.messageBody = JSON.stringify(Object.fromEntries(
-                    Array.from(target.querySelectorAll('wcs-input[name]'))
+                    Array.from(target.querySelectorAll('wcs-input[name], input[name]'))
                         .map(input => [input.getAttribute('name'), input.value])
                 ))
             }

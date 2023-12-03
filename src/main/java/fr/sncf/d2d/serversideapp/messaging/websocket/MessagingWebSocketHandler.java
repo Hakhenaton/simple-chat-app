@@ -11,9 +11,18 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import fr.sncf.d2d.serversideapp.common.serialization.Validator;
+import fr.sncf.d2d.serversideapp.messaging.channels.ChannelEventsHandlers;
+import fr.sncf.d2d.serversideapp.messaging.dtos.CreateMessageDto;
+import fr.sncf.d2d.serversideapp.messaging.dtos.MessagingDto;
+import fr.sncf.d2d.serversideapp.messaging.dtos.RemoveMessageDto;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
+import fr.sncf.d2d.serversideapp.messaging.usecases.RemoveMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
+import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.WebSocketChannelEventHandlersFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,28 +43,27 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
         session.getRemoteAddress().getPort()
     );
 
+    private final Validator validator;
+    private final ObjectMapper objectMapper;
+
     private final ConnectToChannelUseCase connectToChannel;
     private final DisconnectFromChannelUseCase disconnectFromChannel;
     private final SendMessageUseCase sendMessage;
-    private final WebSocketConnectionFactory webSocketConnectionFactory;
+    private final RemoveMessageUseCase removeMessage;
+
+    private final WebSocketChannelEventHandlersFactory eventHandlerFactory;
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 
         log.debug("New connection from {} ", fmtSession.apply(session));
 
-        final var pathVariables = session.getUri().getPath().split("/");
-        UUID channelId;
-        try {
-            channelId = UUID.fromString(pathVariables[2]);
-        } catch (IllegalArgumentException badUuid){
-            session.close(CloseStatus.NOT_ACCEPTABLE);
-            return;
-        }
+        final var sessionAttributes = session.getAttributes();
+        final var channelId = (UUID)sessionAttributes.get(MessagingHandshakeInterceptor.CHANNEL_ID_KEY);
 
-        session.getAttributes().put(CHANNEL_ID_ATTRIBUTE_NAME, channelId);
+        assert channelId != null;
 
-        final var connectionId = this.connectToChannel.connect(channelId, this.webSocketConnectionFactory.create(session));
+        final var connectionId = this.connectToChannel.connect(channelId, this.eventHandlerFactory.forSession(session));
         session.getAttributes().put(CONNECTION_ID_ATTRIBUTE_NAME, connectionId);
 
         log.debug("Client {} accepted on channel {} from {}", connectionId, channelId, fmtSession.apply(session));
@@ -71,9 +79,15 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
             return;
         }
 
-        System.out.println(message.getPayload());
+        final MessagingDto dto = this.objectMapper.readValue(message.getPayload(), MessagingDto.class);
 
-        this.sendMessage.send(channelId, message.getPayload());
+        this.validator.validate(message);
+
+        if (dto instanceof CreateMessageDto createMessageDto)
+            this.sendMessage.send(channelId, createMessageDto.getMessage());
+        
+        else if (dto instanceof RemoveMessageDto removeMesageDto)
+            this.removeMessage.remove(removeMesageDto.getMessageId());
     }
 
     @Override

@@ -9,8 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
 
-import fr.sncf.d2d.serversideapp.security.web.LoginFailureHandler;
-import fr.sncf.d2d.serversideapp.security.web.LoginSuccessHandler;
+import fr.sncf.d2d.serversideapp.security.web.ApplicationAuthenticationFailureHandler;
+import fr.sncf.d2d.serversideapp.security.web.ApplicationAuthenticationSuccessHandler;
+import fr.sncf.d2d.serversideapp.security.web.ApplicationLogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -18,8 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final LoginSuccessHandler loginSuccessHandler;
-    private final LoginFailureHandler loginFailureHandler;
+    private final ApplicationAuthenticationSuccessHandler loginSuccessHandler;
+    private final ApplicationAuthenticationFailureHandler loginFailureHandler;
+    private final ApplicationLogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -29,6 +31,7 @@ public class SecurityConfiguration {
                 .successHandler(this.loginSuccessHandler)
                 .failureHandler(this.loginFailureHandler)
             )
+            .logout(logout -> logout.logoutSuccessHandler(this.logoutSuccessHandler))
             .csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
             .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
             .build();

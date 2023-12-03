@@ -26,6 +26,6 @@ public class DisconnectFromChannelUseCase {
         final var state = ChannelState.fromChannel(channel);
 
         for (final var client: channel.clients().values())
-            client.getConnection().sendState(state);
+            client.getEventHandlers().getOnState().handle(state);
     }
 }

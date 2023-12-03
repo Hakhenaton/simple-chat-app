@@ -1,38 +1,43 @@
 <header 
-    id="navbar" 
+    id='navbar' 
     {{#oob}}
-        hx-swap-oob="outerHTML"
+        hx-swap-oob='outerHTML'
     {{/oob}}
 >
     <wcs-action-bar gutter>
         Sample app
-        <div slot="actions">
+        <div slot='actions'>
             {{#user}}
-                <wcs-dropdown class="wcs-primary" shape="small" style="margin-left: 8px;">
-                <div slot="placeholder">{{ user.getUsername }}</div>
+                <wcs-dropdown class='wcs-primary' shape='small' style='margin-left: 8px;'>
+                <div slot='placeholder'>{{ user.getUsername }}</div>
                     <wcs-dropdown-item>Mon compte</wcs-dropdown-item>
-                    <wcs-dropdown-item>Se déconnecter</wcs-dropdown-item>
+                    <wcs-dropdown-item 
+                        hx-post='/logout' 
+                        hx-vals='{ _csrf:  }' 
+                        hx-trigger='wcsDropdownItemClick'>
+                        Se déconnecter
+                    </wcs-dropdown-item>
                 </wcs-dropdown>
             {{/user}}
             {{^user}}
                 <wcs-button 
-                    hx-get="/users/signup" 
-                    hx-target="#modal-zone" 
-                    hx-swap="innerHTML"
+                    hx-get='/users/signup' 
+                    hx-target='#modal-zone' 
+                    hx-swap='innerHTML'
                     hx-disabled-elt 
-                    class="wcs-primary" 
-                    shape="small"
-                    style="margin-right: 16px">
+                    class='wcs-primary' 
+                    shape='small'
+                    style='margin-right: 16px'>
                     S'inscrire
                 </wcs-button>
                 <wcs-button 
-                    hx-get="/login" 
-                    hx-target="#modal-zone" 
-                    hx-swap="innerHTML"
+                    hx-get='/login' 
+                    hx-target='#modal-zone' 
+                    hx-swap='innerHTML'
                     hx-disabled-elt 
-                    mode="stroked" 
-                    class="wcs-primary" 
-                    shape="small">
+                    mode='stroked' 
+                    class='wcs-primary' 
+                    shape='small'>
                     Se connecter
                 </wcs-button>
             {{/user}}

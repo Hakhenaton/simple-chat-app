@@ -8,8 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
-import fr.sncf.d2d.serversideapp.common.web.HxHttpServletView;
+import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
+import fr.sncf.d2d.serversideapp.messaging.websocket.MessagingHandshakeInterceptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,16 +17,23 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class ApplicationAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final HxRenderer hxRenderer;
+    private static final String OOB_KEY = "oob";
+    private static final String CHANNEL_ID_KEY = "channelId";
+
+    private final HxHttpServletViewFactory servletViewFactory;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
         Authentication authentication) throws IOException, ServletException {
-        new HxHttpServletView(response, this.hxRenderer).render(
+        this.servletViewFactory.create(response).render(
             Map.of(
-                "main/navbar", Collections.singletonMap("oob", true),
+                "channels/channel", Map.of(
+                    OOB_KEY, true,
+                    CHANNEL_ID_KEY, request.getSession().getAttribute(MessagingHandshakeInterceptor.CHANNEL_ID_KEY)
+                ),
+                "main/navbar", Collections.singletonMap(OOB_KEY, true),
                 "login/success", Collections.emptyMap()
             )
         );

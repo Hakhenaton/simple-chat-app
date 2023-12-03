@@ -27,5 +27,5 @@ public class ConnectedClient {
     }
 
     @NonNull
-    private final Connection connection;
+    private final ChannelEventsHandlers eventHandlers;
 }

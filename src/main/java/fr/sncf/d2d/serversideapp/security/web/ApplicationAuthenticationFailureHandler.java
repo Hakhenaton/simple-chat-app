@@ -6,8 +6,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
-import fr.sncf.d2d.serversideapp.common.web.HxHttpServletView;
+import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,14 +14,15 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class LoginFailureHandler implements AuthenticationFailureHandler {
+public class ApplicationAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-    private final HxRenderer hxRenderer;
+    private final HxHttpServletViewFactory servletViewFactory;
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
-        new HxHttpServletView(response, this.hxRenderer).render("login/error");
+        this.servletViewFactory.create(response)
+            .render("login/error");
     }
     
 }

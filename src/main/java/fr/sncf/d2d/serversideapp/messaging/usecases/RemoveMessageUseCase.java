@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import fr.sncf.d2d.serversideapp.common.exceptions.AccessDeniedException;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
@@ -14,6 +15,7 @@ import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.users.models.Role;
 
+@Service
 public class RemoveMessageUseCase {
 
     private final ChannelsRepository channelsRepository;
@@ -48,6 +50,6 @@ public class RemoveMessageUseCase {
         this.repository.markDeleted(message);
 
         for (final var client: channel.clients().values())
-            client.getConnection().deleteMessage(messageId);
+            client.getEventHandlers().getOnMessageDeleted().handle(messageId);
     }
 }

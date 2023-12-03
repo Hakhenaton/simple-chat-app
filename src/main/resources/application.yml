@@ -1,3 +1,8 @@
+fr:
+  sncf:
+    d2d:
+      serversideapp:
+        origin: http://localhost:8080 
 logging:
   level:
     fr:
@@ -16,7 +21,6 @@ spring:
   liquibase:
     change-log: classpath:/database/changelog.xml
   session:
-    store-type: jdbc
     timeout: 1d
     jdbc:
       initialize-schema: never

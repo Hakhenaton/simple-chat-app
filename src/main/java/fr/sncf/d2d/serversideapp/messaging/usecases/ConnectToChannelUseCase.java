@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.ConnectedClient;
-import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
+import fr.sncf.d2d.serversideapp.messaging.channels.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
@@ -28,13 +28,13 @@ public class ConnectToChannelUseCase {
         this.authenticationService = authenticationService;
     }
 
-    public UUID connect(UUID channelId, Connection connection) throws ChannelNotFoundException, IOException {
+    public UUID connect(UUID channelId, ChannelEventsHandlers eventHandlers) throws ChannelNotFoundException, IOException {
 
         final var channel = this.channelsRepository.findById(channelId)
             .orElseThrow(ChannelNotFoundException::new);
 
         final var connectedClientBuilder = ConnectedClient.builder()
-            .connection(connection);
+            .eventHandlers(eventHandlers);
 
         this.authenticationService.currentUser()
             .ifPresent(connectedClientBuilder::user);
@@ -46,7 +46,7 @@ public class ConnectToChannelUseCase {
         final var state = ChannelState.fromChannel(channel);
 
         for (final var client: channel.clients().values())
-            client.getConnection().sendState(state);
+            client.getEventHandlers().getOnState().handle(state);
 
         return clientId;
     }

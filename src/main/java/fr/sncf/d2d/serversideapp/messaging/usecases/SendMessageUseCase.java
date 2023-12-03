@@ -69,7 +69,7 @@ public class SendMessageUseCase {
         this.messagesRepository.save(message);
 
         for (final var client: channel.clients().values())
-            client.getConnection().sendMessage(message, user);   
+            client.getEventHandlers().getOnMessage().handle(message, user);   
 
     }
 }
