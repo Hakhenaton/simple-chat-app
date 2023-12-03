@@ -1,7 +1,8 @@
 package fr.sncf.d2d.serversideapp.messaging.channels;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import fr.sncf.d2d.serversideapp.users.models.User;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class ChannelState {
     
-    private final List<User> users;
+    private final Set<User> users;
 
     private final long totalConnections;
 
@@ -24,7 +25,7 @@ public class ChannelState {
             .filter(client -> client.getUser().isPresent())
             .map(ConnectedClient::getUser)
             .map(Optional::get)
-            .toList();
+            .collect(Collectors.toUnmodifiableSet());
 
         return ChannelState.builder()
             .users(allConnectedUsers)

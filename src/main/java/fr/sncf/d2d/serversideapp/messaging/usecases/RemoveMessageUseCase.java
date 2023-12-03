@@ -10,8 +10,8 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.MessageNotFoundException;
 import fr.sncf.d2d.serversideapp.messaging.persistence.MessagesRepository;
-import fr.sncf.d2d.serversideapp.messaging.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.users.models.Role;
 
 public class RemoveMessageUseCase {

@@ -45,9 +45,6 @@ public class WebSocketConnection implements Connection {
             .getAttributes()
             .get(MessagingWebSocketHandler.CHANNEL_ID_ATTRIBUTE_NAME);
 
-        System.out.println(this.view.getSession().getId());
-        System.out.println(this.view.getSession().isOpen());
-
         this.view.render(
             "channels/state", 
             Map.of(

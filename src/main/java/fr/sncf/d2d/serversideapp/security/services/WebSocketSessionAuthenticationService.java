@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.services;
+package fr.sncf.d2d.serversideapp.security.services;
 
 import java.util.Optional;
 
@@ -6,7 +6,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
-import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.userdetails.ApplicationUserDetails;
 import fr.sncf.d2d.serversideapp.users.models.User;
 import lombok.RequiredArgsConstructor;

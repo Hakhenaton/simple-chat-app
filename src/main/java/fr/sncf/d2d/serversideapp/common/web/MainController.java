@@ -20,7 +20,6 @@ public class MainController {
    
     @GetMapping
     public void home() throws Exception {
-
         this.view.render(
             "main/home", 
             Collections.singletonMap(

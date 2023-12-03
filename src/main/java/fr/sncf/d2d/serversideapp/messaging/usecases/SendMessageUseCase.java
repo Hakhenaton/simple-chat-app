@@ -13,8 +13,8 @@ import fr.sncf.d2d.serversideapp.messaging.channels.Message;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.BadMessageException;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.messaging.persistence.MessagesRepository;
-import fr.sncf.d2d.serversideapp.messaging.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 
 @Service
 public class SendMessageUseCase {

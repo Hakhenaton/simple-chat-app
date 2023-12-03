@@ -11,8 +11,8 @@ import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.messaging.channels.ConnectedClient;
 import fr.sncf.d2d.serversideapp.messaging.channels.Connection;
 import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
+import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 
 @Service
 public class ConnectToChannelUseCase {
@@ -39,7 +39,9 @@ public class ConnectToChannelUseCase {
         this.authenticationService.currentUser()
             .ifPresent(connectedClientBuilder::user);
 
-        final var clientId = channel.add(connectedClientBuilder.build());
+        final var connectedClient = connectedClientBuilder.build();
+
+        final var clientId = channel.add(connectedClient);
 
         final var state = ChannelState.fromChannel(channel);
 

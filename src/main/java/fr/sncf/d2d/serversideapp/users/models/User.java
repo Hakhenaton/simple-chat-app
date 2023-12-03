@@ -1,21 +1,15 @@
 package fr.sncf.d2d.serversideapp.users.models;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import lombok.Builder;
+import fr.sncf.d2d.serversideapp.common.models.Identifiable;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class User implements Serializable {
+@SuperBuilder
+public class User extends Identifiable {
 
     private static final long serialVersionUID = -962899035100012963L;
-
-    @Setter
-    private UUID id;
 
     @NonNull
     private final String username;
@@ -25,14 +19,6 @@ public class User implements Serializable {
 
     @NonNull
     private final Role role;
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && 
-            obj instanceof User user && 
-            user.id != null && 
-            user.id.equals(this.id);
-    }
 
     @Override
     public String toString(){
