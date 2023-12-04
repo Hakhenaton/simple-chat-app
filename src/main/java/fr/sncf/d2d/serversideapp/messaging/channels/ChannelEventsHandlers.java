@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
+/**
+ * Evénements gérés par un client de channel.
+ */
 @Builder
 @Getter
 public class ChannelEventsHandlers {

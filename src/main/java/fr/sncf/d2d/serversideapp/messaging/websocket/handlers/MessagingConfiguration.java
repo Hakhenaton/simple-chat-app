@@ -1,10 +1,11 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket;
+package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
+import fr.sncf.d2d.serversideapp.messaging.websocket.session.SessionRegistrationWebSocketHandlerDecorator;
 import lombok.RequiredArgsConstructor;
 
 @Configuration

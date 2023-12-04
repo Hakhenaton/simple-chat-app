@@ -20,7 +20,7 @@ public class ApplicationUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(this.domainUser.getRole());
+        return Collections.singleton(this.domainUser.getRole()::name);
     }
 
     @Override

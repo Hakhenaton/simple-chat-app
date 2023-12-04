@@ -4,8 +4,12 @@ import java.io.IOException;
 
 import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
 
+/**
+ * Gestion d'état du canal.
+ */
 @FunctionalInterface
 public interface StateHandler {
+    
     /**
      * Implémentation de l'envoi d'un message d'état du canal.
      * @see ChannelState

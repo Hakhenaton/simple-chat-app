@@ -14,8 +14,10 @@ import lombok.ToString;
 @ToString
 public class ChannelState {
     
+    /** Ensemble des utilisateurs connectés au canal. */
     private final Set<User> users;
 
+    /** Nombre total de personnes connectées (utilisateurs ou anonymes). */
     private final long totalConnections;
 
     public static ChannelState fromChannel(Channel channel){

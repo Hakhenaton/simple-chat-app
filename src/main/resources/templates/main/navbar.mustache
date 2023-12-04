@@ -13,7 +13,7 @@
                     <wcs-dropdown-item>Mon compte</wcs-dropdown-item>
                     <wcs-dropdown-item 
                         hx-post='/logout' 
-                        hx-vals='{ _csrf:  }' 
+                        hx-vals='{ "{{ csrf.parameterName }}": "{{ csrf.token }}" }' 
                         hx-trigger='wcsDropdownItemClick'>
                         Se déconnecter
                     </wcs-dropdown-item>

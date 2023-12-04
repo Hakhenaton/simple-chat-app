@@ -9,7 +9,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.stereotype.Component;
 
 import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
-import fr.sncf.d2d.serversideapp.messaging.websocket.MessagingHandshakeInterceptor;
+import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.MessagingHandshakeInterceptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +27,7 @@ public class ApplicationLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
+        
         this.viewFactory.create(response).render(Map.of(
             "channels/channel", Map.of(
                 OOB_KEY, true,

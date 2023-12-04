@@ -5,7 +5,7 @@ import java.io.IOException;
 import fr.sncf.d2d.serversideapp.messaging.channels.Message;
 import fr.sncf.d2d.serversideapp.users.models.User;
 
-
+/** Gestion d'un message arrivant */
 @FunctionalInterface
 public interface MessageHandler {
     /**

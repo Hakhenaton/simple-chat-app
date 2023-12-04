@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket;
+package fr.sncf.d2d.serversideapp.messaging.websocket.session;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

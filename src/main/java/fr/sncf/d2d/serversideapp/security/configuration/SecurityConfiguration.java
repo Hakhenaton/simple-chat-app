@@ -31,7 +31,11 @@ public class SecurityConfiguration {
                 .successHandler(this.loginSuccessHandler)
                 .failureHandler(this.loginFailureHandler)
             )
-            .logout(logout -> logout.logoutSuccessHandler(this.logoutSuccessHandler))
+            .logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(this.logoutSuccessHandler)
+                .invalidateHttpSession(false)
+            )
             .csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
             .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
             .build();

@@ -10,6 +10,9 @@ logging:
         d2d:
           serversideapp: DEBUG
 spring:
+  h2:
+    console:
+      enabled: true
   devtools:
     restart:
       exclude: ""

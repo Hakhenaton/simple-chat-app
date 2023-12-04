@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket;
+package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -14,7 +14,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.sncf.d2d.serversideapp.common.serialization.Validator;
-import fr.sncf.d2d.serversideapp.messaging.channels.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.messaging.dtos.CreateMessageDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.MessagingDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.RemoveMessageDto;
@@ -22,7 +21,7 @@ import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.RemoveMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
-import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.WebSocketChannelEventHandlersFactory;
+import fr.sncf.d2d.serversideapp.messaging.websocket.events.WebSocketChannelEventsHandlersFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,7 +50,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
     private final SendMessageUseCase sendMessage;
     private final RemoveMessageUseCase removeMessage;
 
-    private final WebSocketChannelEventHandlersFactory eventHandlerFactory;
+    private final WebSocketChannelEventsHandlersFactory eventHandlerFactory;
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {

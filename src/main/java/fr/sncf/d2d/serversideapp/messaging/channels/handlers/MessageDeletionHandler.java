@@ -3,6 +3,7 @@ package fr.sncf.d2d.serversideapp.messaging.channels.handlers;
 import java.io.IOException;
 import java.util.UUID;
 
+/** Gestion de la suppression d'un message. */
 @FunctionalInterface
 public interface MessageDeletionHandler {
     /**

@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
+package fr.sncf.d2d.serversideapp.messaging.websocket.events;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

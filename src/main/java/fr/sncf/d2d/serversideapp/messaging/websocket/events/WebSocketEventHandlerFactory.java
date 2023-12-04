@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
+package fr.sncf.d2d.serversideapp.messaging.websocket.events;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageDeletionHandler;
 import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageHandler;
 import fr.sncf.d2d.serversideapp.messaging.channels.handlers.StateHandler;
-import fr.sncf.d2d.serversideapp.messaging.websocket.MessagingWebSocketHandler;
+import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.MessagingWebSocketHandler;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
