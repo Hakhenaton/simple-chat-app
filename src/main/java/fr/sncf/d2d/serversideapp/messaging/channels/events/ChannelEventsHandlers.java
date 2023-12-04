@@ -1,8 +1,5 @@
-package fr.sncf.d2d.serversideapp.messaging.channels;
+package fr.sncf.d2d.serversideapp.messaging.channels.events;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageDeletionHandler;
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageHandler;
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.StateHandler;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;

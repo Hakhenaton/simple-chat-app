@@ -1,8 +1,8 @@
-package fr.sncf.d2d.serversideapp.messaging.channels.handlers;
+package fr.sncf.d2d.serversideapp.messaging.channels.events;
 
 import java.io.IOException;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.ChannelState;
+import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelState;
 
 /**
  * Gestion d'état du canal.

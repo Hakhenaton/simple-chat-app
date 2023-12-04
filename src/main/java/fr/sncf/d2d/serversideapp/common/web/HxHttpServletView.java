@@ -13,6 +13,10 @@ import fr.sncf.d2d.serversideapp.common.htmx.HxView;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implémentation d'une {@link HxView} prévue pour la couche Servlet classique (HTTP).
+ * @apiNote L'injection de ce type de bean nécessite le scope "request" pour accéder à la réponse. Si le scope est indisponible, on pourra utiliser {@link HxHttpServletViewFactory}.
+ */
 @Primary
 @Component
 @RequiredArgsConstructor

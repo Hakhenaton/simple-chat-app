@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -19,22 +20,23 @@ public class SecurityResolversConfiguration {
     private static final String CSRF_KEY = "csrf";
     private static final String CSRF_REQUEST_ATTRIBUTE = "_csrf";
     
+    /**
+     * @return Un {@link HxResolver} prévu pour résoudre l'utilisateur connecté.
+     */
     @Bean
-    public HxResolver userContextResolver(AuthenticationService authenticationService){
+    HxResolver userContextResolver(AuthenticationService authenticationService){
         return () -> authenticationService.currentUser()
             .map(user -> Collections.singletonMap(USER_KEY, user))
             .orElseGet(Collections::emptyMap);
     }
 
+    /**
+     * @return Un {@link HxResolver} prévu pour récupérer les informations liées au token CSRF.
+     */
     @Bean
-    public HxResolver csrfTokenResolver(){
+    HxResolver csrfTokenResolver(){
         return () -> Optional.ofNullable(RequestContextHolder.getRequestAttributes()) 
-            .flatMap(attributes -> Optional.ofNullable(
-                attributes.getAttribute(
-                    CSRF_REQUEST_ATTRIBUTE, 
-                    RequestAttributes.SCOPE_REQUEST
-                )
-            ))
+            .map(attributes -> (CsrfToken)attributes.getAttribute(CSRF_REQUEST_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST))
             .map(token -> Collections.singletonMap(CSRF_KEY, token))
             .orElseGet(Collections::emptyMap);
     }

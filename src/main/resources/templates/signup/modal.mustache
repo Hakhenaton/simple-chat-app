@@ -1,7 +1,7 @@
-<wcs-modal id='signup-modal' size='l' show show-close-button hx-on='
+<wcs-modal id="signup-modal" size="l" show show-close-button hx-on="
     wcsDialogClosed: this.remove() 
     login: this.remove()
-'>
+">
     <style>
         .signup-form-field {
             margin-bottom: 16px;
@@ -12,54 +12,54 @@
             color: var(--wcs-red);
         }
     </style>
-    <div slot='header' id='signup-header'>
+    <div slot="header" id="signup-header">
         🚀 Bienvenue !
     </div>
-    <div style='margin-bottom: 16px'>
+    <div style="margin-bottom: 16px">
         Créez un compte et commencez à discuter avec vos amis...
     </div>
     <form 
-        id='signup-form' 
-        hx-encoding='application/x-www-form-urlencoded' 
-        hx-post='/users/signup' 
-        hx-swap='none'
+        id="signup-form" 
+        hx-encoding="application/x-www-form-urlencoded" 
+        hx-post="/users/signup" 
+        hx-swap="none"
         hx-disabled-elt
     >
-        <ul id='signup-form-server-errors'>
+        <ul id="signup-form-server-errors">
         </ul>
-        <wcs-form-field class='signup-form-field'>
+        <wcs-form-field class="signup-form-field">
             <wcs-label>
                 Nom d'utilisateur
             </wcs-label>
             <wcs-hint>
                 Alphanumérique, maximum 20 caractères.
             </wcs-hint>
-            <wcs-input id='signup-form-username' name='username' placeholder='John doe' required>></wcs-input>
-            <wcs-error id='signup-form-username-error'></wcs-error>
+            <wcs-input id="signup-form-username" name="username" placeholder="John doe" required>></wcs-input>
+            <wcs-error id="signup-form-username-error"></wcs-error>
         </wcs-form-field>
-        <wcs-form-field class='signup-form-field'>
+        <wcs-form-field class="signup-form-field">
             <wcs-label>
                 Mot de passe
             </wcs-label>
             <wcs-hint>
                 Minimum 12 caractères, lettres majuscules, minuscules, et chiffres.
             </wcs-hint>
-            <wcs-input id='signup-form-password' name='password' type='password' required>></wcs-input>    
-            <wcs-error id='signup-form-password-error'></wcs-error>
+            <wcs-input id="signup-form-password" name="password" type="password" clearOnEdit="false" required>></wcs-input>    
+            <wcs-error id="signup-form-password-error"></wcs-error>
         </wcs-form-field>
-        <wcs-form-field class='signup-form-field'>
+        <wcs-form-field class="signup-form-field">
             <wcs-label>
                 Confirmation du mot de passe
             </wcs-label>
-            <wcs-input id='signup-form-password-confirmation' name='password' type='password' required>></wcs-input>
-            <wcs-error id='signup-form-password-confirmation-error'></wcs-error>
+            <wcs-input id="signup-form-password-confirmation" name="password" type="password" clearOnEdit="false" required>></wcs-input>
+            <wcs-error id="signup-form-password-confirmation-error"></wcs-error>
         </wcs-form-field>
         {{>../security/csrf-input}}
-        <wcs-button disabled size='m' id='signup-form-submit' class='wcs-primary' type='submit'>
+        <wcs-button disabled size="m" id="signup-form-submit" class="wcs-primary" type="submit">
             Créer mon compte
         </wcs-button>
     </form>
-    <script type='module'>
+    <script type="module">
 
         // form validation
         const touched = new Set()

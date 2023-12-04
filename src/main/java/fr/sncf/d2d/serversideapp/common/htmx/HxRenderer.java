@@ -13,6 +13,9 @@ import com.github.mustachejava.DefaultMustacheFactory;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Implémentation du rendu d'un template HTMX via un {@link OutputStream}.
+ */
 @Component
 @RequiredArgsConstructor
 public class HxRenderer {

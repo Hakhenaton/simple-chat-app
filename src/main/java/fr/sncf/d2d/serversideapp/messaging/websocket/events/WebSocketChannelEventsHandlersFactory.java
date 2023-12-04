@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
 import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
-import fr.sncf.d2d.serversideapp.messaging.channels.ChannelEventsHandlers;
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageDeletionHandler;
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.MessageHandler;
-import fr.sncf.d2d.serversideapp.messaging.channels.handlers.StateHandler;
+import fr.sncf.d2d.serversideapp.messaging.channels.events.ChannelEventsHandlers;
+import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageDeletionHandler;
+import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageHandler;
+import fr.sncf.d2d.serversideapp.messaging.channels.events.StateHandler;
 import lombok.RequiredArgsConstructor;
 
 @Component

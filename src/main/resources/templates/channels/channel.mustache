@@ -1,37 +1,48 @@
 <div 
-    hx-ext='ws'
-    ws-connect='/channels/{{ channelId }}'
-    x-channel-id='{{ channelId }}' 
-    class='channel'
+    hx-ext="ws"
+    ws-connect="/channels/{{ channelId }}"
+    x-channel-id="{{ channelId }}" 
+    class="channel"
     {{#oob}}
         hx-swap-oob='outerHTML:[x-channel-id="{{ channelId }}"]'
     {{/oob}}    
 >
-    <div class='channel-main'>
-        <div class='channel-users'>
-            <h2>Utilisateurs en ligne</h2>
-            <ul class='channel-users-list'>
-
-            </ul>
-        </div>
-        <div class='channel-messages'>
-            
+    <div class="channel-main">
+        <wcs-card class="channel-users">
+            <p class="channel-users-total-connections"></p>
+            <ul class="channel-users-list"></ul>
+        </wcs-card>
+        <div class="channel-messages">
+            <div class="channel-message-feed"></div>
+            <wcs-divider></wcs-divider>
+            <div class="channel-message-form-body">
+                <form 
+                    ws-send 
+                    hx-on::ws-after-send="htmx.find(this, '.message-input').value = ''"
+                    class="channel-message-form"
+                >
+                    <wcs-textarea 
+                        name="message"
+                        class="message-input"
+                        icon="send"
+                        resize="none"
+                        autoGrow
+                        cols="1"
+                        placeholder="Vous pouvez écrire un message..."
+                    >
+                    </wcs-textarea>
+                    <input 
+                        name="type" 
+                        value="create-message" 
+                        type="hidden" 
+                    />
+                    <wcs-button 
+                        type="submit" 
+                        class="wcs-primary">
+                        Envoyer
+                    </wcs-button>
+                </form>
+            </div>
         </div>
     </div>
-    <form 
-        ws-send 
-        hx-on::ws-after-send="htmx.find(this, '.message-input').value = ''"
-        class='channel-message-form'
-    >
-        <wcs-form-field style='flex-grow: 1'>
-            <wcs-input class='message-input' name='message' size='l'>
-            </wcs-input>
-            <input name='type' value='create-message' type='hidden' />
-        </wcs-form-field>
-        <wcs-button 
-            type='submit' 
-            class='wcs-primary'>
-            Envoyer
-        </wcs-button>
-    </form>
 </div>

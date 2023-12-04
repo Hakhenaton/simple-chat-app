@@ -11,7 +11,7 @@ public class WebSocketSessionConfiguration {
     
     @Bean
     @Scope(scopeName = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
-    public WebSocketSession webSocketSession(){
+    WebSocketSession webSocketSession(){
         return WebSocketSessionHolder.getCurrentSession();
     }
 }

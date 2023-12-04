@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
-import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.MessagingHandshakeInterceptor;
+import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.ChannelIdHandshakeInterceptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,13 +34,13 @@ public class ApplicationAuthenticationSuccessHandler implements AuthenticationSu
             "login/success", Collections.emptyMap()
         ));
 
-        Optional.ofNullable(request.getSession().getAttribute(MessagingHandshakeInterceptor.CHANNEL_ID_KEY))
+        Optional.ofNullable(request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY))
             .ifPresent(channelId -> {
                 partials.put(
                     "channels/channel", 
                     Map.of(
                         "oob", true,
-                        "channelId", request.getSession().getAttribute(MessagingHandshakeInterceptor.CHANNEL_ID_KEY)
+                        "channelId", request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY)
                     )
                 );
             });

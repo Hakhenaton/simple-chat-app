@@ -1,11 +1,11 @@
-<div hx-swap-oob='beforeend:[x-channel-id="{{ channelId }}"] .channel-messages' >
+<div hx-swap-oob='beforeend:[x-channel-id="{{ channelId }}"] .channel-message-feed' >
     <div 
-        x-message-id='{{ message.id }}' 
-        class='message'>
-        <p class='message-header'>
-            {{ author.username }} <span class='message-timestamp'>à {{ message.sentAt }}</span>
+        x-message-id="{{ message.id }}" 
+        class="message">
+        <p class="message-header">
+            {{ author.username }} <span class="message-timestamp">à {{ message.sentAt }}</span>
         </p>
-        <p class='message-content'>
+        <p class="message-content">
             {{ message.content }}
         </p>
     </div>

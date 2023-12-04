@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.channels;
+package fr.sncf.d2d.serversideapp.messaging.channels.models;
 
 import java.util.Optional;
 import java.util.Set;

@@ -1,10 +1,10 @@
-package fr.sncf.d2d.serversideapp.messaging.persistence;
+package fr.sncf.d2d.serversideapp.messaging.messages.persistence;
 
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.Message;
+import fr.sncf.d2d.serversideapp.messaging.messages.models.Message;
 
 public interface MessagesRepository {
     

@@ -7,17 +7,19 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import fr.sncf.d2d.serversideapp.common.exceptions.AccessDeniedException;
-import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
-import fr.sncf.d2d.serversideapp.messaging.channels.Message;
-import fr.sncf.d2d.serversideapp.messaging.exceptions.BadMessageException;
-import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.persistence.MessagesRepository;
+import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
+import fr.sncf.d2d.serversideapp.messaging.channels.persistence.ChannelsRepository;
+import fr.sncf.d2d.serversideapp.messaging.messages.exceptions.BadMessageException;
+import fr.sncf.d2d.serversideapp.messaging.messages.models.Message;
+import fr.sncf.d2d.serversideapp.messaging.messages.persistence.MessagesRepository;
+import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 
 @Service
 public class SendMessageUseCase {
+
+    private static final long MAX_MESSAGE_SIZE = 10_000;
     
     private final ChannelsRepository channelsRepository;
     private final AuthenticationService authenticationService;
@@ -45,18 +47,18 @@ public class SendMessageUseCase {
         final var isConnected = channel.clients()
             .values()
             .stream()
-            .anyMatch(client -> client.getUser()
-                .map(connectedUser -> connectedUser.equals(user))
-                .orElse(false)
-            );
+            .anyMatch(client -> client.getUser().filter(connectedUser -> connectedUser.equals(user)).isPresent());
 
         if (!isConnected)
             throw new AccessDeniedException();
 
-        final var sanitizedMessage = content.trim();
-
-        if (sanitizedMessage.length() == 0)
+        if (content.isBlank())
             throw new BadMessageException();
+
+        if (content.length() > MAX_MESSAGE_SIZE)
+            throw new BadMessageException();
+
+        final var sanitizedMessage = content.trim();
 
         final var message = Message.builder()
             .content(sanitizedMessage)

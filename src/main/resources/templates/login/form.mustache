@@ -1,4 +1,4 @@
-<wcs-modal id='login-modal' show show-close-button hx-on='wcsDialogClosed: this.remove()'>
+<wcs-modal id="login-modal" show show-close-button hx-on="wcsDialogClosed: this.remove()">
     <style>
         .login-field {
             margin-bottom: 16px;
@@ -22,30 +22,30 @@
         }
         
     </style>
-    <div slot='header' id='login-header'>
-        <span class='material-icons'>login</span>
+    <div slot="header" id="login-header">
+        <span class="material-icons">login</span>
         Login
     </div>
     <form  
-        hx-post='/login' 
-        hx-encoding='application/x-www-form-urlencoded' 
-        hx-swap='none' 
+        hx-post="/login" 
+        hx-encoding="application/x-www-form-urlencoded" 
+        hx-swap="none" 
         hx-disabled-elt
         hx-on::before-request="htmx.find(this, '#login-error').innerHTML = ''">
-        <span id='login-error'></span>
+        <span id="login-error"></span>
         {{#afterSignup}}
             <p>Votre compte a été créé. 👌</p>
             <p>Vous pouvez maintenant vous connecter...</p>
         {{/afterSignup}}
-        <wcs-form-field class='login-field'>
+        <wcs-form-field class="login-field">
             <wcs-label>Nom d'utilisateur</wcs-label>
-            <wcs-input name='username' placeholder='John doe' required></wcs-input>
+            <wcs-input name="username" placeholder="John doe" required></wcs-input>
         </wcs-form-field>
-        <wcs-form-field class='login-field'>
+        <wcs-form-field class="login-field">
             <wcs-label>Mot de passe</wcs-label>
-            <wcs-input name='password' type='password' required>></wcs-input>
+            <wcs-input name="password" type="password" clearOnEdit="false" required>></wcs-input>
         </wcs-form-field>
         {{>../security/csrf-input}}
-        <wcs-button class='wcs-primary' type='submit'>Se connecter</wcs-button>
+        <wcs-button class="wcs-primary" type="submit">Se connecter</wcs-button>
     </form>
 </wcs-modal>

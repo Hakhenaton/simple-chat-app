@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class MessagingConfiguration implements WebSocketConfigurer {
 
     private final MessagingWebSocketHandler messagesHandler;
-    private final MessagingHandshakeInterceptor handshakeInterceptor;
+    private final ChannelIdHandshakeInterceptor handshakeInterceptor;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

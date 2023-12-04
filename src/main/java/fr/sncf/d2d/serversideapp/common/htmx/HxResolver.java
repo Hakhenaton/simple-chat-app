@@ -3,15 +3,13 @@ package fr.sncf.d2d.serversideapp.common.htmx;
 import java.util.Map;
 
 /**
- * Small middlewares used to resolve some data before view rendering.
- * See it as lightweight Spring interceptors, but only for the model data part.
+ * Simple middleware permettant d'enrichir les données disponibles au sein des modèles HTMX.
  */
 @FunctionalInterface
 public interface HxResolver {
 
     /**
-     * Resolve data before view rendering.
-     * @return 
+     * @return Les données à mettre à disposition lors du rendu de modèle. 
      */
     Map<String, ? extends Object> resolve();
 }

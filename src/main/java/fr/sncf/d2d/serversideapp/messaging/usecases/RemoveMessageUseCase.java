@@ -6,11 +6,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import fr.sncf.d2d.serversideapp.common.exceptions.AccessDeniedException;
-import fr.sncf.d2d.serversideapp.messaging.channels.ChannelsRepository;
-import fr.sncf.d2d.serversideapp.messaging.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.exceptions.MessageNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.persistence.MessagesRepository;
+import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
+import fr.sncf.d2d.serversideapp.messaging.channels.persistence.ChannelsRepository;
+import fr.sncf.d2d.serversideapp.messaging.messages.exceptions.MessageNotFoundException;
+import fr.sncf.d2d.serversideapp.messaging.messages.persistence.MessagesRepository;
+import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 import fr.sncf.d2d.serversideapp.users.models.Role;

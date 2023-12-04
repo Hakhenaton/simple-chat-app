@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.persistence;
+package fr.sncf.d2d.serversideapp.messaging.messages.persistence;
 
 import java.util.Collections;
 import java.util.Date;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.Message;
+import fr.sncf.d2d.serversideapp.messaging.messages.models.Message;
 import lombok.RequiredArgsConstructor;
 
 @Repository

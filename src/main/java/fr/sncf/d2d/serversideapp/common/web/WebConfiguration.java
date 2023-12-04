@@ -21,7 +21,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public RequestContextListener requestContextListener(){
+    RequestContextListener requestContextListener(){
         return new RequestContextListener();
     }
 }

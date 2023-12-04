@@ -1,5 +1,12 @@
+<p hx-swap-oob='innerHTML:[x-channel-id="{{ channelId }}"] .channel-users-total-connections'>
+    {{ state.totalConnections }} utilisateur(s) connecté(s)
+</p>
+
 <ul hx-swap-oob='innerHTML:[x-channel-id="{{ channelId }}"] .channel-users-list'>
-{{#state.users}}
-    <li>{{username}}</li>
-{{/state.users}}
+    {{#state.users}}
+    <wcs-list-item>
+        <wcs-mat-icon slot="icon" icon="person"></wcs-mat-icon>
+        <div slot="description">{{username}}</div>
+    </wcs-list-item>
+    {{/state.users}}
 </ul>

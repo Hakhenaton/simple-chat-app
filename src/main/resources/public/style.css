@@ -8,13 +8,17 @@ body {
     background-color: var(--wcs-light);
 }
 
-p {
-    padding: 0;
-    margin: 0;
-}
-
 main {
     flex-grow: 1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+p, ul {
+    margin: 0;
+    padding: 0;
 }
 
 .error {
@@ -29,12 +33,11 @@ main {
 
 .channel-main {
     display: flex;
-    flex-direction: row;
-    flex-grow: 1;
+    height: 100%;
 }
 
 .channel-form {
-    padding: 16px;
+    
 }
 
 .message-input {
@@ -43,38 +46,61 @@ main {
 }
 
 .channel-users {
-    padding: 16px;
-    min-width: 250px;
-    background-color:cadetblue;
-    margin-bottom: 16px;
+    width: 250px;
+    border-radius: 0;
 }
 
 .channel-messages {
-    overflow-y: scroll;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--wcs-white);
+}
+
+.channel-message-feed {
+    flex-grow: 1;
+}
+
+.message-input-form-field {
+    flex-grow: 1;
+}
+
+.channel-message-form {
+    display: flex;
+    height: 100%;
+    height: 100px;
+}
+
+.message-input {
+    height: 100%;
 }
 
 .channel-users-list {
     overflow: hidden;
     border-radius: 8px;
     padding: 0;
+    margin: 0;
     list-style-type: none;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+}
+
+.channel-users-list:first-child {
+    margin-top: 0;
+}
+
+.channel-users-total-connections {
+    padding: 8px;
+    font-size: 0.8rem;
 }
 
 .channel-users-list > li {
-    background-color: bisque;
-    border-bottom: 1px solid black;
     padding: 16px;
     text-overflow: ellipsis;
 }
 
 .channel-message-form {
     padding: 8px;
-    background-color:cornflowerblue;
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 

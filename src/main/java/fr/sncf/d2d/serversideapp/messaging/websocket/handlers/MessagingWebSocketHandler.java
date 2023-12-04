@@ -1,5 +1,6 @@
 package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,15 +14,18 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.sncf.d2d.serversideapp.common.serialization.Validator;
+import fr.sncf.d2d.serversideapp.common.util.Validator;
+import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.messaging.dtos.CreateMessageDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.MessagingDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.RemoveMessageDto;
+import fr.sncf.d2d.serversideapp.messaging.messages.exceptions.BadMessageException;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.RemoveMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.websocket.events.WebSocketChannelEventsHandlersFactory;
+import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,8 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
-    public static final String CHANNEL_ID_ATTRIBUTE_NAME = "channelId";
-    public static final String CONNECTION_ID_ATTRIBUTE_NAME = "connectionId";
+    public static final String CONNECTION_ID_ATTRIBUTE_NAME = MessagingWebSocketHandler.class.getCanonicalName() + ".CONNECTION_ID";
 
     private static final Function<WebSocketSession, String> fmtSession = session -> String.format(
         "%s (%s:%s)",
@@ -58,7 +61,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
         log.debug("New connection from {} ", fmtSession.apply(session));
 
         final var sessionAttributes = session.getAttributes();
-        final var channelId = (UUID)sessionAttributes.get(MessagingHandshakeInterceptor.CHANNEL_ID_KEY);
+        final var channelId = (UUID)sessionAttributes.get(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY);
 
         assert channelId != null;
 
@@ -70,7 +73,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        final var channelId = (UUID)session.getAttributes().get(CHANNEL_ID_ATTRIBUTE_NAME);
+        final var channelId = (UUID)session.getAttributes().get(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY);
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){
@@ -98,7 +101,7 @@ public class MessagingWebSocketHandler extends TextWebSocketHandler {
             status
         );
 
-        final var channelId = (UUID)session.getAttributes().get(CHANNEL_ID_ATTRIBUTE_NAME);
+        final var channelId = (UUID)session.getAttributes().get(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY);
         final var connectionId = (UUID)session.getAttributes().get(CONNECTION_ID_ATTRIBUTE_NAME);
 
         if (channelId == null || connectionId == null){

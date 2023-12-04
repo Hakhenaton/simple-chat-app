@@ -20,25 +20,25 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UsersController {
+public class SignupController {
     
     private final CreateUserUseCase createUserUseCase;
     private final HxView view;
     private final HxCommands commands;
 
     @GetMapping("/signup")
-    public void signupForm() throws Exception{
+    public void form() throws Exception{
        this.view.render("signup/modal");
     }
 
     @PostMapping("/signup")
-    public void signupAction(SignupForm form, HttpServletResponse response) throws Exception {
+    public void signup(SignupForm form, HttpServletResponse response) throws Exception {
 
         try {
             final var params = CreateUserParams.builder()
-                        .username(form.getUsername())
-                        .password(form.getPassword())
-                        .build();
+                .username(form.getUsername())
+                .password(form.getPassword())
+                .build();
     
             final var user = this.createUserUseCase.create(params);
 

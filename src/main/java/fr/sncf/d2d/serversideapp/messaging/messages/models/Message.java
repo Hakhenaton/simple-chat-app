@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.messaging.channels;
+package fr.sncf.d2d.serversideapp.messaging.messages.models;
 
 import java.util.Date;
 import java.util.UUID;

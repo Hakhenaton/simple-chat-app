@@ -1,7 +1,8 @@
-package fr.sncf.d2d.serversideapp.messaging.channels;
+package fr.sncf.d2d.serversideapp.messaging.channels.models;
 
 import java.util.Optional;
 
+import fr.sncf.d2d.serversideapp.messaging.channels.events.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.users.models.User;
 import lombok.AccessLevel;
 import lombok.Builder;

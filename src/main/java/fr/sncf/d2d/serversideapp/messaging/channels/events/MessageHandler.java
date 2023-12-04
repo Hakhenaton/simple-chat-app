@@ -1,8 +1,8 @@
-package fr.sncf.d2d.serversideapp.messaging.channels.handlers;
+package fr.sncf.d2d.serversideapp.messaging.channels.events;
 
 import java.io.IOException;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.Message;
+import fr.sncf.d2d.serversideapp.messaging.messages.models.Message;
 import fr.sncf.d2d.serversideapp.users.models.User;
 
 /** Gestion d'un message arrivant */

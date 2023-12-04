@@ -12,11 +12,15 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * {@link HandshakeInterceptor} prévu pour stocker l'identifiant de channel auquel l'utilisateur se connecte 
+ * dans les données de session WebSocket. L'identifiant est également stocké sur la session HTTP.
+ */
 @Component
 @RequiredArgsConstructor
-public class MessagingHandshakeInterceptor implements HandshakeInterceptor {
+public class ChannelIdHandshakeInterceptor implements HandshakeInterceptor {
 
-    public static final String CHANNEL_ID_KEY = "channelId";
+    public static final String CHANNEL_ID_KEY = ChannelIdHandshakeInterceptor.class.getCanonicalName() + ".CHANNEL_ID";
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> wsSessionAttributes) throws Exception {

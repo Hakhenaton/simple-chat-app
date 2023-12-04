@@ -4,6 +4,9 @@ import java.util.Set;
 
 import lombok.Getter;
 
+/**
+ * Erreur de validation de données entrantes.
+ */
 @Getter
 public class ValidationException extends Exception {
     

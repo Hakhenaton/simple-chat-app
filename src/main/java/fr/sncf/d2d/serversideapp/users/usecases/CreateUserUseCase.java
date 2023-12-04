@@ -30,8 +30,8 @@ public class CreateUserUseCase {
             errors.add("Votre nom d'utilisateur ne doit pas être vide.");
 
         final var isAdmin = this.authenticationService.currentUser()
-            .map(u -> u.getRole().equals(Role.ADMINISTRATOR))
-            .orElse(false);
+            .filter(u -> u.getRole().equals(Role.ADMINISTRATOR))
+            .isPresent();
 
         if (!params.getRole().equals(Role.USER) && !isAdmin)
             throw new AccessDeniedException("Seuls les administrateurs peuvent créer des utilisateurs non standards");
@@ -45,11 +45,16 @@ public class CreateUserUseCase {
         if (!validPassword)
             errors.add("Votre mot de passe ne respecte pas les contraintes de sécurité.");
 
-        final var sanitizedUsername = params.getUsername().trim();
+        final var sanitizedUsername = params.getUsername().trim().toLowerCase();
 
-        if (this.usersRepository.findByUsername(sanitizedUsername).isPresent()){
-            errors.add(String.format("Le nom d'utilisateur %s n'est pas disponible", sanitizedUsername));
-        }
+        if (sanitizedUsername.length() > 25)
+            errors.add("Votre nom d'utilisateur ne doit pas dépasser 25 caractères");
+
+        if (Pattern.compile("^[a-z0-9_\\-]$").matcher(sanitizedUsername).find())
+            errors.add("Votre nom d'utilisateur doit être alphanumérique et ne peut contenir que des tirets: _ -");
+
+        if (this.usersRepository.findByUsername(sanitizedUsername).isPresent())
+            errors.add(String.format("Le nom d'utilisateur \"%s\" n'est pas disponible", sanitizedUsername));
 
         if (!errors.isEmpty())
             throw new UserValidationError(errors);

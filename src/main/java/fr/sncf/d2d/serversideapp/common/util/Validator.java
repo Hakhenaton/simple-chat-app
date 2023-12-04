@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.common.serialization;
+package fr.sncf.d2d.serversideapp.common.util;
 
 import java.util.stream.Collectors;
 
