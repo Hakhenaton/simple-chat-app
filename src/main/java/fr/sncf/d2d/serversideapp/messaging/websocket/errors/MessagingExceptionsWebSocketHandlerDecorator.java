@@ -45,7 +45,7 @@ public class MessagingExceptionsWebSocketHandlerDecorator implements WebSocketHa
         } catch (Exception exception){
             this.eventHandlerFactory.forSession(session)
                 .getOnMessagingException()
-                .handle(exception);;
+                .handle(exception);
         }
     }
     
