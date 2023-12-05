@@ -1,15 +1,15 @@
-package fr.sncf.d2d.serversideapp.messaging.websocket.events;
+package fr.sncf.d2d.serversideapp.common.htmx.views;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
-import fr.sncf.d2d.serversideapp.common.htmx.HxView;
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.HxResolver;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -23,10 +23,12 @@ public class HxWebSocketView implements HxView {
     
     private final HxRenderer renderer;
 
+    private final Set<HxResolver> resolvers;
+
     @Override
     public void render(Map<String, Map<String, Object>> partials) throws IOException {
         final var responseStream = new ByteArrayOutputStream(DEFAULT_OUTPUT_ALLOC_SIZE);
-        renderer.render(responseStream, partials);
+        renderer.render(responseStream, partials, this.resolvers);
         synchronized (this.session){
             this.session.sendMessage(new TextMessage(responseStream.toString(StandardCharsets.UTF_8)));
         }

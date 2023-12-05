@@ -8,7 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxHttpServletViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.ChannelIdHandshakeInterceptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ public class ApplicationLogoutSuccessHandler implements LogoutSuccessHandler {
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         
-        this.viewFactory.create(response).render(Map.of(
+        this.viewFactory.forResponse(response).render(Map.of(
             "channels/channel", Map.of(
                 OOB_KEY, true,
                 CHANNEL_ID_KEY, request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY)

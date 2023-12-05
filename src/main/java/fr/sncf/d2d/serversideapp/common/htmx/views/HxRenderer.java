@@ -1,16 +1,17 @@
-package fr.sncf.d2d.serversideapp.common.htmx;
+package fr.sncf.d2d.serversideapp.common.htmx.views;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.HxResolver;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -25,13 +26,11 @@ public class HxRenderer {
     private static final String TEMPLATE_FILE_EXT = ".mustache";
 
     private final DefaultMustacheFactory mustacheFactory = new DefaultMustacheFactory(TEMPLATES_LOCATION);
-
-    private final List<HxResolver> resolvers;
     
-    public void render(OutputStream stream, Map<String, Map<String, Object>> partials) throws IOException {
+    public void render(OutputStream stream, Map<String, Map<String, Object>> partials, Set<HxResolver> resolvers) throws IOException {
         final var data = new HashMap<String, Object>();
 
-        for (final var resolver: this.resolvers)
+        for (final var resolver: resolvers)
             data.putAll(resolver.resolve());
 
         try(final var writer = new OutputStreamWriter(stream)){

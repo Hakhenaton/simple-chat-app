@@ -1,6 +1,5 @@
 package fr.sncf.d2d.serversideapp.messaging.websocket.handlers;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,17 +14,14 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.sncf.d2d.serversideapp.common.util.Validator;
-import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
 import fr.sncf.d2d.serversideapp.messaging.dtos.CreateMessageDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.MessagingDto;
 import fr.sncf.d2d.serversideapp.messaging.dtos.RemoveMessageDto;
-import fr.sncf.d2d.serversideapp.messaging.messages.exceptions.BadMessageException;
 import fr.sncf.d2d.serversideapp.messaging.usecases.ConnectToChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.DisconnectFromChannelUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.RemoveMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.usecases.SendMessageUseCase;
 import fr.sncf.d2d.serversideapp.messaging.websocket.events.WebSocketChannelEventsHandlersFactory;
-import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

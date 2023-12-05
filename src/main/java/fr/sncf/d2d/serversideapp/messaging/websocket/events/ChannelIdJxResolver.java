@@ -1,21 +1,24 @@
 package fr.sncf.d2d.serversideapp.messaging.websocket.events;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxResolver;
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.HxResolver;
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.HxResolverScope;
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.Scoped;
 import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.ChannelIdHandshakeInterceptor;
 import fr.sncf.d2d.serversideapp.messaging.websocket.session.WebSocketSessionHolder;
 
-@Configuration
-public class WebSocketResolversConfiguration {
+@Component
+@Scoped(HxResolverScope.WEBSOCKET)
+public class ChannelIdJxResolver implements HxResolver {
 
-    @Bean
-    HxResolver channelIdResolver(){
-        return () -> WebSocketSessionHolder.currentSession()
+    @Override
+    public Map<String, ? extends Object> resolve() {
+        return WebSocketSessionHolder.currentSession()
             .map(session -> (UUID)session.getAttributes().get(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY))
             .map(channelId -> Collections.singletonMap("channelId", channelId))
             .orElseGet(Collections::emptyMap);

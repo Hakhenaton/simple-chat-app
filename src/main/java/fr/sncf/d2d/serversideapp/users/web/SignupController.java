@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import fr.sncf.d2d.serversideapp.common.htmx.HxCommands;
-import fr.sncf.d2d.serversideapp.common.htmx.HxView;
+
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxCommands;
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxView;
 import fr.sncf.d2d.serversideapp.users.exceptions.UserValidationError;
 import fr.sncf.d2d.serversideapp.users.usecases.CreateUserParams;
 import fr.sncf.d2d.serversideapp.users.usecases.CreateUserUseCase;

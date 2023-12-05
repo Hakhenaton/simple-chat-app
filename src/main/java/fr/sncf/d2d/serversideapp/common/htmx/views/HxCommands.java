@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.common.htmx;
+package fr.sncf.d2d.serversideapp.common.htmx.views;
 
 import java.util.Collections;
 import org.springframework.stereotype.Component;

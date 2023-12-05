@@ -6,7 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketSession;
 
-import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxWebSocketView;
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxWebSocketViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageDeletionHandler;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageHandler;
@@ -19,11 +20,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebSocketChannelEventsHandlersFactory {
 
-    private final HxRenderer hxRenderer;
+    private final HxWebSocketViewFactory hxWebSocketViewFactory;
 
     public ChannelEventsHandlers forSession(WebSocketSession session){
 
-        final var view = new HxWebSocketView(session, this.hxRenderer);
+        final var view = this.hxWebSocketViewFactory.forSession(session);
 
         return ChannelEventsHandlers.builder()
             .onMessage(messageHandler(view))

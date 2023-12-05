@@ -1,8 +1,10 @@
-package fr.sncf.d2d.serversideapp.common.htmx;
+package fr.sncf.d2d.serversideapp.common.htmx.views;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+
+import fr.sncf.d2d.serversideapp.common.htmx.resolvers.HxResolver;
 
 /**
  * Représente un objet capable d'envoyer des vues HTMX à un client.

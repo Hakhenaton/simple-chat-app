@@ -1,4 +1,4 @@
-package fr.sncf.d2d.serversideapp.common.htmx;
+package fr.sncf.d2d.serversideapp.common.htmx.resolvers;
 
 import java.util.Map;
 

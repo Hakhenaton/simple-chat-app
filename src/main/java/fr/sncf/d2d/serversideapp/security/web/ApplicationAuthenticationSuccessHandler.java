@@ -10,7 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import fr.sncf.d2d.serversideapp.common.web.HxHttpServletViewFactory;
+import fr.sncf.d2d.serversideapp.common.htmx.views.HxHttpServletViewFactory;
 import fr.sncf.d2d.serversideapp.messaging.websocket.handlers.ChannelIdHandshakeInterceptor;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +45,7 @@ public class ApplicationAuthenticationSuccessHandler implements AuthenticationSu
                 );
             });
 
-        this.servletViewFactory.create(response).render(partials);
+        this.servletViewFactory.forResponse(response).render(partials);
     }
 
 }
