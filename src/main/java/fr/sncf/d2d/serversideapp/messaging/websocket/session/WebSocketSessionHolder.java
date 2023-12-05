@@ -7,7 +7,13 @@ import org.springframework.web.socket.WebSocketSession;
 
 
 
-/** Similaire au {@link org.springframework.web.context.request.RequestContextHolder}, mais pour les {@link WebSocketSession}. */
+/** 
+ * Similaire au {@link org.springframework.web.context.request.RequestContextHolder}, 
+ * mais pour les objets {@link WebSocketSession} représentant la session courante.
+ * La {@link WebSocketSession} est stockée au niveau du thread courant lorsqu'une méthode est
+ * appelée sur un {@link WebSocketHandler} décoré avec un {@link SessionRegistrationWebSocketHandler} et peut être
+ * injecté dans des implémentations de services de la couche métier.
+ */
 public class WebSocketSessionHolder {
     
     private static final NamedInheritableThreadLocal<WebSocketSession> SESSION = 

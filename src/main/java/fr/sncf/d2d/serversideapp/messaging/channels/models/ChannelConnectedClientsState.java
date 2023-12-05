@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Builder
 @ToString
-public class ChannelState {
+public class ChannelConnectedClientsState {
     
     /** Ensemble des utilisateurs connectés au canal. */
     private final Set<User> users;
@@ -20,7 +20,7 @@ public class ChannelState {
     /** Nombre total de personnes connectées (utilisateurs ou anonymes). */
     private final long totalConnections;
 
-    public static ChannelState fromChannel(Channel channel){
+    public static ChannelConnectedClientsState fromChannel(Channel channel){
         final var allConnectedUsers = channel.clients()
             .values()
             .stream()
@@ -29,7 +29,7 @@ public class ChannelState {
             .map(Optional::get)
             .collect(Collectors.toUnmodifiableSet());
 
-        return ChannelState.builder()
+        return ChannelConnectedClientsState.builder()
             .users(allConnectedUsers)
             .totalConnections(channel.clients().size())
             .build();

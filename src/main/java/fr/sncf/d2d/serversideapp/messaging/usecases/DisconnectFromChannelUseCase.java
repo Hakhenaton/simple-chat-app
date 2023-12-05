@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelState;
+import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelConnectedClientsState;
 import fr.sncf.d2d.serversideapp.messaging.channels.persistence.ChannelsRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -23,9 +23,9 @@ public class DisconnectFromChannelUseCase {
 
         channel.remove(clientId);
 
-        final var state = ChannelState.fromChannel(channel);
+        final var state = ChannelConnectedClientsState.fromChannel(channel);
 
         for (final var client: channel.clients().values())
-            client.getEventHandlers().getOnState().handle(state);
+            client.getEventHandlers().getOnClientConnectionsState().handle(state);
     }
 }

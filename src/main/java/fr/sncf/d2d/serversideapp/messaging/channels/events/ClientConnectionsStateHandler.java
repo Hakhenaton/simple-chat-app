@@ -2,19 +2,19 @@ package fr.sncf.d2d.serversideapp.messaging.channels.events;
 
 import java.io.IOException;
 
-import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelState;
+import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelConnectedClientsState;
 
 /**
  * Gestion d'état du canal.
  */
 @FunctionalInterface
-public interface StateHandler {
+public interface ClientConnectionsStateHandler {
     
     /**
      * Implémentation de l'envoi d'un message d'état du canal.
-     * @see ChannelState
+     * @see ChannelConnectedClientsState
      * @param state L'état actuel du canal.
      * @throws IOException en cas d'erreur lors de l'envoi.
      */
-    void handle(ChannelState state) throws IOException;
+    void handle(ChannelConnectedClientsState state) throws IOException;
 }

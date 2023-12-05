@@ -17,8 +17,10 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 public class CsrfTokenHandshakeInterceptor implements HandshakeInterceptor {
 
     private static final String CSRF_REQUEST_ATTRIBUTE = "_csrf";
-    public static final String CSRF_PARAMETER_NAME_SESSION_KEY = CsrfTokenHandshakeInterceptor.class.getCanonicalName() + ".parameterName";
-    public static final String CSRF_TOKEN_VALUE_SESSION_KEY = CsrfTokenHandshakeInterceptor.class.getCanonicalName() + ".token";
+    public static final String CSRF_PARAMETER_NAME_SESSION_KEY = 
+        CsrfTokenHandshakeInterceptor.class.getCanonicalName() + ".parameterName";
+    public static final String CSRF_TOKEN_VALUE_SESSION_KEY = 
+        CsrfTokenHandshakeInterceptor.class.getCanonicalName() + ".token";
 
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
@@ -38,6 +40,7 @@ public class CsrfTokenHandshakeInterceptor implements HandshakeInterceptor {
     }
 
     @Override
-    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {}
+    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, 
+        Exception exception) {}
     
 }

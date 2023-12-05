@@ -16,7 +16,9 @@ public class HxWebSocketViewFactory {
     private final HxRenderer hxRenderer;
     private final Set<HxResolver> hxResolvers;
 
-    public HxWebSocketViewFactory(@Qualifier(HxResolversConfiguration.WS_RESOLVERS) Set<HxResolver> hxResolvers, HxRenderer hxRenderer) {
+    public HxWebSocketViewFactory(
+        @Qualifier(HxResolversConfiguration.WS_RESOLVERS) Set<HxResolver> hxResolvers, 
+        HxRenderer hxRenderer) {
         this.hxRenderer = hxRenderer;
         this.hxResolvers = hxResolvers;
     }

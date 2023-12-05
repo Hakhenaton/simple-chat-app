@@ -12,7 +12,7 @@ import lombok.NonNull;
 public class ChannelEventsHandlers {
 
     @NonNull
-    private final StateHandler onState;
+    private final ClientConnectionsStateHandler onClientConnectionsState;
 
     @NonNull
     private final MessageHandler onMessage;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import fr.sncf.d2d.serversideapp.messaging.channels.events.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.messaging.channels.exceptions.ChannelNotFoundException;
-import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelState;
+import fr.sncf.d2d.serversideapp.messaging.channels.models.ChannelConnectedClientsState;
 import fr.sncf.d2d.serversideapp.messaging.channels.models.ConnectedClient;
 import fr.sncf.d2d.serversideapp.messaging.channels.persistence.ChannelsRepository;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
@@ -43,10 +43,10 @@ public class ConnectToChannelUseCase {
 
         final var clientId = channel.add(connectedClient);
 
-        final var state = ChannelState.fromChannel(channel);
+        final var state = ChannelConnectedClientsState.fromChannel(channel);
 
         for (final var client: channel.clients().values())
-            client.getEventHandlers().getOnState().handle(state);
+            client.getEventHandlers().getOnClientConnectionsState().handle(state);
 
         return clientId;
     }

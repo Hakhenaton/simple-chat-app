@@ -7,6 +7,11 @@ import org.springframework.web.socket.WebSocketSession;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enregistre l'objet {@link WebSocketSession} au niveau du {@link WebSocketSessionHolder} et la rend ainsi
+ * disponible pour l'injection.
+ * @see WebSocketSessionHolder
+ */
 @RequiredArgsConstructor
 public class SessionRegistrationWebSocketHandlerDecorator implements WebSocketHandler {
 

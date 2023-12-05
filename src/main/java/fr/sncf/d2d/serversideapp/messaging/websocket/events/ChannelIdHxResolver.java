@@ -14,7 +14,7 @@ import fr.sncf.d2d.serversideapp.messaging.websocket.session.WebSocketSessionHol
 
 @Component
 @Scoped(HxResolverScope.WEBSOCKET)
-public class ChannelIdJxResolver implements HxResolver {
+public class ChannelIdHxResolver implements HxResolver {
 
     @Override
     public Map<String, ? extends Object> resolve() {
