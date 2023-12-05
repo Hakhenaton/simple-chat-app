@@ -28,7 +28,7 @@ public class SignupController {
 
     @GetMapping("/signup")
     public void form() throws Exception{
-       this.view.render("signup/modal");
+       this.view.render("signup/form");
     }
 
     @PostMapping("/signup")

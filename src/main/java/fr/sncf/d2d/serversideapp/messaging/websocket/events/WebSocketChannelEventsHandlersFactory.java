@@ -10,7 +10,9 @@ import fr.sncf.d2d.serversideapp.common.htmx.HxRenderer;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.ChannelEventsHandlers;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageDeletionHandler;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.MessageHandler;
+import fr.sncf.d2d.serversideapp.messaging.channels.events.MessagingExceptionHandler;
 import fr.sncf.d2d.serversideapp.messaging.channels.events.StateHandler;
+import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -27,6 +29,7 @@ public class WebSocketChannelEventsHandlersFactory {
             .onMessage(messageHandler(view))
             .onMessageDeleted(deleteHandler(view))
             .onState(stateHandler(view))
+            .onMessagingException(messagingExceptionHandler(view))
             .build();
     }
 
@@ -57,6 +60,18 @@ public class WebSocketChannelEventsHandlersFactory {
                 "channels/delete-message", 
                 Collections.singletonMap("messageId", messageId)
             );
+        };
+    }
+
+    private MessagingExceptionHandler messagingExceptionHandler(HxWebSocketView view){
+        return exception -> {
+
+            if (exception instanceof AccessDeniedException){
+                view.render("login/form", Collections.singletonMap("oob", true));
+                return;
+            }
+
+            throw exception;
         };
     }
 }

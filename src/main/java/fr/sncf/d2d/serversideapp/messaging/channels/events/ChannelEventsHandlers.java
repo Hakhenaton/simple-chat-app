@@ -19,4 +19,7 @@ public class ChannelEventsHandlers {
 
     @NonNull
     private final MessageDeletionHandler onMessageDeleted;
+
+    @NonNull
+    private final MessagingExceptionHandler onMessagingException;
 }

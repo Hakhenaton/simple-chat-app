@@ -1,4 +1,12 @@
-<wcs-modal id="login-modal" show show-close-button hx-on="wcsDialogClosed: this.remove()">
+{{#oob}}
+<div hx-swap-oob="innerHTML:#modal-zone">
+{{/oob}}
+<wcs-modal 
+    id="login-modal" 
+    show 
+    show-close-button 
+    hx-on="wcsDialogClosed: this.remove()"
+>
     <style>
         .login-field {
             margin-bottom: 16px;
@@ -49,3 +57,6 @@
         <wcs-button class="wcs-primary" type="submit">Se connecter</wcs-button>
     </form>
 </wcs-modal>
+{{#oob}}
+</div>
+{{/oob}}
