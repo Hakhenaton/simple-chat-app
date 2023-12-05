@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
-import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 
 import fr.sncf.d2d.serversideapp.messaging.websocket.errors.MessagingExceptionsWebSocketHandlerDecorator;
 import fr.sncf.d2d.serversideapp.messaging.websocket.events.WebSocketChannelEventsHandlersFactory;
@@ -16,8 +15,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessagingConfiguration implements WebSocketConfigurer {
 
+    private final ChannelIdHandshakeInterceptor channelIdInterceptor;
+    private final CsrfTokenHandshakeInterceptor csrfTokenHandshakeInterceptor;
+
     private final MessagingWebSocketHandler messagesHandler;
-    private final ChannelIdHandshakeInterceptor handshakeInterceptor;
+    
     private final WebSocketChannelEventsHandlersFactory eventsHandlersFactory;
 
     @Override
@@ -31,6 +33,9 @@ public class MessagingConfiguration implements WebSocketConfigurer {
             ), 
             "/channels/*"
         )
-        .addInterceptors(new HttpSessionHandshakeInterceptor(), this.handshakeInterceptor);
+        .addInterceptors(
+            this.csrfTokenHandshakeInterceptor, 
+            this.channelIdInterceptor
+        );
     }
 }
