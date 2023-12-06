@@ -5,9 +5,7 @@
         <meta name="description" content="Une application moderne avec HTMX">
         <meta charset="utf-8">
         <meta name="htmx-config" content='{
-            "selfRequestsOnly": true,
-            "historyCacheSize": 0,
-            "defaultSettleDelay": 0
+            
         }'>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
@@ -60,6 +58,21 @@
 
             document.body.addEventListener('htmx:wsConfigSend', event => {
                 bindWcsInputsToWsMessages(event)
+            })
+
+            function fixStencil(elt){
+
+            }
+
+            htmx.on(document.body, 'htmx:load', event => {
+                console.log('load')
+                console.log(event)
+
+                fixStencil(elt)
+
+                // fix stencil hydration error when using WCS.
+                if (event.detail.elt.tagName.startsWith('WCS'))
+                    event.detail.elt.classList.add('hydrated')
             })
         </script>
     </body>
