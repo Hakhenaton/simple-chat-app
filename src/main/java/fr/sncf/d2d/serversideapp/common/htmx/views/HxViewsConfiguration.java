@@ -7,6 +7,7 @@ import org.springframework.web.context.annotation.RequestScope;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+
 @Configuration
 @RequiredArgsConstructor
 public class HxViewsConfiguration {

@@ -45,8 +45,6 @@ public class SignupController {
 
             log.info("\"{}\" signed up", user.getUsername());
             
-            this.commands.retarget("#signup-modal");
-            this.commands.reswap("outerHTML");
             this.view.render(
                 "login/form", 
                 Collections.singletonMap("afterSignup", true)

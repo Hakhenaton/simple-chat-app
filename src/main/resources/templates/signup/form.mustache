@@ -1,175 +1,190 @@
-<wcs-modal id="signup-modal" size="l" show show-close-button hx-on="
-    wcsDialogClosed: this.remove() 
-    login: this.remove()
-">
-    <style>
-        .signup-form-field {
-            margin-bottom: 16px;
-        }
-        #signup-form-errors, #signup-form-server-errors {
-            display: block;
-            margin-bottom: 16px;
-            color: var(--wcs-red);
-        }
-    </style>
-    <div slot="header" id="signup-header">
-        🚀 Bienvenue !
-    </div>
-    <div style="margin-bottom: 16px">
-        Créez un compte et commencez à discuter avec vos amis...
-    </div>
-    <form 
-        id="signup-form" 
-        hx-encoding="application/x-www-form-urlencoded" 
-        hx-post="/users/signup" 
-        hx-swap="none"
-        hx-disabled-elt
+<div hx-swap-oob="innerHTML:#modal-zone">
+    <wcs-modal
+        size="l"
+        show
+        show-close-button
+        hx-on="wcsDialogClosed: this.remove()"
     >
-        <ul id="signup-form-server-errors">
-        </ul>
-        <wcs-form-field class="signup-form-field">
-            <wcs-label>
-                Nom d'utilisateur
-            </wcs-label>
-            <wcs-hint>
-                Alphanumérique, maximum 20 caractères.
-            </wcs-hint>
-            <wcs-input id="signup-form-username" name="username" placeholder="John doe" required>></wcs-input>
-            <wcs-error id="signup-form-username-error"></wcs-error>
-        </wcs-form-field>
-        <wcs-form-field class="signup-form-field">
-            <wcs-label>
-                Mot de passe
-            </wcs-label>
-            <wcs-hint>
-                Minimum 12 caractères, lettres majuscules, minuscules, et chiffres.
-            </wcs-hint>
-            <wcs-input id="signup-form-password" name="password" type="password" clearOnEdit="false" required>></wcs-input>    
-            <wcs-error id="signup-form-password-error"></wcs-error>
-        </wcs-form-field>
-        <wcs-form-field class="signup-form-field">
-            <wcs-label>
-                Confirmation du mot de passe
-            </wcs-label>
-            <wcs-input id="signup-form-password-confirmation" name="password" type="password" clearOnEdit="false" required>></wcs-input>
-            <wcs-error id="signup-form-password-confirmation-error"></wcs-error>
-        </wcs-form-field>
-        {{>../security/csrf-input}}
-        <wcs-button disabled size="m" id="signup-form-submit" class="wcs-primary" type="submit">
-            Créer mon compte
-        </wcs-button>
-    </form>
-    <script type="module">
+        {{>style}}
+        <div slot="header" id="signup-header">
+            🚀 Bienvenue !
+        </div>
+        <div style="margin-bottom: 16px">
+            Créez un compte et commencez à discuter avec vos amis...
+        </div>
+        <form 
+            id="signup-form" 
+            hx-encoding="application/x-www-form-urlencoded" 
+            hx-post="/users/signup" 
+            hx-swap="none"
+            hx-disabled-elt
+        >
+            <ul id="signup-form-server-errors">
+            </ul>
+            <wcs-form-field class="signup-form-field">
+                <wcs-label>
+                    Nom d'utilisateur
+                </wcs-label>
+                <wcs-hint>
+                    Alphanumérique, maximum 20 caractères.
+                </wcs-hint>
+                <wcs-input id="signup-form-username" name="username" placeholder="John doe" required>></wcs-input>
+                <wcs-error id="signup-form-username-error"></wcs-error>
+            </wcs-form-field>
+            <wcs-form-field class="signup-form-field">
+                <wcs-label>
+                    Mot de passe
+                </wcs-label>
+                <wcs-hint>
+                    Minimum 12 caractères, lettres majuscules, minuscules, et chiffres.
+                </wcs-hint>
+                <wcs-input 
+                    id="signup-form-password" 
+                    name="password" 
+                    type="password" 
+                    clearOnEdit="false" 
+                    required
+                >
+                </wcs-input>    
+                <wcs-error id="signup-form-password-error"></wcs-error>
+            </wcs-form-field>
+            <wcs-form-field class="signup-form-field">
+                <wcs-label>
+                    Confirmation du mot de passe
+                </wcs-label>
+                <wcs-input 
+                    id="signup-form-password-confirmation" 
+                    name="password" 
+                    type="password" 
+                    clearOnEdit="false" 
+                    required
+                >
+                </wcs-input>
+                <wcs-error id="signup-form-password-confirmation-error"></wcs-error>
+            </wcs-form-field>
+            {{>../security/csrf-input}}
+            <wcs-button 
+                id="signup-form-submit" 
+                disabled 
+                size="m" 
+                class="wcs-primary" 
+                type="submit"
+            >
+                Créer mon compte
+            </wcs-button>
+        </form>
+        <script type="module">
 
-        // form validation
-        const touched = new Set()
-        const oks = new Set()
+            // form validation
+            const touched = new Set()
+            const oks = new Set()
 
-        const fields = Object.fromEntries(
-            ['username', 'password', 'password-confirmation']
-                .map(name => [name, htmx.find(`#signup-form-${name}`)])
-        )
+            const fields = Object.fromEntries(
+                ['username', 'password', 'password-confirmation']
+                    .map(name => [name, htmx.find(`#signup-form-${name}`)])
+            )
 
-        const fail = (name, message) => {
+            const fail = (name, message) => {
 
-            if (!touched.has(name))
-                return
+                if (!touched.has(name))
+                    return
 
-            fields[name].state = 'error'
-            fields[name].parentNode.isError = true
-            htmx.find(`#${fields[name].id}-error`).textContent = message
-            oks.delete(name)
-        }
-
-        const ok = name => {
-            oks.add(name)
-            fields[name].state = 'initial'
-            fields[name].parentNode.isError = false
-            htmx.find(`#${fields[name].id}-error`).textContent = ''
-        }
-
-        function validate(name){
-
-            switch (name){
-                case 'username':
-
-                    if (fields.username.value.length === 0){
-                        fail('username', 'Votre nom d\'utilisateur doit être fourni.')
-                        return
-                    }
-
-                    if (fields.username.value.length > 20){
-                        fail('username', 'Votre nom d\'utilisateur ne doit pas dépasser 20 caractères.')
-                        return
-                    }
-
-                    ok('username')
-
-                    break
-                case 'password':
-                case 'password-confirmation':
-
-                    if (fields.password.value.length < 12){
-                        fail('password', 'Votre mot de passe doit faire au moins 12 caractères.')
-                        return
-                    }
-
-                    if ([/[a-z]/, /[A-Z]/, /[0-9]/].some(pattern => !pattern.test(fields.password.value))){
-                        fail('password', 'Votre mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre.')
-                        return
-                    }
-
-                    ok('password')
-
-                    if (fields.password.value !== fields['password-confirmation'].value){
-                        fail('password-confirmation', 'Veuillez vérifier la confirmation de votre mot de passe.')
-                        return
-                    }
-
-                    ok('password-confirmation')
+                fields[name].state = 'error'
+                fields[name].parentNode.isError = true
+                htmx.find(`#${fields[name].id}-error`).textContent = message
+                oks.delete(name)
             }
-        }
 
-        function isFormValid(fields){
-            return Object.keys(fields).every(name => oks.has(name))
-        }
-    
-        const submitButton = htmx.find('#signup-form-submit')
+            const ok = name => {
+                oks.add(name)
+                fields[name].state = 'initial'
+                fields[name].parentNode.isError = false
+                htmx.find(`#${fields[name].id}-error`).textContent = ''
+            }
 
-        Object.entries(fields)
-            .forEach(([name, field]) => {
-                field.addEventListener('wcsChange', () => {
-                    touched.add(name)
-                    validate(name, field)
-                    if (isFormValid(fields)){
-                        submitButton.disabled = false
-                        return
-                    }
-                    submitButton.disabled = true
+            function validate(name){
+
+                switch (name){
+                    case 'username':
+
+                        if (fields.username.value.length === 0){
+                            fail('username', 'Votre nom d\'utilisateur doit être fourni.')
+                            return
+                        }
+
+                        if (fields.username.value.length > 20){
+                            fail('username', 'Votre nom d\'utilisateur ne doit pas dépasser 20 caractères.')
+                            return
+                        }
+
+                        ok('username')
+
+                        break
+                    case 'password':
+                    case 'password-confirmation':
+
+                        if (fields.password.value.length < 12){
+                            fail('password', 'Votre mot de passe doit faire au moins 12 caractères.')
+                            return
+                        }
+
+                        if ([/[a-z]/, /[A-Z]/, /[0-9]/].some(pattern => !pattern.test(fields.password.value))){
+                            fail('password', 'Votre mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un chiffre.')
+                            return
+                        }
+
+                        ok('password')
+
+                        if (fields.password.value !== fields['password-confirmation'].value){
+                            fail('password-confirmation', 'Veuillez vérifier la confirmation de votre mot de passe.')
+                            return
+                        }
+
+                        ok('password-confirmation')
+                }
+            }
+
+            function isFormValid(fields){
+                return Object.keys(fields).every(name => oks.has(name))
+            }
+        
+            const submitButton = htmx.find('#signup-form-submit')
+
+            Object.entries(fields)
+                .forEach(([name, field]) => {
+                    field.addEventListener('wcsChange', () => {
+                        touched.add(name)
+                        validate(name, field)
+                        if (isFormValid(fields)){
+                            submitButton.disabled = false
+                            return
+                        }
+                        submitButton.disabled = true
+                    })
                 })
-            })
 
-        // button loading state
-        const form = htmx.find('#signup-form')
+            // button loading state
+            const form = htmx.find('#signup-form')
 
-        const submitButtonInnerText = submitButton.innerText
+            const submitButtonInnerText = submitButton.innerText
 
-        htmx.on(
-            form, 
-            'htmx:beforeRequest', 
-            () => {
-                submitButton.innerText = ''
-                submitButton.loading = true
-            }
-        )
+            htmx.on(
+                form, 
+                'htmx:beforeRequest', 
+                () => {
+                    submitButton.innerText = ''
+                    submitButton.loading = true
+                }
+            )
 
-        htmx.on(
-            form, 
-            'htmx:afterRequest', () => {
-                submitButton.innerText = submitButtonInnerText
-                submitButton.loading = false
-            }
-        )
+            htmx.on(
+                form, 
+                'htmx:afterRequest', () => {
+                    submitButton.innerText = submitButtonInnerText
+                    submitButton.loading = false
+                }
+            )
 
-    </script>
-</wcs-modal>
+        </script>
+    </wcs-modal>
+</div>

@@ -63,10 +63,7 @@ public class WebSocketChannelEventsHandlersFactory {
         return exception -> {
 
             if (exception instanceof AccessDeniedException){
-                view.render(
-                    "login/form", 
-                    Collections.singletonMap("oob", true)
-                );
+                view.render("login/form");
                 return;
             }
 

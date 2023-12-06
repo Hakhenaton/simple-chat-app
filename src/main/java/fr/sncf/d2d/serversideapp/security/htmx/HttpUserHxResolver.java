@@ -21,7 +21,7 @@ public class HttpUserHxResolver implements HxResolver {
     private final SecurityContextAuthenticationService securityContextAuthenticationService;
 
     @Override
-    public Map<String, ? extends Object> resolve() {
+    public Map<String, ? extends Object> resolve(){
         return this.securityContextAuthenticationService.currentUser()
             .map(user -> Collections.singletonMap(USER_KEY, user))
             .orElseGet(Collections::emptyMap);

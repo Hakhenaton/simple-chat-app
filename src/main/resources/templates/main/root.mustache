@@ -4,17 +4,21 @@
         <title>Dead simple app</title>
         <meta name="description" content="Une application moderne avec HTMX">
         <meta charset="utf-8">
+        <meta name="htmx-config" content='{
+            "selfRequestsOnly": true,
+            "historyCacheSize": 0,
+            "defaultSettleDelay": 0
+        }'>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        {{> navbar}}
+        {{>navbar}}
         <main>
             {{$main}}{{/main}}
         </main>
-        <div id="modal-zone">
-        </div>
+        <div id="modal-zone"></div>
         <script src="https://unpkg.com/htmx.org@1.9.8"></script>
         <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
         <script type="module">
@@ -23,7 +27,11 @@
             
             defineCustomElements()
 
-            const wcsControls = ['wcs-input', 'wcs-textarea', 'wcs-select']
+            const wcsControls = [
+                'wcs-input', 
+                'wcs-textarea', 
+                'wcs-select'
+            ]
 
             // les éléments <wcs-input> ne sont pas des <input> standards, donc les éléments <form> ne les prennent pas
             // en compte par défaut.

@@ -11,8 +11,9 @@ import fr.sncf.d2d.serversideapp.common.htmx.resolvers.Scoped;
 import fr.sncf.d2d.serversideapp.security.services.WebSocketSessionAuthenticationService;
 import lombok.RequiredArgsConstructor;
 
-@Scoped(HxResolverScope.WEBSOCKET)
+
 @Component
+@Scoped(HxResolverScope.WEBSOCKET)
 @RequiredArgsConstructor
 public class WebSocketUserHxResolver implements HxResolver {
 
@@ -21,11 +22,9 @@ public class WebSocketUserHxResolver implements HxResolver {
     private final WebSocketSessionAuthenticationService webSocketSessionAuthenticationService;
 
     @Override
-    public Map<String, ? extends Object> resolve() {
+    public Map<String, ? extends Object> resolve(){
         return this.webSocketSessionAuthenticationService.currentUser()
             .map(user -> Collections.singletonMap(USER_KEY, user))
             .orElseGet(Collections::emptyMap);
     }
-    
-    
 }

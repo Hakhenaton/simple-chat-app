@@ -27,3 +27,7 @@ spring:
     timeout: 1d
     jdbc:
       initialize-schema: never
+---
+une:
+  autre:
+    propriete: valeur
