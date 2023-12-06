@@ -21,11 +21,9 @@ public class SecurityContextAuthenticationService implements AuthenticationServi
 
     public Optional<User> currentUser(){
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
-            .flatMap(authentication -> {
-                final var principal = authentication.getPrincipal();
-                return principal instanceof ApplicationUserDetails details
-                    ? Optional.of(details.getDomainUser())
-                    : Optional.empty();
-            });
+            .map(authentication -> authentication.getPrincipal() instanceof ApplicationUserDetails details
+                ? details.getDomainUser()
+                : null
+            );
     }
 }

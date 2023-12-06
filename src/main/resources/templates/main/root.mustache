@@ -5,8 +5,7 @@
         <meta name="description" content="Une application moderne avec HTMX">
         <meta charset="utf-8">
         <meta name="htmx-config" content='{
-            "historyCacheSize": 0,
-            "defaultSettleDelay": 1
+            "historyCacheSize": 0
         }'>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
@@ -20,61 +19,6 @@
         <div id="modal-zone"></div>
         <script src="https://unpkg.com/htmx.org@1.9.8"></script>
         <script src="https://unpkg.com/htmx.org/dist/ext/ws.js"></script>
-        <script type="module">
-
-            import { defineCustomElements } from '/wcs-core/loader/index.js'
-            
-            defineCustomElements()
-
-            const wcsControls = [
-                'wcs-input', 
-                'wcs-textarea', 
-                'wcs-select'
-            ]
-
-            // les éléments <wcs-input> ne sont pas des <input> standards, donc les éléments <form> ne les prennent pas
-            // en compte par défaut.
-            // on peut customiser le comportement de HTMX pour supporter cela lors de la configuration des requêtes
-            // faites avec hx-<method>.
-            function bindWcsInputsToRequests(htmxConfigRequestEvent){
-                const { target, parameters } = htmxConfigRequestEvent.detail
-                
-                for (const input of target.querySelectorAll(wcsControls.map(control => `${control}[name]`).join(',')))
-                    parameters[input.getAttribute('name')] = input.value
-            }
-
-            document.body.addEventListener('htmx:configRequest', event => {
-                bindWcsInputsToRequests(event)
-            })
-
-            // le même traitement doit s'appliquer avec les messages WebSocket envoyés avec ws-send
-            function bindWcsInputsToWsMessages(htmxWsConfigSendEvent){
-                const { elt: target } = htmxWsConfigSendEvent.detail
-
-                htmxWsConfigSendEvent.detail.messageBody = JSON.stringify(Object.fromEntries(
-                    Array.from(target.querySelectorAll([...wcsControls, 'input'].map(control => `${control}[name]`).join(',')))
-                        .map(input => [input.getAttribute('name'), input.value])
-                ))
-            }
-
-            document.body.addEventListener('htmx:wsConfigSend', event => {
-                bindWcsInputsToWsMessages(event)
-            })
-
-            function fixStencil(elt){
-
-            }
-
-            htmx.on(document.body, 'htmx:load', event => {
-                console.log('load')
-                console.log(event)
-
-                fixStencil(elt)
-
-                // fix stencil hydration error when using WCS.
-                if (event.detail.elt.tagName.startsWith('WCS'))
-                    event.detail.elt.classList.add('hydrated')
-            })
-        </script>
+        <script type="module" src="/js/init.js"></script>
     </body>
 </html>

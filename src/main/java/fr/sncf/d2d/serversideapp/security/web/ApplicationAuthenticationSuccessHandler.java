@@ -27,25 +27,25 @@ public class ApplicationAuthenticationSuccessHandler implements AuthenticationSu
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, 
         Authentication authentication) throws IOException, ServletException {
 
-        final var partials = new HashMap<String, Map<String, Object>>();
+        final var fragments = new HashMap<String, Map<String, Object>>();
 
-        partials.putAll(Map.of(
+        fragments.putAll(Map.of(
             "main/navbar", Collections.singletonMap("oob", true),
             "login/success", Collections.emptyMap()
         ));
 
         Optional.ofNullable(request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY))
             .ifPresent(channelId -> {
-                partials.put(
+                fragments.put(
                     "channels/channel", 
                     Map.of(
                         "oob", true,
-                        "channelId", request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY)
+                        "channelId", channelId
                     )
                 );
             });
 
-        this.servletViewFactory.forResponse(response).render(partials);
+        this.servletViewFactory.forResponse(response).render(fragments);
     }
 
 }
