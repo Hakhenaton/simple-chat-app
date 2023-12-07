@@ -44,14 +44,15 @@ document.body.addEventListener('htmx:wsConfigSend', event => {
 // modifications lorsqu'il est prêt à être affiché. Un élément non hydraté a une propriété "visbility": "hidden".
 // Stencil fait cela de manière asynchrone, probablement via des gestionnaires d'événéments.
 
-// Quand HTMX écrase un élément existant, il insère le nouveau noeud et copie d'abord les anciens attributs, puis il invoque un setTimeout en fonction de htmx.config.afterSettleDelay.
+// Quand HTMX écrase un élément existant, il insère le nouveau noeud et copie d'abord les anciens attributs, puis il invoque un setTimeout en fonction de htmx.config.defaultSettleDelay.
 // C'est seulement après ce délai qu'il va mettre à jour le noeud avec d'éventuels nouveaux attributs. Seulement, il ne prend pas en compte les attributs qui auraient été rajoutés entre temps
 // par Stencil. L'attribut "hydrated" est donc présent pendant quelques instants, puis disparaît lorsque les nouveaux attributs sont mis en place.
 
 // Ce tour de magie sert au support des transitions CSS pour HTMX. Le délai par défaut est de 20ms.
-// On peut désactiver totalement cela en mettant htmx.config.afterSettleDelay à 0.
+// On peut désactiver totalement cela en mettant htmx.config.defaultSettleDelay à 0.
 // Une autre solution est d'ajouter manuellement l'attribut "hydrated" lorsque HTMX ajoute un noeud WCS dans le DOM.
 // https://htmx.org/docs/#details
+// c'est ce que fait cette fonction.
 function fixStencilHydratation(elt){
 
     if (!(elt instanceof Node) || elt.nodeType !== Node.ELEMENT_NODE)
@@ -63,6 +64,28 @@ function fixStencilHydratation(elt){
     for (const child of elt.children)
         fixStencilHydratation(child)
 }
+
+
+htmx.on(document.body, 'htmx:afterSettle', event => {
+    console.log('after settle: ', event.detail)
+})
+
+htmx.on(document.body, 'htmx:beforeSwap', event => {
+    console.log('before swap: ', event.detail)
+})
+
+htmx.on(document.body, 'htmx:afterSwap', event => {
+    console.log('after swap: ', event.detail)
+})
+
+htmx.on(document.body, 'htmx:oobBeforeSwap', event => {
+    console.log('before oob swap: ', event.detail)
+})
+
+htmx.on(document.body, 'htmx:oobAfterSwap', event => {
+    console.log('after oob swap: ', event.detail)
+})
+
 
 htmx.on(document.body, 'htmx:load', event => {
     fixStencilHydratation(event.detail.elt)
