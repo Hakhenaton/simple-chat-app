@@ -4,9 +4,7 @@
         <title>Dead simple app</title>
         <meta name="description" content="Une application moderne avec HTMX">
         <meta charset="utf-8">
-        <meta name="htmx-config" content='{
-            
-        }'>
+        <meta name="htmx-config" content='{}'>
         <link rel="stylesheet" href="/style.css">
         <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -65,9 +63,7 @@
             }
 
             htmx.on(document.body, 'htmx:load', event => {
-                console.log('load')
-                console.log(event)
-
+                
                 fixStencil(elt)
 
                 // fix stencil hydration error when using WCS.
