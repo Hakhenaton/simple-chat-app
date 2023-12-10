@@ -4,21 +4,38 @@
         <title>Dead simple app</title>
         <meta name="description" content="Une application moderne avec HTMX">
         <meta charset="utf-8">
-        <meta name="htmx-config" content='{
-            "historyCacheSize": 0
-        }'>
-        <link rel="stylesheet" href="/style.css">
-        <link rel="stylesheet" href="/wcs-core/dist/wcs/wcs.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <meta name="nonce" content="{{ nonce }}">
+        <link rel="stylesheet" nonce="{{ nonce }}" href="/style.css">
+        <link rel="stylesheet" nonce="{{ nonce }}" href="/wcs-core/dist/wcs/wcs.css">
+        <link 
+            rel="stylesheet" 
+            crossorigin="anonymous" 
+            nonce="{{ nonce }}" 
+            integrity="sha512-PFCefAvQJ8EJOtRVFJ7bVhfobQYXxkx6Nn2GNkiWZ3FXZEgICp/5lJ8LNh66VuyN8ITsQYziICy46GRM2AE9kQ==" 
+            href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body>
-        {{>navbar}}
+        {{>../navbar/navbar}}
         <main>
             {{$main}}{{/main}}
         </main>
         <div id="modal-zone"></div>
-        <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha512-wua2xfJY3quQbT5pSx40Tp5+LD/zpw/9hARj1zsjJOA+rCq7N7pf7wlBXXdn5iGjQI5HE7svGvPz529Q3gJDiA==" crossorigin="anonymous"></script>
-        <script src="https://unpkg.com/htmx.org@1.9.9/dist/ext/ws.js" integrity="sha512-pt3nHyVIdlhMGjAF7fpJMH1Z+tp/uXwixVH9CO6ndmk4XuWXmDB7qnQcmShXSglKCbSFDpbw2f/1+HwiFn7cRg==" crossorigin="anonymous"></script>
-        <script type="module" src="/js/init.js"></script>
+        <script 
+            src="https://unpkg.com/htmx.org@1.9.9" 
+            nonce="{{ nonce }}" 
+            integrity="sha512-FSS62yxqCRMCtm1J+ddRwX8DuCRVt/WMpihCo06P+Je5AG4CV9yoLX53zHaOB5w/eZdG7d/QAyUEJTnHZHrWKg==" 
+            crossorigin="anonymous">
+        </script>
+        <script 
+            src="https://unpkg.com/htmx.org@1.9.9/dist/ext/ws.js" 
+            nonce="{{ nonce }}" 
+            integrity="sha512-pt3nHyVIdlhMGjAF7fpJMH1Z+tp/uXwixVH9CO6ndmk4XuWXmDB7qnQcmShXSglKCbSFDpbw2f/1+HwiFn7cRg==" 
+            crossorigin="anonymous">
+        </script>
+        <script 
+            type="module" 
+            nonce="{{ nonce }}" 
+            src="/js/init.js">
+        </script>
     </body>
 </html>

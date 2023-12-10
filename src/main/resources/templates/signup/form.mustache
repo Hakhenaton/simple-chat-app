@@ -8,10 +8,10 @@
     >
         {{>style}}
         <div slot="header" id="signup-header">
-            🚀 Bienvenue !
-        </div>
-        <div style="margin-bottom: 16px">
-            Créez un compte et commencez à discuter avec vos amis...
+            <p>🚀 Bienvenue !</p>
+            <p>
+                Créez un compte et commencez à discuter avec vos amis...
+            </p>
         </div>
         <form 
             id="signup-form" 
@@ -74,7 +74,7 @@
                 Créer mon compte
             </wcs-button>
         </form>
-        <script type="module">
+        <script type="module" nonce="{{ nonce }}">
 
             // form validation
             const touched = new Set()

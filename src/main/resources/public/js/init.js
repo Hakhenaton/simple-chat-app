@@ -1,7 +1,10 @@
 'use strict'
 
-import { defineCustomElements } from '/wcs-core/loader/index.js'
+import { defineCustomElements, setNonce } from '/wcs-core/loader/index.js'
             
+const nonce = document.head.querySelector('meta[name="nonce"]').content
+
+setNonce(nonce)
 defineCustomElements()
 
 const wcsControls = [
@@ -64,6 +67,16 @@ function fixStencilHydratation(elt){
     for (const child of elt.children)
         fixStencilHydratation(child)
 }
+
+Object.assign(
+    htmx.config, 
+    {
+        historyCacheSize: 0,
+        inlineScriptNonce: nonce,
+        includeIndicatorStyles: false,
+        allowEval: false
+    }
+)
 
 
 htmx.on(document.body, 'htmx:afterSettle', event => {

@@ -23,6 +23,10 @@ p, ul {
     padding: 0;
 }
 
+p {
+    margin-bottom: 16px;
+}
+
 .error {
     color: var(--wcs-red);
 }

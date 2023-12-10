@@ -1,5 +1,7 @@
 package fr.sncf.d2d.serversideapp.security.configuration;
 
+import java.util.Set;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,7 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.XorCsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.header.HeaderWriterFilter;
 
+import fr.sncf.d2d.serversideapp.security.filters.CspFilter;
 import fr.sncf.d2d.serversideapp.security.web.ApplicationAuthenticationFailureHandler;
 import fr.sncf.d2d.serversideapp.security.web.ApplicationAuthenticationSuccessHandler;
 import fr.sncf.d2d.serversideapp.security.web.ApplicationLogoutSuccessHandler;
@@ -38,6 +42,7 @@ public class SecurityConfiguration {
             )
             .csrf(csrf -> csrf.csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()))
             .authorizeHttpRequests(requests -> requests.anyRequest().permitAll())
+            .addFilterAfter(new CspFilter(), HeaderWriterFilter.class)
             .build();
     }
 

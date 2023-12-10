@@ -1,0 +1,44 @@
+<wcs-header 
+    id="navbar" 
+    {{#oob}}
+        hx-swap-oob="outerHTML"
+    {{/oob}}
+>
+        <img slot="logo" src="/img/sncf.svg" alt="Logo SNCF">
+        <h1 slot="title">HTMX Super tchat</h1>
+        <div slot="actions">
+            {{#user}}
+                <wcs-dropdown class="wcs-primary" shape="small">
+                <div slot="placeholder">{{ user.getUsername }}</div>
+                    <wcs-dropdown-item>Mon compte</wcs-dropdown-item>
+                    <wcs-dropdown-item 
+                        hx-post="/logout" 
+                        hx-swap="none"
+                        hx-vals='{ "{{ csrf.parameterName }}": "{{ csrf.token }}" }' 
+                        hx-trigger="wcsDropdownItemClick">
+                        Se déconnecter
+                    </wcs-dropdown-item>
+                </wcs-dropdown>
+            {{/user}}
+            {{^user}}
+                <wcs-button 
+                    hx-get="/users/signup" 
+                    hx-swap="none"
+                    hx-disabled-elt 
+                    class="wcs-primary" 
+                    shape="small">
+                    S'inscrire
+                </wcs-button>
+                <wcs-button 
+                    hx-get="/login" 
+                    hx-swap="none"
+                    hx-disabled-elt 
+                    mode="stroked" 
+                    class="wcs-primary" 
+                    shape="small">
+                    Se connecter
+                </wcs-button>
+            {{/user}}
+        </div>
+        {{>style}}
+</wcs-header >
