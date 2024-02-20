@@ -19,7 +19,6 @@
             <div class="channel-message-form-body">
                 <form 
                     ws-send 
-                    hx-on::ws-after-send="htmx.find(this, '.message-input').value = ''"
                     class="channel-message-form"
                 >
                     <wcs-textarea 
@@ -42,6 +41,11 @@
                         class="wcs-primary">
                         Envoyer
                     </wcs-button>
+                    <script type="module" nonce="{{ nonce }}">
+                        htmx.on('htmx:wsAfterSend', ev => {
+                            htmx.find(ev.target, '.message-input').value = ''
+                        })
+                    </script>
                 </form>
             </div>
         </div>

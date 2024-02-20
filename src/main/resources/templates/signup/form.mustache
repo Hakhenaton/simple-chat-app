@@ -4,7 +4,6 @@
         size="l"
         show
         show-close-button
-        hx-on="wcsDialogClosed: this.remove()"
     >
         {{>style}}
         <div slot="header" id="signup-header">
@@ -185,7 +184,13 @@
                     submitButton.loading = false
                 }
             )
-
+        </script>
+        <script type="module" nonce="{{ nonce }}">
+            htmx.on(
+                htmx.find('#signup-modal'), 
+                'wcsDialogClosed', 
+                event => event.target.remove()
+            )
         </script>
     </wcs-modal>
 </div>

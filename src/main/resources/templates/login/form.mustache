@@ -3,7 +3,6 @@
         id="login-modal"
         show
         show-close-button 
-        hx-on="wcsDialogClosed: this.remove()"
     >
         {{>style}}
         <div slot="header" id="login-header">
@@ -11,11 +10,11 @@
             Login
         </div>
         <form  
+            id="login-form"
             hx-post="/login" 
             hx-encoding="application/x-www-form-urlencoded" 
             hx-swap="none" 
             hx-disabled-elt
-            hx-on::before-request="htmx.find(this, '#login-error').innerHTML = ''"
         >
             <span id="login-error"></span>
             {{#afterSignup}}
@@ -40,4 +39,17 @@
             </wcs-button>
         </form>
     </wcs-modal>
+    <script type="module" nonce="{{ nonce }}">
+        htmx.on(
+            htmx.find('#login-modal'), 
+            'wcsDialogClosed', 
+            event => event.target.remove()
+        )
+
+        htmx.on(
+            htmx.find("#login-form"),
+            'htmx:beforeRequest',
+            event => htmx.find(event.target, '#login-error').innerHTML = ''
+        )
+    </script>
 </div>

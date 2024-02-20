@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class MessagingConfiguration implements WebSocketConfigurer {
 
     private final ChannelIdHandshakeInterceptor channelIdInterceptor;
+    private final NonceHandshakeInterceptor nonceHandshakeInterceptor;
     private final CsrfTokenHandshakeInterceptor csrfTokenHandshakeInterceptor;
 
     private final MessagingWebSocketHandler messagesHandler;
@@ -35,7 +36,8 @@ public class MessagingConfiguration implements WebSocketConfigurer {
         )
         .addInterceptors(
             this.csrfTokenHandshakeInterceptor, 
-            this.channelIdInterceptor
+            this.channelIdInterceptor,
+            this.nonceHandshakeInterceptor
         );
     }
 }

@@ -25,7 +25,6 @@ public class SignupController {
     
     private final CreateUserUseCase createUserUseCase;
     private final HxView view;
-    private final HxCommands commands;
 
     @GetMapping("/signup")
     public void form() throws Exception{

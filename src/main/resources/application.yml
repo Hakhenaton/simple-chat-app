@@ -27,7 +27,7 @@ spring:
     timeout: 1d
     jdbc:
       initialize-schema: never
----
-une:
-  autre:
-    propriete: valeur
+server:
+  servlet:
+    session:
+      tracking-modes: []

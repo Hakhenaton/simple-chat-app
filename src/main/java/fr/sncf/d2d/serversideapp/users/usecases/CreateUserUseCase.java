@@ -3,10 +3,10 @@ package fr.sncf.d2d.serversideapp.users.usecases;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import fr.sncf.d2d.serversideapp.security.exceptions.AccessDeniedException;
 import fr.sncf.d2d.serversideapp.security.services.AuthenticationService;
 import fr.sncf.d2d.serversideapp.users.exceptions.UserValidationError;
 import fr.sncf.d2d.serversideapp.users.models.Role;
@@ -22,7 +22,7 @@ public class CreateUserUseCase {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationService authenticationService;
 
-    public User create(CreateUserParams params) throws UserValidationError {
+    public User create(CreateUserParams params) throws UserValidationError, AccessDeniedException {
 
         final var errors = new ArrayList<String>();
 

@@ -24,7 +24,7 @@ public class HttpCspNonceHxResolver implements HxResolver {
 
     @Override
     public Map<String, ? extends Object> resolve() {
-        return Optional.ofNullable(this.request.getSession(false).getAttribute(CspFilter.SCRIPT_NONCE))
+        return Optional.ofNullable(this.request.getSession().getAttribute(CspFilter.SCRIPT_NONCE))
             .map(nonce -> Collections.singletonMap(NONCE_KEY, nonce))
             .orElseGet(Collections::emptyMap);
     }

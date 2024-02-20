@@ -33,7 +33,7 @@ public class ApplicationLogoutSuccessHandler implements LogoutSuccessHandler {
                 OOB_KEY, true,
                 CHANNEL_ID_KEY, request.getSession().getAttribute(ChannelIdHandshakeInterceptor.CHANNEL_ID_KEY)
             ),
-            "main/navbar", Collections.singletonMap(OOB_KEY, true)
+            "navbar/navbar", Collections.singletonMap(OOB_KEY, true)
         ));
     }
     

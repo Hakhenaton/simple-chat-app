@@ -30,7 +30,7 @@ public class ApplicationAuthenticationSuccessHandler implements AuthenticationSu
         final var fragments = new HashMap<String, Map<String, Object>>();
 
         fragments.putAll(Map.of(
-            "main/navbar", Collections.singletonMap("oob", true),
+            "navbar/navbar", Collections.singletonMap("oob", true),
             "login/success", Collections.emptyMap()
         ));
 

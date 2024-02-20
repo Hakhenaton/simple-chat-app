@@ -44,7 +44,7 @@ document.body.addEventListener('htmx:wsConfigSend', event => {
 
 // Lorsque des noeuds WCS sont créés, Stencil utilise un mécanisme d'"hydratation" pour masquer les éléments dans le DOM
 // avant que les styles soient appliqués. Pour cela, une classe "hydrated" est utilisée, elle est ajoutée à l'élément qui a subit des
-// modifications lorsqu'il est prêt à être affiché. Un élément non hydraté a une propriété "visbility": "hidden".
+// modifications lorsqu'il est prêt à être affiché. Un élément non hydraté a une propriété "visibility": "hidden".
 // Stencil fait cela de manière asynchrone, probablement via des gestionnaires d'événéments.
 
 // Quand HTMX écrase un élément existant, il insère le nouveau noeud et copie d'abord les anciens attributs, puis il invoque un setTimeout en fonction de htmx.config.defaultSettleDelay.
@@ -77,28 +77,6 @@ Object.assign(
         allowEval: false
     }
 )
-
-
-htmx.on(document.body, 'htmx:afterSettle', event => {
-    console.log('after settle: ', event.detail)
-})
-
-htmx.on(document.body, 'htmx:beforeSwap', event => {
-    console.log('before swap: ', event.detail)
-})
-
-htmx.on(document.body, 'htmx:afterSwap', event => {
-    console.log('after swap: ', event.detail)
-})
-
-htmx.on(document.body, 'htmx:oobBeforeSwap', event => {
-    console.log('before oob swap: ', event.detail)
-})
-
-htmx.on(document.body, 'htmx:oobAfterSwap', event => {
-    console.log('after oob swap: ', event.detail)
-})
-
 
 htmx.on(document.body, 'htmx:load', event => {
     fixStencilHydratation(event.detail.elt)
