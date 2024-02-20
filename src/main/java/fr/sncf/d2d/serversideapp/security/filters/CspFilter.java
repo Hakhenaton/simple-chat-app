@@ -5,7 +5,6 @@ import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.HexFormat;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.servlet.Filter;
